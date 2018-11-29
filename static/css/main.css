@@ -25,9 +25,9 @@ a {
 
 .content-box {
     position: absolute;
-    left: 21%;
+    left: 255px;
     right: 0;
-    top: 130px;
+    top: 125px;
     bottom: 0;
     padding-bottom: 30px;
     -webkit-transition: left .3s ease-in-out;
@@ -173,3 +173,24 @@ a {
 .v-note-wrapper .v-note-panel {
     min-height: 500px;
 }
+
+.el-tabs__item {
+    color: #ffffff;
+    font-size: 20px;
+    line-height: 50px;
+    height: 50px;
+  }
+  
+  /*.el-menu-item{*/
+    /*padding-left: 30px;*/
+  /*}*/
+  .el-table th>.cell {
+    font-size: 18px;
+    color: #000000;
+    padding: 0px;
+    margin-bottom: 10px;
+  }
+  
+  .el-table .cell {
+    font-size: 15px;
+  }

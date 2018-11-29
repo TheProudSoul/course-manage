@@ -13,64 +13,145 @@
     </div>
     <!-- 登录选项卡 (组 合) -->
     <el-card class="box-card">
-        <!-- http://element.eleme.io/#/en-US/component/tabs#card-style -->    
-        <el-tabs type="card" @tab-click="handleClick">
-          <el-tab-pane label="学生"></el-tab-pane>
-          <el-tab-pane label="教师"></el-tab-pane>
-          <el-tab-pane label="管理员"></el-tab-pane>
-        </el-tabs>
-        <div class="cm-title">登录账户</div>
-        <!-- http://element.eleme.io/#/zh-CN/component/form#zi-ding-yi-xiao-yan-gui-ze -->
-        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-          <el-form-item label="账号">
-            <!-- http://element.eleme.io/#/zh-CN/component/input#ji-chu-yong-fa -->
-            <el-input type="text" v-model="ruleForm.userName" autocomplete="off" ></el-input>
-          </el-form-item>
-          <el-form-item label="密码">
-            <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
-        </el-form>
-    </el-card>  
+      <h1>登录账户</h1>
 
+      <!-- http://element.eleme.io/#/en-US/component/tabs#card-style -->
+      <el-tabs type="card" @tab-click="handleLoginType">
+        <el-tab-pane label="学生"></el-tab-pane>
+        <el-tab-pane label="教师"></el-tab-pane>
+        <el-tab-pane label="管理员"></el-tab-pane>
+      </el-tabs>
+      <!-- http://element.eleme.io/#/zh-CN/component/form#zi-ding-yi-xiao-yan-gui-ze -->
+      <el-form
+        :model="loginForm"
+        status-icon
+        :rules="loginRules"
+        ref="loginForm"
+        label-width="100px"
+        class="demo-ruleForm"
+      >
+        <el-form-item label="账号" prop="id">
+          <!-- http://element.eleme.io/#/zh-CN/component/input#ji-chu-yong-fa -->
+          <el-input type="text" v-model="loginForm.id" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="passwd">
+          <el-input type="password" v-model="loginForm.passwd" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-button type="primary" @click="submitInfo()">登录</el-button>
+      </el-form>
+    </el-card>
   </div>
 </template>
 
 <script>
 export default {
   data() {
+    var validateId = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入账号"));
+      } else {
+        callback();
+      }
+    };
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        callback();
+      }
+    };
     return {
-      ruleForm: {
-        userName: "",
-        password: ""
+      loginForm: {
+        id: "",
+        passwd: "",
+        group: 3
+      },
+
+      loginRules: {
+        id: [
+          {
+            message: "请输入账号",
+            validator: validateId,
+            trigger: "blur"
+          }
+        ],
+        passwd: [
+          {
+            message: "请输入密码",
+            validator: validatePass,
+            trigger: "blur"
+          }
+        ]
       }
     };
   },
   methods: {
-    submitForm(formName) {},
-    handleClick(tab, event) {
-      console.log(tab, event);
+    submitInfo() {
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.$http("post", "/login", this.loginForm).then(res => {
+            if (res.data.status == 0) {
+              console.log(res.data);
+              if (this.loginForm.group == 3) {
+                this.$router.push({
+                  path: "/home",
+                  params: {
+                    username: this.loginForm.id
+                  }
+                });
+              } else if (this.loginForm.group == 2) {
+                this.$router.push({
+                  path: "/home",
+                  params: {
+                    username: this.loginForm.id
+                  }
+                });
+              } else if (this.loginForm.group == 1) {
+                this.$router.push({
+                  path: "/home",
+                  params: {
+                    username: this.loginForm.id
+                  }
+                });
+              }
+            } else {
+              this.$message.error("用户名或密码错误");
+            }
+          });
+        } else {
+          this.$message.error("用户名或密码错误");
+        }
+      });
+    },
+
+    handleLoginType(tab, event) {
+      this.loginForm.group = 3 - tab.index;
+      console.log(this.loginForm.group)
     }
   }
 };
 </script>
 
 <style scoped>
+h1 {
+  font-family: serif;
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
 .login-wrap {
   position: relative;
   width: 100%;
   background-image: url(../../assets/bg.jpg);
-  background-repeat:no-repeat;
-  background-position:center;
+  background-repeat: no-repeat;
+  background-position: center;
   position: relative;
-  height:100%;
+  height: 100%;
   background-size: 100%;
-
 }
 .hearder {
   padding-top: 20px;
   padding-bottom: 30px;
-  background-color:rgba(159, 125, 100, 1);
+  background-color: rgba(159, 125, 100, 1);
   position: relative;
   font-family: Microsoft YaHei;
 }
@@ -83,9 +164,9 @@ export default {
   transform: translate(-50%, -50%);
   opacity: 0.9;
 }
-.cm-title{
+.cm-title {
   margin-bottom: 8px;
-  font-size:28px;
+  font-size: 28px;
   color: aliceblue;
   font-weight: bold;
 }
@@ -94,7 +175,7 @@ export default {
   height: 50px;
   vertical-align: bottom;
 }
-.header-right{
+.header-right {
   position: absolute;
   top: 40px;
   right: 40px;

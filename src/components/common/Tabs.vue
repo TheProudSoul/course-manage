@@ -1,6 +1,6 @@
 <template>
     <div class="tabs">
-        <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+        <el-tabs stretch v-model="activeName" type="card" @tab-click="handleClick">
             <el-tab-pane label="课程公告" name="first"></el-tab-pane>
             <el-tab-pane label="在线测试" name="second"></el-tab-pane>
             <el-tab-pane label="作业" name="third"></el-tab-pane>
@@ -19,12 +19,16 @@
     },
     methods: {
       handleClick(tab, event) {
-        console.log(tab.value.name);
+        console.log(tab.name);
       }
     }
   };
 </script>
 
 <style scoped>
-
+  .tabs{
+    background: #ffd700;
+    height: 50px;
+  }
+  
 </style>
