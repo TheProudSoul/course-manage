@@ -12,36 +12,46 @@ export default new Router({
       meta: { title: '登录' }
     },
     {
-      path: '/course',
-      component: resolve => require(['../components/common/course.vue'], resolve),
+      path: '/chome',
+      component: resolve => require(['../components/common/Chome.vue'], resolve),
       meta: { title: '自述文件' },
+      props: true,
       children: [
         {
-          path: '/coursehome',
-          component: resolve => require(['../components/page/CourseHome.vue'], resolve),
-          meta: { title: '课程主页' }
+          path: '/home',
+          name: 'home',
+          component: resolve => require(['../components/page/StudentHome.vue'], resolve),
+          meta: { title: '主页' }
         },
         {
-          path: '/onlinetest',
-          component: resolve => require(['../components/page/OnlineTest.vue'], resolve),
-          meta: { title: '在线测试 ' }
-        },
-        {
-          path: '/homework',
-          component: resolve => require(['../components/page/Homework.vue'], resolve),
-          meta: { title: '在线测试 ' }
-        },
-        {
-          path: '/resource',
-          component: resolve => require(['../components/page/Resource.vue'], resolve),
-          meta: { title: ' 资源 ' }
+          path: '/ccourse',
+          component: resolve => require(['../components/common/Ccourse.vue'], resolve),
+          meta: { title: '自述文件' },
+          children: [
+            {
+              path: '/coursehome',
+              component: resolve => require(['../components/page/CourseHome.vue'], resolve),
+              meta: { title: '课程主页' }
+            },
+            {
+              path: '/onlinetest',
+              component: resolve => require(['../components/page/OnlineTest.vue'], resolve),
+              meta: { title: '在线测试 ' }
+            },
+            {
+              path: '/homework',
+              component: resolve => require(['../components/page/Homework.vue'], resolve),
+              meta: { title: ' 作业 ' }
+            },
+            {
+              path: '/resource',
+              component: resolve => require(['../components/page/Resource.vue'], resolve),
+              meta: { title: ' 资源 ' }
+            }
+          ]
         }
+
       ]
-    },
-    {
-      path: '/home',
-      component: resolve => require(['../components/page/StudentHome.vue'], resolve),
-      meta: { title: '主页' }
     }
   ]
 })

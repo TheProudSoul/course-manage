@@ -11,7 +11,6 @@ body,
     height: 100%;
     overflow: hidden;
     background: #f0f0f0;
-
 }
 
 body {
@@ -175,7 +174,7 @@ a {
 }
 
 .el-tabs__item {
-    color: #ffffff;
+    color: #000000;
     font-size: 20px;
     line-height: 50px;
     height: 50px;
@@ -193,4 +192,5 @@ a {
   
   .el-table .cell {
     font-size: 15px;
+    border: #000000;
   }

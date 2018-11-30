@@ -1,23 +1,23 @@
 <template>
   <div>
     <vHead></vHead>
-    <vSidebar></vSidebar>
-    <div class="content-box">
-      <vTabs></vTabs>
+    <vSidebar :courses="courses"></vSidebar>
       <router-view></router-view>
-    </div>
   </div>
 </template>
 
 <script>
 import vSidebar from "../common/Sidebar";
 import vHead from "../common/Header";
-import vTabs from "../common/Tabs";
 export default {
+  created () {
+    // 组件创建完后获取数据，
+    // 此时 data 已经被 observed 了
+    this.courses = this.$route.params.course
+  },
   components: {
     vSidebar,
     vHead,
-    vTabs
   }
 };
 </script>

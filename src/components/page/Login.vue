@@ -94,16 +94,20 @@ export default {
               console.log(res.data);
               if (this.loginForm.group == 3) {
                 this.$router.push({
-                  path: "/home",
+                  name: "home",
                   params: {
-                    username: this.loginForm.id
+                    username: this.loginForm.id,
+                    notice:res.data.notice,
+                    course:res.data.course
                   }
                 });
               } else if (this.loginForm.group == 2) {
                 this.$router.push({
                   path: "/home",
                   params: {
-                    username: this.loginForm.id
+                    username: this.loginForm.id,
+                    course:res.date.course,
+                    notice:res.data.notice
                   }
                 });
               } else if (this.loginForm.group == 1) {
@@ -135,8 +139,10 @@ export default {
 <style scoped>
 h1 {
   font-family: serif;
+  font-size: 20px;
+  color: black;
   padding-top: 10px;
-  padding-bottom: 30px;
+  padding-bottom: 20px;
 }
 .login-wrap {
   position: relative;
@@ -157,12 +163,13 @@ h1 {
 }
 
 .box-card {
-  width: 40%;
+  height: 50%;
+  width: 35%;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  opacity: 0.9;
+  opacity: 0.8;
 }
 .cm-title {
   margin-bottom: 8px;
