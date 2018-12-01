@@ -6,7 +6,6 @@
 </template>
 
 <script>
-
 import vTabs from "../common/Tabs";
 export default {
   components: {
