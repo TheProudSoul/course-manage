@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import vTabs from "../common/Tabs";
+import vTabs from '../common/Tabs'
 export default {
   data() {
     return {
@@ -16,5 +16,5 @@ export default {
   components: {
     vTabs
   }
-};
+}
 </script>

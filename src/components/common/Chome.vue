@@ -7,13 +7,13 @@
 </template>
 
 <script>
-import vSidebar from "../common/Sidebar";
-import vHead from "../common/Header";
+import vSidebar from '../common/Sidebar'
+import vHead from '../common/Header'
 export default {
-  data() {
+  data () {
     return {
       courses: this.$route.params.course
-    };
+    }
   },
     beforeRouteUpdate (to, from, next) {
     // 在当前路由改变，但是该组件被复用时调用
@@ -27,5 +27,5 @@ export default {
     vSidebar,
     vHead
   }
-};
+}
 </script>
