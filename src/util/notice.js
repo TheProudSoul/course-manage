@@ -1,10 +1,8 @@
 const Mock = require('mockjs') // 获取mock对象
 const domain = '/api' // 定义默认域名，随便写
 
-// 随机生成文章数据
 const Data = req => {
   console.log(req) // 请求体，用于获取参数
-  // 返回状态码和文章数据posts
   let notice = [
     {
       'notice_id': '1',

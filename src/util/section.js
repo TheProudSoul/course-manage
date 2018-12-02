@@ -1,7 +1,6 @@
 const Mock = require('mockjs') // 获取mock对象
 const domain = '/api' // 定义默认域名，随便写
 
-// 随机生成文章数据
 const Data = req => {
   req.body = JSON.parse(req.body)
   console.log(req.body) // 请求体，用于获取参数

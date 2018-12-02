@@ -51,6 +51,12 @@ export default new Router({
               name: 'resource',
               component: resolve => require(['../components/page/Resource.vue'], resolve),
               meta: { title: ' 资源 ' }
+            },
+            {
+              path: '/course/:course/homework/:assign_id',
+              name: 'assignment',
+              component: resolve => require(['../components/page/Assignment.vue'], resolve),
+              meta: { title: '自述文件' }
             }
           ]
         }

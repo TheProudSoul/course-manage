@@ -93,14 +93,7 @@ export default {
           this.$http("post", "/login", this.loginForm).then(res => {
             if (res.data.status == 0) {
               if (this.loginForm.group == 3) {
-                this.$router.push({
-                  name: 'home',
-                  params: {
-                    username: this.loginForm.id,
-                    notice: res.data.notice,
-                    course: res.data.course
-                  }
-                })
+                this.$router.push('home')
               } else if (this.loginForm.group === 2) {
                 this.$router.push({
                   path: '/home',

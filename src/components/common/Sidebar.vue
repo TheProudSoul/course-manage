@@ -21,11 +21,7 @@
 import bus from "../common/bus";
 import CourseHomeVue from "../page/CourseHome.vue";
 export default {
-  data(){
-    // return{
-    //   courses:''
-    // }
-  },
+
   props: ["courses"],
   // beforeRouteEnter(to, from, next) {
   //   next(vm => {

@@ -15,7 +15,7 @@ export default {
       courses: ''
     };
   },
-    beforeRouteEnter(to, from, next) {
+  beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.$http("get", "/section").then(res => {
         // console.log(res.data);
