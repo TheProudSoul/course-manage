@@ -6,12 +6,12 @@ const LoginData = req => {
   console.log(req) // 请求体，用于获取参数
   let status = 0
   let notice = [{
-    'notice_id': 1,
+    'notice_id': '1',
     'release_time': '2018-11-03 12:00',
     'title': '11月6号晚上要写完API文档'
   },
   {
-    'notice_id': 2,
+    'notice_id': '2',
     'release_time': '2018-11-03 12:00',
     'title': '啊，已经7号了......'
   }

@@ -22,14 +22,6 @@
           <span style="margin-left: 10px">{{notice.title}}</span>
         </div>
       </el-card>
-      <!-- <el-table :data="tableData">
-        <el-table-column label="通知">
-          <template slot-scope="scope">
-            <i class="el-icon-time"></i>
-            <span style="margin-left: 10px">{{ scope.row.content }}</span>
-          </template>
-        </el-table-column>
-      </el-table>-->
     </div>
   </div>
 </template>
@@ -71,6 +63,7 @@ export default {
         this.notices = res.data.notice;
       });
       this.$http("get", "/section",{sec_id:this.course_id}).then(res => {
+        console.log("res", res)
         this.notices = res.data.notice;
         this.course_name = res.data.course_name;
         this.course_intro = res.data.course_intro;
@@ -82,7 +75,7 @@ export default {
         this.room = res.data.room;
         this.teacher_id = res.data.teacher_id;
         this.teacher_name = res.data.teacher_name;
-      });
+      })
     }
   }
 }

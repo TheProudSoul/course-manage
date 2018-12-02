@@ -22,28 +22,28 @@ import bus from "../common/bus";
 import CourseHomeVue from "../page/CourseHome.vue";
 export default {
   data(){
-    return{
-      courses:''
-    }
+    // return{
+    //   courses:''
+    // }
   },
   props: ["courses"],
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.$http("get", "/section").then(res => {
-        // console.log(res);
-        vm.courses = res.data.course;
-        // console.log(this.notices);
-      });
-    });
-  },
+  // beforeRouteEnter(to, from, next) {
+  //   next(vm => {
+  //     vm.$http("get", "/section").then(res => {
+  //       console.log(res);
+  //       vm.courses = res.data.course;
+  //       // console.log(this.notices);
+  //     });
+  //   });
+  // },
   methods: {
-    fetchData() {
-      this.$http("get", "/section").then(res => {
-        // console.log(res);
-        this.courses = res.data.course;
-        // console.log(this.notices);
-      });
-    },
+    // fetchData() {
+    //   this.$http("get", "/section").then(res => {
+    //     console.log(res);
+    //     this.courses = res.data.course;
+    //     // console.log(this.notices);
+    //   });
+    // },
     handleOpen(key, keyPath) {
       if (key != "home") {
         this.$router.push({

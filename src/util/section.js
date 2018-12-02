@@ -3,6 +3,7 @@ const domain = '/api' // 定义默认域名，随便写
 
 // 随机生成文章数据
 const Data = req => {
+  req.body = JSON.parse(req.body)
   console.log(req.body) // 请求体，用于获取参数
   let course = [{
       'section_id': '1',
@@ -13,7 +14,7 @@ const Data = req => {
       'course_title': '软件架构'
     }
   ]
-  if (req.body === '') {
+  if (!req.body.sec_id) {
     return course
   }
   let course_id = '1'
