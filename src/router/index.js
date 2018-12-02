@@ -56,7 +56,13 @@ export default new Router({
               path: '/course/:course/homework/:assign_id',
               name: 'assignment',
               component: resolve => require(['../components/page/Assignment.vue'], resolve),
-              meta: { title: '自述文件' }
+              meta: { title: '作业详情页' }
+            },
+            {
+              path: '/course/:course/onlinetest/:test_id',
+              name: 'onlinetestInfo',
+              component: resolve => require(['../components/page/OnlineTestInfo.vue'], resolve),
+              meta: { title: '在线测试详情页' }
             }
           ]
         }

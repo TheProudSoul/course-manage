@@ -49,7 +49,6 @@ export default {
           course: this.$route.params.course
         }
       });
-      console.log(row);
     }
   }
 };
