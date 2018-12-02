@@ -91,7 +91,6 @@ export default {
         if (valid) {
           this.$http("post", "/login", this.loginForm).then(res => {
             if (res.data.status == 0) {
-              console.log(res.data);
               if (this.loginForm.group == 3) {
                 this.$router.push({
                   name: "home",

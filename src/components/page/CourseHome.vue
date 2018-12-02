@@ -14,14 +14,14 @@
     <hr class="hr" color="#ffd700">
     <div class="course-box">
       <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span>通知</span>
-      </div>
-      <div v-for="notice in notices" :key="notice.notice_id" class="text item">
-        <i class="fa fa-comment"></i>
-        <span style="margin-left: 10px">{{notice.title}}</span>
-      </div>
-    </el-card>
+        <div slot="header" class="clearfix">
+          <span>通知</span>
+        </div>
+        <div v-for="notice in notices" :key="notice.notice_id" class="text item">
+          <i class="fa fa-comment"></i>
+          <span style="margin-left: 10px">{{notice.title}}</span>
+        </div>
+      </el-card>
       <!-- <el-table :data="tableData">
         <el-table-column label="通知">
           <template slot-scope="scope">
@@ -29,7 +29,7 @@
             <span style="margin-left: 10px">{{ scope.row.content }}</span>
           </template>
         </el-table-column>
-      </el-table> -->
+      </el-table>-->
     </div>
   </div>
 </template>
@@ -38,18 +38,18 @@
 export default {
   data() {
     return {
-      notices:'',
-      course_id:'',
-      course_name:'',
-      course_intro:'',
-      course_credit:'',
-      school:'',
-      section_week:'',
-      time_slot:'',
-      building:'',
-      room:'',
-      teacher_id:'',
-      teacher_name:''
+      course_id: this.$route.params.course,
+      notices: "",
+      course_name: "",
+      course_intro: "",
+      course_credit: "",
+      school: "",
+      section_week: "",
+      time_slot: "",
+      building: "",
+      room: "",
+      teacher_id: "",
+      teacher_name: ""
     };
   },
   created() {
@@ -57,17 +57,21 @@ export default {
     // 此时 data 已经被 observed 了
     this.fetchData();
   },
+  beforeRouteUpdate (to, from, next) {
+    // 在当前路由改变，但是该组件被复用时调用
+    // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
+    // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
+    // 可以访问组件实例 `this`
+    this.fetchData()
+    next()
+  },
   methods: {
     fetchData() {
-      this.$http("get", "/notice").then(res => {
-        console.log(res);
+      this.$http("get", "/notice",{sec_id:this.course_id}).then(res => {
         this.notices = res.data.notice;
-        console.log(this.notices);
       });
-      this.$http("get", "/section").then(res => {
-        console.log(res);
+      this.$http("get", "/section",{sec_id:this.course_id}).then(res => {
         this.notices = res.data.notice;
-        this.course_id = res.data.course_id;
         this.course_name = res.data.course_name;
         this.course_intro = res.data.course_intro;
         this.course_credit = res.data.course_credit;
@@ -78,7 +82,6 @@ export default {
         this.room = res.data.room;
         this.teacher_id = res.data.teacher_id;
         this.teacher_name = res.data.teacher_name;
-        console.log(this.teacher_name);
       });
     }
   }

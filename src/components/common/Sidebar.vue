@@ -1,17 +1,16 @@
 <template>
   <div class="sidebar">
     <el-menu
-      default-active="2"
+      default-active="home"
       class="el-menu-vertical-demo"
       active-text-color="#9F7D64"
       @select="handleOpen"
-      @close="handleClose"
-      router>
-      <el-menu-item index="home">
+    >
+      <el-menu-item index="home" route="home">
         <i class="fa fa-home fa-2x" aria-hidden="true"></i>
         <span>主页</span>
       </el-menu-item>
-      <el-menu-item v-for="course in courses" :key="course.section_id" index="coursehome">
+      <el-menu-item v-for="course in courses" :key="course.section_id" :index="course.section_id">
         <i class="fa fa-book fa-2x" aria-hidden="true"></i>
         <span>{{course.course_title}}</span>
       </el-menu-item>
@@ -20,14 +19,42 @@
 </template>
 <script>
 import bus from "../common/bus";
+import CourseHomeVue from "../page/CourseHome.vue";
 export default {
-  props:["courses"],
+  data(){
+    return{
+      courses:''
+    }
+  },
+  props: ["courses"],
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.$http("get", "/section").then(res => {
+        // console.log(res);
+        vm.courses = res.data.course;
+        // console.log(this.notices);
+      });
+    });
+  },
   methods: {
-    handleOpen(key, keyPath) {
-      this.$router.push("/");
+    fetchData() {
+      this.$http("get", "/section").then(res => {
+        // console.log(res);
+        this.courses = res.data.course;
+        // console.log(this.notices);
+      });
     },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
+    handleOpen(key, keyPath) {
+      if (key != "home") {
+        this.$router.push({
+          name: "coursehome",
+          params: {
+            course: key
+          }
+        });
+      } else {
+        this.$router.push("/home");
+      }
     }
   }
 };

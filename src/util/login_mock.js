@@ -18,11 +18,11 @@ const LoginData = req => {
   ]
   let course = [
     {
-      'section_id': 1,
+      'section_id': '1',
       'course_title': 'IT项目管理'
     },
     {
-      'section_id': 2,
+      'section_id': '2',
       'course_title': '软件架构'
     }
   ]

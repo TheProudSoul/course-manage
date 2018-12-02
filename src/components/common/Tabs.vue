@@ -1,34 +1,40 @@
 <template>
-    <div class="tabs">
-        <el-tabs stretch v-model="activeName" type="card" @tab-click="handleClick">
-            <el-tab-pane label="课程公告" name="first"></el-tab-pane>
-            <el-tab-pane label="在线测试" name="second"></el-tab-pane>
-            <el-tab-pane label="作业" name="third"></el-tab-pane>
-            <el-tab-pane label="资源" name="fourth"></el-tab-pane>
-            <el-tab-pane label="讨论区" name="fifth"></el-tab-pane>
-        </el-tabs>
-    </div>
+  <div class="tabs">
+    <el-tabs stretch v-model="activeName" type="card" @tab-click="handleClick">
+      <el-tab-pane label="课程公告" name="coursehome"></el-tab-pane>
+      <el-tab-pane label="在线测试" name="onlinetest"></el-tab-pane>
+      <el-tab-pane label="作业" name="homework"></el-tab-pane>
+      <el-tab-pane label="资源" name="resource"></el-tab-pane>
+      <el-tab-pane label="讨论区" name="fifth"></el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        activeName: 'first',
-      };
-    },
-    methods: {
-      handleClick(tab, event) {
-        console.log(tab.name);
-      }
+export default {
+  props: ["course_id"],
+
+  data() {
+    return {
+      activeName: "first"
+    };
+  },
+  methods: {
+    handleClick(tab, event) {
+      this.$router.push({
+        name: tab.name,
+        params: {
+            course: this.course_id
+          }
+      });
     }
-  };
+  }
+};
 </script>
 
 <style scoped>
-  .tabs{
-    background: #ffd700;
-    height: 50px;
-  }
-  
+.tabs {
+  background: #ffd700;
+  height: 50px;
+}
 </style>

@@ -29,22 +29,26 @@ export default new Router({
           meta: { title: '自述文件' },
           children: [
             {
-              path: '/coursehome',
+              path: '/coursehome/:course',
+              name: 'coursehome',
               component: resolve => require(['../components/page/CourseHome.vue'], resolve),
               meta: { title: '课程主页' }
             },
             {
-              path: '/onlinetest',
+              path: '/onlinetest/:course',
+              name: 'onlinetest',
               component: resolve => require(['../components/page/OnlineTest.vue'], resolve),
               meta: { title: '在线测试 ' }
             },
             {
-              path: '/homework',
+              path: '/homework/:course',
+              name: 'homework',
               component: resolve => require(['../components/page/Homework.vue'], resolve),
               meta: { title: ' 作业 ' }
             },
             {
-              path: '/resource',
+              path: '/resource/:course',
+              name: 'resource',
               component: resolve => require(['../components/page/Resource.vue'], resolve),
               meta: { title: ' 资源 ' }
             }
