@@ -11,18 +11,18 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        activeName: 'first',
-      };
-    },
-    methods: {
-      handleClick(tab, event) {
-        console.log(tab.name);
-      }
+export default {
+  data () {
+    return {
+      activeName: 'first'
     }
-  };
+  },
+  methods: {
+    handleClick (tab, event) {
+      console.log(tab.name)
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -30,5 +30,5 @@
     background: #ffd700;
     height: 50px;
   }
-  
+
 </style>

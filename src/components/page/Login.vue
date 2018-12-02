@@ -29,15 +29,16 @@
         ref="loginForm"
         label-width="100px"
         class="demo-ruleForm"
+        label-position="left"
       >
-        <el-form-item label="账号" prop="id">
+        <el-form-item label="账号" prop="id" label-width="50px">
           <!-- http://element.eleme.io/#/zh-CN/component/input#ji-chu-yong-fa -->
           <el-input type="text" v-model="loginForm.id" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="passwd">
+        <el-form-item label="密码" prop="passwd" label-width="50px">
           <el-input type="password" v-model="loginForm.passwd" autocomplete="off"></el-input>
         </el-form-item>
-        <el-button type="primary" @click="submitInfo()">登录</el-button>
+        <el-button type="primary" @click="submitInfo()" class="submit-btn">登 录</el-button>
       </el-form>
     </el-card>
   </div>
@@ -45,101 +46,101 @@
 
 <script>
 export default {
-  data() {
+  data () {
     var validateId = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入账号"));
+      if (value === '') {
+        callback(new Error('请输入账号'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
+      if (value === '') {
+        callback(new Error('请输入密码'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     return {
       loginForm: {
-        id: "",
-        passwd: "",
+        id: '',
+        passwd: '',
         group: 3
       },
 
       loginRules: {
         id: [
           {
-            message: "请输入账号",
+            message: '请输入账号',
             validator: validateId,
-            trigger: "blur"
+            trigger: 'blur'
           }
         ],
         passwd: [
           {
-            message: "请输入密码",
+            message: '请输入密码',
             validator: validatePass,
-            trigger: "blur"
+            trigger: 'blur'
           }
         ]
       }
-    };
+    }
   },
   methods: {
-    submitInfo() {
+    submitInfo () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.$http("post", "/login", this.loginForm).then(res => {
-            if (res.data.status == 0) {
-              console.log(res.data);
-              if (this.loginForm.group == 3) {
+          this.$http('post', '/login', this.loginForm).then(res => {
+            if (res.data.status === 0) {
+              console.log(res.data)
+              if (this.loginForm.group === 3) {
                 this.$router.push({
-                  name: "home",
+                  name: 'home',
                   params: {
                     username: this.loginForm.id,
-                    notice:res.data.notice,
-                    course:res.data.course
+                    notice: res.data.notice,
+                    course: res.data.course
                   }
-                });
-              } else if (this.loginForm.group == 2) {
+                })
+              } else if (this.loginForm.group === 2) {
                 this.$router.push({
-                  path: "/home",
+                  path: '/home',
                   params: {
                     username: this.loginForm.id,
-                    course:res.date.course,
-                    notice:res.data.notice
+                    course: res.date.course,
+                    notice: res.data.notice
                   }
-                });
-              } else if (this.loginForm.group == 1) {
+                })
+              } else if (this.loginForm.group === 1) {
                 this.$router.push({
-                  path: "/home",
+                  path: '/home',
                   params: {
                     username: this.loginForm.id
                   }
-                });
+                })
               }
             } else {
-              this.$message.error("用户名或密码错误");
+              this.$message.error('用户名或密码错误')
             }
-          });
+          })
         } else {
-          this.$message.error("用户名或密码错误");
+          this.$message.error('用户名或密码错误')
         }
-      });
+      })
     },
 
-    handleLoginType(tab, event) {
-      this.loginForm.group = 3 - tab.index;
+    handleLoginType (tab, event) {
+      this.loginForm.group = 3 - tab.index
       console.log(this.loginForm.group)
     }
   }
-};
+}
 </script>
 
 <style scoped>
 h1 {
   font-family: serif;
-  font-size: 20px;
+  font-size: 24px;
   color: black;
   padding-top: 10px;
   padding-bottom: 20px;
@@ -169,7 +170,7 @@ h1 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  opacity: 0.8;
+  opacity: 0.85;
 }
 .cm-title {
   margin-bottom: 8px;
@@ -190,5 +191,13 @@ h1 {
 .header-right a {
   color: white;
   text-decoration: none;
+}
+.demo-ruleForm{
+  margin: 20px 70px 30px 60px;
+}
+.submit-btn{
+  margin-top: 20px;
+  opacity: 1;
+  font-size: 14px;
 }
 </style>
