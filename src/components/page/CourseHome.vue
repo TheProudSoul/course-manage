@@ -31,18 +31,18 @@ export default {
   data () {
     return {
       course_id: this.$route.params.course,
-      notices: "",
-      course_name: "",
-      course_intro: "",
-      course_credit: "",
-      school: "",
-      section_week: "",
-      time_slot: "",
-      building: "",
-      room: "",
-      teacher_id: "",
-      teacher_name: ""
-    };
+      notices: '',
+      course_name: '',
+      course_intro: '',
+      course_credit: '',
+      school: '',
+      section_week: '',
+      time_slot: '',
+      building: '',
+      room: '',
+      teacher_id: '',
+      teacher_name: ''
+    }
   },
   created () {
     // 组件创建完后获取数据，
@@ -58,23 +58,23 @@ export default {
     next()
   },
   methods: {
-    fetchData() {
-      this.$http("get", "/notice",{sec_id:this.course_id}).then(res => {
-        this.notices = res.data.notice;
-      });
-      this.$http("get", "/section",{sec_id:this.course_id}).then(res => {
-        console.log("res", res)
-        this.notices = res.data.notice;
-        this.course_name = res.data.course_name;
-        this.course_intro = res.data.course_intro;
-        this.course_credit = res.data.course_credit;
-        this.school = res.data.school;
-        this.section_week = res.data.section_week;
-        this.time_slot = res.data.time_slot;
-        this.building = res.data.building;
-        this.room = res.data.room;
-        this.teacher_id = res.data.teacher_id;
-        this.teacher_name = res.data.teacher_name;
+    fetchData () {
+      this.$http('get', '/notice', {sec_id: this.course_id}).then(res => {
+        this.notices = res.data.notice
+      })
+      this.$http('get', '/section', {sec_id: this.course_id}).then(res => {
+        console.log('res', res)
+        this.notices = res.data.notice
+        this.course_name = res.data.course_name
+        this.course_intro = res.data.course_intro
+        this.course_credit = res.data.course_credit
+        this.school = res.data.school
+        this.section_week = res.data.section_week
+        this.time_slot = res.data.time_slot
+        this.building = res.data.building
+        this.room = res.data.room
+        this.teacher_id = res.data.teacher_id
+        this.teacher_name = res.data.teacher_name
       })
     }
   }
