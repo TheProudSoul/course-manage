@@ -1,11 +1,11 @@
 <template>
   <div class="content-box">
     <!-- <div class="content"> -->
-    <el-card class="box-card">
+    <el-card class="box-card" shadow="never">
       <div slot="header" class="clearfix">
-        <span>通知</span>
+        <span class="notice-title">通知</span>
       </div>
-      <div v-for="notice in notices" :key="notice.notice_id" class="text item">
+      <div v-for="notice in notices" :key="notice.notice_id" class="text item" >
         <i class="fa fa-comment"></i>
         <span style="margin-left: 10px">{{notice.title}}</span>
       </div>
@@ -26,36 +26,42 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      notices:''
-    };
+      notices: ''
+    }
   },
-  created() {
+  created () {
     // 组件创建完后获取数据，
     // 此时 data 已经被 observed 了
-    this.fetchData();
+    this.fetchData()
   },
   methods: {
-    fetchData() {
-      this.$http("get", "/notice").then(res => {
-        console.log(res);
-        this.notices = res.data.notice;
-        console.log(this.notices);
-      });
+    fetchData () {
+      this.$http('get', '/notice').then(res => {
+        console.log(res)
+        this.notices = res.data.notice
+        console.log(this.notices)
+      })
     }
   }
-};
+}
 </script>
 
 <style>
 .text {
-  font-size: 14px;
+  font-size: 15px;
   text-align: left;
+  padding-left: 50px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.item:hover{
+  background: aliceblue;
 }
 
 .item {
-  margin-bottom: 18px;
+  margin-bottom: 5px;
 }
 
 .clearfix:before,
@@ -71,4 +77,16 @@ export default {
   width: 100%;
   height: 100%;
 }
+
+.notice-title{
+  font-style: unset;
+  font-size: 24px;
+}
+
+.el-card__header {
+  border-bottom: 2px solid gold;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
 </style>

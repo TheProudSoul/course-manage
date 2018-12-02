@@ -14,33 +14,49 @@
 </template>
 
 <script>
-  export default {
-    methods: {
-      handleClick(row) {
-        console.log(row);
-      }
-    },
+export default {
+  methods: {
+    handleClick (row) {
+      console.log(row)
+    }
+  },
 
-    data() {
-      return {
-        tableData: [{
-          name: '实验第一次考试',
-          start: '2018/10/15  14:00',
-          period: '2 小时'
-        }, {
-          name: '实验第二次考试',
-          start: '2018/10/15  14:00',
-          period: '2 小时'
-        }, {
-          name: '实验第三次考试',
-          start: '2018/10/15  14:00',
-          period: '2 小时'
-        }, {
-          name: '实验第四次考试',
-          start: '2018/10/15  14:00',
-          period: '2 小时'
-        }]
-      }
+  data () {
+    return {
+      tableData: [{
+        name: '实验第一次考试',
+        start: '2018/10/15  14:00',
+        period: '2 小时'
+      }, {
+        name: '实验第二次考试',
+        start: '2018/10/15  14:00',
+        period: '2 小时'
+      }, {
+        name: '实验第三次考试',
+        start: '2018/10/15  14:00',
+        period: '2 小时'
+      }, {
+        name: '实验第四次考试',
+        start: '2018/10/15  14:00',
+        period: '2 小时'
+      }]
     }
   }
+}
 </script>
+
+<!--修改-->
+<style>
+  .el-table .cell{
+    text-align: center;
+  }
+  /*.el-table th>.cell{*/
+    /*margin-top: 10px;*/
+    /*margin-bottom: 10px;*/
+  /*}*/
+  .content{
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 20px;
+  }
+</style>

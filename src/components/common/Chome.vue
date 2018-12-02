@@ -7,17 +7,17 @@
 </template>
 
 <script>
-import vSidebar from "../common/Sidebar";
-import vHead from "../common/Header";
+import vSidebar from '../common/Sidebar'
+import vHead from '../common/Header'
 export default {
-  data() {
+  data () {
     return {
       courses: this.$route.params.course
-    };
+    }
   },
   components: {
     vSidebar,
     vHead
   }
-};
+}
 </script>
