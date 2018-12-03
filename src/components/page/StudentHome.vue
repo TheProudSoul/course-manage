@@ -1,6 +1,5 @@
 <template>
   <div class="content-box">
-    <!-- <div class="content"> -->
     <el-card class="box-card" shadow="never">
       <div slot="header" class="clearfix">
         <span class="notice-title">通知</span>
@@ -10,17 +9,6 @@
         <span style="margin-left: 10px">{{notice.title}}</span>
       </div>
     </el-card>
-    <!-- <el-table :data="notice">
-        <el-table-column label="通知" prop="date">
-    <template slot-scope="scope">-->
-    <!-- http://www.fontawesome.com.cn/icons-ui/ -->
-    <!-- <i class="fa fa-info-circle" aria-hidden="true"></i>
-    <i class="fa fa-sticky-note" aria-hidden="true"></i>-->
-    <!-- <i class="fa fa-comment"></i>
-            <span style="margin-left: 10px">{{ scope.row.notice_id }}</span>
-          </template>
-        </el-table-column>
-    </el-table>-->
   </div>
 </template>
 
@@ -34,10 +22,10 @@ export default {
   created () {
     // 组件创建完后获取数据，
     // 此时 data 已经被 observed 了
-    this.fetchData()
+    this.fetchNotice()
   },
   methods: {
-    fetchData () {
+    fetchNotice() {
       this.$http('get', '/notice').then(res => {
         console.log(res)
         this.notices = res.data.notice
@@ -88,5 +76,4 @@ export default {
   margin-left: 30px;
   margin-right: 30px;
 }
-
 </style>

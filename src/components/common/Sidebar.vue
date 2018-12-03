@@ -4,7 +4,7 @@
       default-active="home"
       class="el-menu-vertical-demo"
       active-text-color="#9F7D64"
-      @select="handleOpen"
+      @select="fetchCourse"
     >
       <el-menu-item index="home" class="el-menu-item" route="home">
         <i class="fa fa-home fa-2x" aria-hidden="true"></i>
@@ -18,8 +18,6 @@
   </div>
 </template>
 <script>
-import bus from "../common/bus";
-import CourseHomeVue from "../page/CourseHome.vue";
 export default {
 
   props: ["courses"],
@@ -40,7 +38,7 @@ export default {
     //     // console.log(this.notices);
     //   });
     // },
-    handleOpen(key, keyPath) {
+    fetchCourse(key, keyPath) {
       if (key != "home") {
         this.$router.push({
           name: "coursehome",

@@ -36,13 +36,13 @@ export default {
     vSidebar,
     vHead
   },
-  methods: {
-    fetchData() {
-      this.$http("get", "/section").then(res => {
-        console.log(res);
-        this.courses = res.data.course;
-      });
-    }
-  }
+  // methods: {
+  //   fetchData() {
+  //     this.$http("get", "/section").then(res => {
+  //       console.log(res);
+  //       this.courses = res.data.course;
+  //     });
+  //   }
+  // }
 };
 </script>

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import vTabs from '../common/Tabs'
+import vTabs from '../common/CourseTabs'
 export default {
   data() {
     return {

@@ -1,6 +1,6 @@
 <template>
   <div class="tabs">
-    <el-tabs stretch v-model="activeName" type="card" @tab-click="handleClick">
+    <el-tabs stretch type="card" @tab-click="handleClick">
       <el-tab-pane label="课程公告" name="coursehome"></el-tab-pane>
       <el-tab-pane label="在线测试" name="onlinetest"></el-tab-pane>
       <el-tab-pane label="作业" name="homework"></el-tab-pane>
@@ -14,11 +14,11 @@
 export default {
   props: ["course_id"],
 
-  data() {
-    return {
-      activeName: "first"
-    };
-  },
+  // data() {
+  //   return {
+  //     activeName: "first"
+  //   };
+  // },
   methods: {
     handleClick(tab, event) {
       this.$router.push({

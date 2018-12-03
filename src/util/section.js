@@ -5,13 +5,13 @@ const Data = req => {
   req.body = JSON.parse(req.body)
   console.log(req.body) // 请求体，用于获取参数
   let course = [{
-      'section_id': '1',
-      'course_title': 'IT项目管理'
-    },
-    {
-      'section_id': '2',
-      'course_title': '软件架构'
-    }
+    'section_id': '1',
+    'course_title': 'IT项目管理'
+  },
+  {
+    'section_id': '2',
+    'course_title': '软件架构'
+  }
   ]
   if (!req.body.sec_id) {
     return course
@@ -23,17 +23,17 @@ const Data = req => {
   let school = '软件学院'
   let section_week = [2, 3, 4, 5, 6, 7]
   let time_slot = [{
-      'week_day': 1,
-      'period': [1, 2],
-      'start_time': '8:50',
-      'end_time': '10:25'
-    },
-    {
-      'week_day': 2,
-      'period': [3, 4],
-      'start_time': '10:40',
-      'end_time': '12:15'
-    }
+    'week_day': 1,
+    'period': [1, 2],
+    'start_time': '8:50',
+    'end_time': '10:25'
+  },
+  {
+    'week_day': 2,
+    'period': [3, 4],
+    'start_time': '10:40',
+    'end_time': '12:15'
+  }
   ]
   let building = 'A1'
   let room = '101'
