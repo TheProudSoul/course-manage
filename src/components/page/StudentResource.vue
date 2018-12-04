@@ -4,7 +4,7 @@
       show-checkbox
       :load="fetchReourseList"
       lazy
-      node-key="id"
+      node-key="res_id"
       ref="tree"
       highlight-current
       :props="defaultProps"
@@ -20,55 +20,16 @@
 export default {
   data() {
     return {
-      resourceList: [
-        {
-          id: 1,
-          label: "上课PPT",
-          children: [
-            {
-              id: 4,
-              label: "二级 1-1"
-            }
-          ]
-        },
-        {
-          id: 2,
-          label: "往年试卷",
-          children: [
-            {
-              id: 5,
-              label: "二级 2-1"
-            },
-            {
-              id: 6,
-              label: "二级 2-2"
-            }
-          ]
-        },
-        {
-          id: 3,
-          label: "实验",
-          children: [
-            {
-              id: 7,
-              label: "二级 3-1"
-            },
-            {
-              id: 8,
-              label: "二级 3-2"
-            }
-          ]
-        }
-      ],
+      resourceList: [],
       defaultProps: {
-        children: "children",
-        label: "name"
+        label: "res_name",
+        isLeaf: "leaf"
       }
     };
   },
   methods: {
     getCheckedKeys() {
-      console.log(this.$refs.tree.getCheckedKeys());
+      console.log(this.$refs.tree.getCheckedNodes());
     },
     resetChecked() {
       this.$refs.tree.setCheckedKeys([]);
@@ -76,23 +37,35 @@ export default {
     fetchReourseList(node, resolve) {
       if (node.level === 0) {
         return resolve([
-          { name: "课件" },
-          { name: "试卷" },
-          { name: "实验资料" },
-          { name: "参考资料" }
+          { res_name: "课件" },
+          { res_name: "试卷" },
+          { res_name: "实验资料" },
+          { res_name: "参考资料" }
         ]);
       }
       var type;
-      if (node.data.name === '课件') {
-          type = 0;
-        } else if (node.data.name === '试卷') {
-          type = 1;
-        } else if (node.data.name === '实验资料') {
-          type = 2;
-        } else {
-          type = 3;
-        }
-      // this.$http("get","/resource",)
+      if (node.data.res_name === "课件") {
+        type = 0;
+      } else if (node.data.res_name === "试卷") {
+        type = 1;
+      } else if (node.data.res_name === "实验资料") {
+        type = 2;
+      } else {
+        type = 3;
+      }
+      this.$http("get", "/resource", {
+        sec_id: this.$route.params.course,
+        type: type
+      }).then(res => {
+        this.resourceList = res.data.resource;
+      });
+
+      setTimeout(() => {
+        this.resourceList.forEach(resource=>{
+          resource.leaf= true;
+        })
+        resolve(this.resourceList);
+      }, 500);
     }
   }
 };

@@ -16,8 +16,20 @@ const Data = req => {
   if (!req.body.sec_id) {
     return course
   }
-  let course_id = '1'
-  let course_name = 'IT项目管理'
+  let course_id = ''
+  let course_name = ''
+  let teacher_name = ''
+  console.log('req.body.sec_id', req.body.sec_id)
+  if (req.body.sec_id == 1) {
+    course_id = '1'
+    course_name = 'IT项目管理'
+    teacher_name = '李红'
+  } else {
+    course_id = '2'
+    course_name = '软件架构'
+    teacher_name = '杨磊'
+  }
+
   let course_intro = 'balabala'
   let course_credit = 3
   let school = '软件学院'
@@ -35,10 +47,9 @@ const Data = req => {
     'end_time': '12:15'
   }
   ]
-  let building = 'A1'
-  let room = '101'
+  let building = 'A2'
+  let room = '302'
   let teacher_id = '100010'
-  let teacher_name = '冯玉祥'
 
   // 返回状态码和文章数据posts
   return {

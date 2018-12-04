@@ -1,7 +1,7 @@
 <template>
     <div class="content-box">
       <vTabs :course_id="course_id"></vTabs>
-      <router-view></router-view>
+<router-view></router-view>
     </div>
 </template>
 

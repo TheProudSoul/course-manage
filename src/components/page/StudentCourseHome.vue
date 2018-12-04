@@ -7,9 +7,15 @@
       <h3 class="course_teacher">授课教师：</h3>
       <p class="p">{{courseInfo.teacher_name}}</p>
       <h3 class="course-time">上课时间：</h3>
-      <p style="margin-left: 60px; margin-top: 10px">{{courseInfo.time_slot}}</p>
+      <p
+        style="margin-left: 60px; margin-top: 10px"
+        v-for="(time,index) in courseInfo.time_slot"
+        :key="index"
+      >周{{time.week_day}}	&ensp;第{{time.period}}节课	&ensp;{{time.start_time}}-{{time.end_time}}</p>
       <h3 class="course-place">课室：</h3>
-      <p style="margin-top: 5px; margin-left: 60px; margin-bottom: 10px">{{courseInfo.building}}-{{courseInfo.room}}</p>
+      <p
+        style="margin-top: 5px; margin-left: 60px; margin-bottom: 10px"
+      >{{courseInfo.building}}-{{courseInfo.room}}</p>
     </div>
     <hr class="hr" color="#ffd700">
     <div class="course-box" align="center">
@@ -32,17 +38,17 @@ export default {
     return {
       course_id: this.$route.params.course,
       courseInfo: {
-        notices: '',
-        course_name: '',
-        course_intro: '',
-        course_credit: '',
-        school: '',
-        section_week: '',
-        time_slot: '',
-        building: '',
-        room: '',
-        teacher_id: '',
-        teacher_name: '',
+        notices: "",
+        course_name: "",
+        course_intro: "",
+        course_credit: "",
+        school: "",
+        section_week: "",
+        time_slot: "",
+        building: "",
+        room: "",
+        teacher_id: "",
+        teacher_name: ""
       }
     };
   },
@@ -56,27 +62,31 @@ export default {
     // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
     // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
     // 可以访问组件实例 `this`
+    this.course_id = to.params.course;
     this.fetchCourseInfo();
     next();
   },
+
   methods: {
     fetchCourseInfo() {
+      this.courseInfo = {};
       this.$http("get", "/notice", { sec_id: this.course_id }).then(res => {
-        this.courseInfo.notices = res.data.notice;
+        this.$set(this.courseInfo, "notices", res.data.notice);
       });
       this.$http("get", "/section", { sec_id: this.course_id }).then(res => {
         console.log("res", res);
-        // this.courseInfo.notices = res.data.notice;
-        this.courseInfo.course_name = res.data.course_name;
-        this.courseInfo.course_intro = res.data.course_intro;
-        this.courseInfo.course_credit = res.data.course_credit;
-        this.courseInfo.school = res.data.school;
-        this.courseInfo.section_week = res.data.section_week;
-        this.courseInfo.time_slot = res.data.time_slot;
-        this.courseInfo.building = res.data.building;
-        this.courseInfo.room = res.data.room;
-        this.courseInfo.teacher_id = res.data.teacher_id;
-        this.courseInfo.teacher_name = res.data.teacher_name;
+        this.courseInfo = Object.assign({}, this.courseInfo, {
+          course_name: res.data.course_name,
+          course_intro: res.data.course_intro,
+          course_credit: res.data.course_credit,
+          school: res.data.school,
+          section_week: res.data.section_week,
+          time_slot: res.data.time_slot,
+          building: res.data.building,
+          room: res.data.room,
+          teacher_id: res.data.teacher_id,
+          teacher_name: res.data.teacher_name
+        });
       });
     }
   }
