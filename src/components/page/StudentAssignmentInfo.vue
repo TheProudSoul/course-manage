@@ -19,8 +19,16 @@
       <div class="desc-content">{{assignmentInfo.content}}</div>
     </div>
     <div class="date">
+      <p class="date-title">开始日期：</p>
+      <p class="date-content">{{assignmentInfo.release_time}}</p>
+    </div>
+    <div class="date">
       <p class="date-title">截止日期：</p>
       <p class="date-content">{{assignmentInfo.deadline}}</p>
+    </div>
+    <div class="file">
+      <p class="file-title">附件：</p>
+      <el-button type="text" class="btn-file">{{assignmentInfo.file_name}}</el-button>
     </div>
     <div class="answer">
       <p class="answer-title">回答：</p>
@@ -45,84 +53,84 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       assignment_id: this.$route.params.assign_id,
-      content: "",
+      content: '',
       assignmentInfo: {
-        assign_id: "",
-        title: "",
-        content: "",
-        release_time: "",
-        deadline: "",
-        file_id: "",
-        file_name: ""
+        assign_id: '',
+        title: '',
+        content: '',
+        release_time: '',
+        deadline: '',
+        file_id: '',
+        file_name: ''
       },
       fileList: [
         {
-          name: "food.jpeg",
+          name: 'food.jpeg',
           url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+            'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
         },
         {
-          name: "food2.jpeg",
+          name: 'food2.jpeg',
           url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
+            'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
         }
       ]
-    };
+    }
   },
-  created() {
+  created () {
     // 组件创建完后获取数据，
     // 此时 data 已经被 observed 了
-    this.fetchAssignmentInfo();
+    this.fetchAssignmentInfo()
   },
-  beforeRouteUpdate(to, from, next) {
+  beforeRouteUpdate (to, from, next) {
     // 在当前路由改变，但是该组件被复用时调用
     // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
     // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
     // 可以访问组件实例 `this`
-    this.fetchAssignmentInfo();
-    next();
+    this.fetchAssignmentInfo()
+    next()
   },
   methods: {
-    back() {
-      this.$router.go(-1);
+    back () {
+      this.$router.go(-1)
     },
-    fetchAssignmentInfo() {
-      this.$http("get", "/assignment/" + this.assignment_id, {
+    fetchAssignmentInfo () {
+      this.$http('get', '/assignment/' + this.assignment_id, {
         ass_id: this.assignment_id
       }).then(res => {
-        console.log(res);
-        this.assignmentInfo.assign_id = res.data.assign_id;
-        this.assignmentInfo.title = res.data.title;
-        this.assignmentInfo.content = res.data.content;
-        this.assignmentInfo.release_time = res.data.release_time;
-        this.assignmentInfo.deadline = res.data.deadline;
-        this.assignmentInfo.file_id = res.data.file_id;
-        this.assignmentInfo.file_name = res.data.file_name;
-      });
+        console.log(res)
+        this.assignmentInfo.assign_id = res.data.assign_id
+        this.assignmentInfo.title = res.data.title
+        this.assignmentInfo.content = res.data.content
+        this.assignmentInfo.release_time = res.data.release_time
+        this.assignmentInfo.deadline = res.data.deadline
+        this.assignmentInfo.file_id = res.data.file_id
+        this.assignmentInfo.file_name = res.data.file_name
+      })
     },
-    submit() {
-      this.$http("post", "/test_submit", {
-        action: "post",
+    submit () {
+      this.$http('post', '/test_submit', {
+        action: 'post',
         test_id: this.test_id,
         content: this.content
-      });
+      })
     },
-    submitUpload() {
-      this.$refs.upload.submit();
+    submitUpload () {
+      this.$refs.upload.submit()
     },
     // 文件列表移除文件时的钩子
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
+    handleRemove (file, fileList) {
+      console.log(file, fileList)
     },
     // 点击文件列表中已上传的文件时的钩子
-    handlePreview(file) {
-      console.log(file);
+    handlePreview (file) {
+      console.log(file)
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -138,6 +146,14 @@ export default {
 .desc-content {
   display: inline-block;
 }
+.file-title,
+.btn-file{
+  display: inline-block;
+}
+.btn-file{
+  font-size: 15px;
+}
+.file,
 .answer,
 .date,
 .desc {
