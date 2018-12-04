@@ -19,7 +19,7 @@
     </div>
     <hr class="hr" color="#ffd700">
     <div class="course-box" align="center">
-      <el-card class="box-card" shadow="never" body-style="padding-left: 60px; padding-top: 20px">
+      <el-card class="box-card" shadow="never" body-style="padding-left: 40px; padding-top: 20px">
         <div slot="header" class="clearfix" style="text-align: center">
           <span style="font-style: unset; font-size: 18px">通知</span>
         </div>
@@ -98,6 +98,7 @@ export default {
   text-align: left;
   padding-left: 0px;
   margin: 10px;
+
 }
 .course-name {
   margin-bottom: 20px;
@@ -152,7 +153,9 @@ export default {
 }
 
 .box-card {
+  border: 0;
   width: 100%;
   height: 100%;
 }
+
 </style>

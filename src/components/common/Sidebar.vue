@@ -41,7 +41,7 @@ export default {
   text-align: left;
 }
 .sidebar {
-  width: 230px;
+  width: 220px;
   height: 100%;
   position: absolute;
   top: 100px;
@@ -50,7 +50,7 @@ export default {
 }
 .el-menu-item {
   padding-left: 30px;
-  font-size: 16px;
-  margin-top: 10px;
+  font-size: 14px;
+  margin-top: 5px;
 }
 </style>
