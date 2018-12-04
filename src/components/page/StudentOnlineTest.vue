@@ -60,6 +60,7 @@ export default {
   }
   .el-table .cell{
     text-align: center;
+    font-size: 14px;
   }
   .el-table th>.cell{
     margin-top: 10px;

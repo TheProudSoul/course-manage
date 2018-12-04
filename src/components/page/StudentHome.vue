@@ -37,6 +37,10 @@ export default {
 </script>
 
 <style>
+.content-box{
+  margin-right: 35px;
+  margin-bottom: 30px;
+}
 .text {
   font-size: 15px;
   text-align: left;
@@ -72,7 +76,7 @@ export default {
 }
 
 .el-card__header {
-  border-bottom: 2px solid gold;
+  border-bottom: 3px solid gold;
   margin-left: 30px;
   margin-right: 30px;
 }

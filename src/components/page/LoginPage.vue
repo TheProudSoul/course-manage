@@ -132,7 +132,7 @@ export default {
 <style scoped>
 h1 {
   font-family: serif;
-  font-size: 24px;
+  font-size: 21px;
   color: black;
   padding-top: 10px;
   padding-bottom: 20px;
@@ -156,8 +156,8 @@ h1 {
 }
 
 .box-card {
-  height: 50%;
-  width: 35%;
+  height: 55%;
+  width: 40%;
   position: absolute;
   top: 50%;
   left: 50%;
