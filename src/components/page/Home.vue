@@ -22,14 +22,13 @@ export default {
   created () {
     // 组件创建完后获取数据，
     // 此时 data 已经被 observed 了
+    console.log("hhhhhh", this.$store.state.login.role);
     this.fetchNotice()
   },
   methods: {
     fetchNotice() {
       this.$http('get', '/notice').then(res => {
-        console.log(res)
         this.notices = res.data.notice
-        console.log(this.notices)
       })
     }
   }

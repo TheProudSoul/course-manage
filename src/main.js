@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
+import store from './store'
 import LoginMock from './util/login_mock'
 import section from './util/section'
 import notice from './util/notice'
@@ -31,6 +32,14 @@ Vue.prototype.$http = request
 // })
 new Vue({
   el: '#app',
+  store,
   router,
-  render: h => h(App)
+  render: h => h(App),
+  // 储存登录状态
+  created () {
+    if (localStorage.getItem('role') === null) {
+      localStorage.setItem('role', '')
+    }
+    this.$store.state.login.role = localStorage.getItem('role')
+  }
 })

@@ -10,7 +10,9 @@
       :props="defaultProps"
     ></el-tree>
     <div class="buttons" align="right">
+      <el-button v-show='isTeacher' @click="handleAdd" class="download">发布</el-button>
       <el-button @click="getCheckedKeys" class="download">下载</el-button>
+      <el-button v-show='isTeacher' @click="handleDelete" class="download">删除</el-button>
       <el-button @click="resetChecked" class="clear">清空</el-button>
     </div>
   </div>
@@ -26,6 +28,11 @@ export default {
         isLeaf: "leaf"
       }
     };
+  },
+  computed: {
+    isTeacher() {
+      return this.$store.state.login.role == "teacher";
+    }
   },
   methods: {
     getCheckedKeys() {

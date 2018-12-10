@@ -1,12 +1,14 @@
 <template>
   <div class="content">
+    <el-button v-show="isTeacher" type="text" @click="handleAdd">发布</el-button>
     <el-table :data="assignmentList" border style="width: 100%">
       <el-table-column fixed prop="title" label="标题" width="auto"></el-table-column>
       <el-table-column prop="release_time" label="发布时间" width="250"></el-table-column>
       <el-table-column prop="deadline" label="截止时间" width="200"></el-table-column>
       <el-table-column fixed="right" label="操作" width="300">
-        <template slot-scope="scope">
-          <el-button @click="getAssignment(scope.row)" type="text" size="small">查看详情</el-button>
+        <template v-show="!isTeacher" slot-scope="scope">
+          <el-button v-show="!isTeacher" @click="getAssignment(scope.row)" type="text" size="small">开始</el-button>
+          <el-button v-show="isTeacher" @click="getAssignment(scope.row)" type="text" size="small">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -19,6 +21,11 @@ export default {
     return {
       assignmentList: []
     };
+  },
+  computed: {
+    isTeacher() {
+      return this.$store.state.login.role == "teacher";
+    }
   },
   created() {
     // 组件创建完后获取数据，
@@ -43,10 +50,19 @@ export default {
     },
     getAssignment(row) {
       this.$router.push({
-        name: "assignment",
+        name: "assignmentInfo",
         params: {
           assign_id: row.assign_id,
           course: this.$route.params.course
+        }
+      });
+    },
+    handleAdd() {
+      this.$router.push({
+        name: "setAssignment",
+        params: {
+          course: this.$route.params.course,
+          operation: 'add'
         }
       });
     }

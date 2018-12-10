@@ -11,6 +11,7 @@ const actions = {
 const mutations = {
   userType (state, type) {
     state.role = type
+    localStorage.setItem('role', type)
   }
 }
 

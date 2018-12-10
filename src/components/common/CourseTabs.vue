@@ -3,7 +3,7 @@
     <el-tabs stretch type="card" @tab-click="handleClick">
       <el-tab-pane label="课程公告" name="coursehome"></el-tab-pane>
       <el-tab-pane label="在线测试" name="onlinetest"></el-tab-pane>
-      <el-tab-pane label="作业" name="homework"></el-tab-pane>
+      <el-tab-pane label="作业" name="assignment"></el-tab-pane>
       <el-tab-pane label="资源" name="resource"></el-tab-pane>
       <el-tab-pane label="讨论区" name="fifth"></el-tab-pane>
     </el-tabs>
@@ -14,11 +14,6 @@
 export default {
   props: ["course_id"],
 
-  // data() {
-  //   return {
-  //     activeName: "first"
-  //   };
-  // },
   methods: {
     handleClick(tab, event) {
       this.$router.push({

@@ -1,12 +1,14 @@
 <template>
-  <div class="content" align="center" >
-    <el-table :data="onlineTestList" border style="width: 90%" class="el-table-test" >
-      <el-table-column fixed prop="title" label="标题" width="auto" ></el-table-column>
+  <div class="content" align="center">
+    <el-button v-show="isTeacher" type="text" @click="handleAdd">发布</el-button>
+    <el-table :data="onlineTestList" border style="width: 90%" class="el-table-test">
+      <el-table-column fixed prop="title" label="标题" width="auto"></el-table-column>
       <el-table-column prop="start_time" label="开始时间" width="250"></el-table-column>
       <el-table-column prop="end_time" label="结束时间" width="200"></el-table-column>
       <el-table-column fixed="right" label="操作" width="300">
-        <template slot-scope="scope">
-          <el-button @click="getTest(scope.row)" type="text" size="small">开始</el-button>
+        <template v-show="!isTeacher" slot-scope="scope">
+          <el-button v-show="!isTeacher" @click="getTest(scope.row)" type="text" size="small">开始</el-button>
+          <el-button v-show="isTeacher" @click="getTest(scope.row)" type="text" size="small">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -19,6 +21,11 @@ export default {
     return {
       onlineTestList: []
     };
+  },
+  computed: {
+    isTeacher() {
+      return this.$store.state.login.role == "teacher";
+    }
   },
   created() {
     // 组件创建完后获取数据，
@@ -50,23 +57,32 @@ export default {
         }
       });
       console.log(row);
+    },
+    handleAdd() {
+      this.$router.push({
+        name: "setOnlinetest",
+        params: {
+          course: this.$route.params.course,
+          operation: 'add'
+        }
+      });
     }
   }
 };
 </script>
 <style>
-  .content{
-    margin-top: 30px;
-  }
-  .el-table .cell{
-    text-align: center;
-    font-size: 14px;
-  }
-  .el-table th>.cell{
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-  .el-table__header{
-    background: #d9d9d9;
-  }
+.content {
+  margin-top: 30px;
+}
+.el-table .cell {
+  text-align: center;
+  font-size: 14px;
+}
+.el-table th > .cell {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.el-table__header {
+  background: #d9d9d9;
+}
 </style>

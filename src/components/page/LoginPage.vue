@@ -46,87 +46,82 @@
 
 <script>
 export default {
-  data () {
+  data() {
     var validateId = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入账号'))
+      if (value === "") {
+        callback(new Error("请输入账号"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     var validatePass = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入密码'))
+      if (value === "") {
+        callback(new Error("请输入密码"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     return {
       loginForm: {
-        id: '',
-        passwd: '',
+        id: "",
+        passwd: "",
         group: 3
       },
 
       loginRules: {
         id: [
           {
-            message: '请输入账号',
+            message: "请输入账号",
             validator: validateId,
-            trigger: 'blur'
+            trigger: "blur"
           }
         ],
         passwd: [
           {
-            message: '请输入密码',
+            message: "请输入密码",
             validator: validatePass,
-            trigger: 'blur'
+            trigger: "blur"
           }
         ]
       }
-    }
+    };
   },
   methods: {
-    submitInfo () {
+    submitInfo() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.$http("post", "/login", this.loginForm).then(res => {
             if (res.data.status == 0) {
               if (this.loginForm.group == 3) {
-                this.$router.push('home')
-                this.$store.commit('userType','student')
+                this.$store.commit("userType", "student");
+                this.$router.push("home");
               } else if (this.loginForm.group === 2) {
-                this.$router.push({
-                  path: '/home',
-                  params: {
-                    username: this.loginForm.id,
-                    course: res.date.course,
-                    notice: res.data.notice
-                  }
-                })
+                this.$store.commit("userType", "teacher");
+                this.$router.push("home");
               } else if (this.loginForm.group === 1) {
                 this.$router.push({
-                  path: '/home',
+                  path: "/home",
                   params: {
                     username: this.loginForm.id
                   }
-                })
+                });
               }
+              
             } else {
-              this.$message.error('用户名或密码错误')
+              this.$message.error("用户名或密码错误");
             }
-          })
+          });
         } else {
-          this.$message.error('用户名或密码错误')
+          this.$message.error("用户名或密码错误");
         }
-      })
+      });
     },
 
-    handleLoginType (tab, event) {
-      this.$store.commit('userType',tab.index)
+    handleLoginType(tab, event) {
+      this.loginForm.group = 3 - tab.index;
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -184,10 +179,10 @@ h1 {
   color: white;
   text-decoration: none;
 }
-.demo-ruleForm{
+.demo-ruleForm {
   margin: 20px 70px 30px 60px;
 }
-.submit-btn{
+.submit-btn {
   margin-top: 20px;
   opacity: 1;
   font-size: 14px;
