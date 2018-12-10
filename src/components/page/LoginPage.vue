@@ -94,6 +94,7 @@ export default {
             if (res.data.status == 0) {
               if (this.loginForm.group == 3) {
                 this.$router.push('home')
+                this.$store.commit('userType','student')
               } else if (this.loginForm.group === 2) {
                 this.$router.push({
                   path: '/home',
@@ -122,8 +123,7 @@ export default {
     },
 
     handleLoginType (tab, event) {
-      this.loginForm.group = 3 - tab.index
-      console.log(this.loginForm.group)
+      this.$store.commit('userType',tab.index)
     }
   }
 }
