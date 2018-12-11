@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content" style="margin-left:40px;">
     <el-tree
       show-checkbox
       :load="fetchReourseList"
@@ -9,7 +9,7 @@
       highlight-current
       :props="defaultProps"
     ></el-tree>
-    <div class="buttons" align="right">
+    <div class="buttons" align="center">
       <el-button v-show='isTeacher' @click="handleAdd" class="download">发布</el-button>
       <el-button @click="getCheckedKeys" class="download">下载</el-button>
       <el-button v-show='isTeacher' @click="handleDelete" class="download">删除</el-button>
@@ -100,6 +100,7 @@ export default {
   background: cornflowerblue;
   color: #fff;
   font-size: 13px;
+  
 }
 .el-tree-node__content {
   margin-bottom: 10px;

@@ -5,7 +5,7 @@
         <span class="notice-title">通知</span>
       </div>
       <div v-for="notice in notices" :key="notice.notice_id" class="text item" >
-        <i class="fa fa-comment"></i>
+        <img  v-bind:src="notice.img" style="height:15px; width: 15px;"/>
         <span style="margin-left: 10px">{{notice.title}}</span>
       </div>
     </el-card>
@@ -75,11 +75,12 @@ export default {
 .notice-title{
   font-style: unset;
   font-size: 24px;
+  font-weight: bold;
 }
 
 .el-card__header {
   border-bottom: 3px solid gold;
-  margin-left: 30px;
-  margin-right: 30px;
+  margin-left: 40px;
+  margin-right: 40px;
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
-  <div class="content">
+  <div class="content" style="">
     <div class="course-box">
-      <h1 class="course-name" style="text-align: center">{{courseInfo.course_name}}</h1>
-      <h3 style="margin-left: 60px">简介：</h3>
+      <h1 class="course-name" style="text-align: center; font-size: 28px;">{{courseInfo.course_name}}</h1>
+      <h3 style="margin-left: 40px">简介：</h3>
       <p class="p">{{courseInfo.course_intro}}</p>
       <h3 class="course_teacher">授课教师：</h3>
       <p class="p">{{courseInfo.teacher_name}}</p>
@@ -14,17 +14,17 @@
       >周{{time.week_day}} &ensp;第{{time.period}}节课 &ensp;{{time.start_time}}-{{time.end_time}}</p>
       <h3 class="course-place">课室：</h3>
       <p
-        style="margin-top: 5px; margin-left: 60px; margin-bottom: 10px"
+        style="margin-top: 15px; margin-left: 60px; margin-bottom: 15px"
       >{{courseInfo.building}}-{{courseInfo.room}}</p>
     </div>
     <hr class="hr" color="#ffd700">
     <div v-show="!isAdmin" class="course-box" align="center">
       <el-card class="box-card" shadow="never" body-style="padding-left: 40px; padding-top: 20px">
         <div slot="header" class="clearfix" style="text-align: center">
-          <span style="font-style: unset; font-size: 18px">通知</span>
-          <el-button v-show='isTeacher' type="text" @click="dialogFormVisible = true">发布</el-button>
+          <span style="font-style: unset; font-size: 22px; font-weight: bold;  text-align:center ">通知</span>
+          <el-button v-show='isTeacher' type="text" @click="dialogFormVisible = true" class="release">发布</el-button>
 
-          <el-dialog title="发布公告" :visible.sync="dialogFormVisible">
+          <el-dialog title="发布公告" :visible.sync="dialogFormVisible" style="">
             <el-form :model="form">
               <el-form-item label="公告标题" label-width="120px">
                 <el-input v-model="form.title" autocomplete="off"></el-input>
@@ -40,7 +40,7 @@
 
         </div>
         <div v-for="notice in notices" :key="notice.notice_id" class="text item">
-          <i class="fa fa-comment"></i>
+          <img  v-bind:src="notice.img" style="height:15px; width: 15px;"/>
           <span style="margin-left: 10px">{{notice.title}}</span>
         </div>
       </el-card>
@@ -158,24 +158,26 @@ export default {
 }
 .course-time {
   margin-top: 20px;
-  margin-left: 60px;
+  margin-left: 40px;
 }
 .course-place {
   margin-top: 20px;
-  margin-left: 60px;
+  margin-left: 40px;
 }
 .course_teacher {
   margin-top: 20px;
-  margin-left: 60px;
+  margin-left: 40px;
 }
 .hr {
-  margin-left: 30px;
-  margin-right: 30px;
+  margin-left: 50px;
+  margin-right: 50px;
+  height:1px;
 }
 .p {
   margin-right: 20px;
   margin-top: 5px;
   margin-left: 60px;
+  
 }
 
 /* 通知 */
@@ -209,5 +211,14 @@ export default {
   border: 0;
   width: 100%;
   height: 100%;
+}
+
+.release {
+  padding-left: 15px;
+  padding-right: 15px;
+  background: cornflowerblue;
+  color: #fff;
+  font-size: 12px;
+  float: right;
 }
 </style>

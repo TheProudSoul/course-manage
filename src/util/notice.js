@@ -1,3 +1,9 @@
+import p1 from '././img1.png'
+import p2 from '././img2.png'
+import p3 from '././img3.png'
+import p4 from '././img4.png'
+
+
 const Mock = require('mockjs') // 获取mock对象
 const domain = '/api' // 定义默认域名，随便写
 
@@ -7,12 +13,14 @@ const Data = req => {
     {
       'notice_id': '1',
       'release_time': '2018-11-03 12:00',
-      'title': '11月6号晚上要写完API文档'
+      'title': '11月6号晚上要写完API文档',
+      'img':p3
     },
     {
       'notice_id': '2',
       'release_time': '2018-11-03 12:00',
-      'title': '啊，已经7号了......'
+      'title': '啊，已经7号了......',
+      'img':p4
     }
   ]
   return {
