@@ -32,7 +32,7 @@
     </div>
 
     <!-- 学生操作 -->
-    <div v-show="!isTeacher">
+    <div v-show="isStudent">
       <div class="answer">
         <p class="answer-title">回答：</p>
         <el-input type="textarea" :autosize="{ minRows: 5}" placeholder="请输入内容" v-model="content"></el-input>
@@ -65,6 +65,8 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex'
+
 export default {
   data() {
     return {
@@ -94,9 +96,11 @@ export default {
     };
   },
   computed: {
-    isTeacher() {
-      return this.$store.state.login.role == "teacher";
-    }
+    ...mapGetters('login', {
+      isStudent: 'isStudent',
+      isTeacher: 'isTeacher',
+      isAdmin: 'isAdmin',
+    })
   },
   created() {
     // 组件创建完后获取数据，

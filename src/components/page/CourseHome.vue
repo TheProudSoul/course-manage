@@ -18,7 +18,7 @@
       >{{courseInfo.building}}-{{courseInfo.room}}</p>
     </div>
     <hr class="hr" color="#ffd700">
-    <div class="course-box" align="center">
+    <div v-show="!isAdmin" class="course-box" align="center">
       <el-card class="box-card" shadow="never" body-style="padding-left: 40px; padding-top: 20px">
         <div slot="header" class="clearfix" style="text-align: center">
           <span style="font-style: unset; font-size: 18px">通知</span>
@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex'
+
 export default {
   data() {
     return {
@@ -76,14 +78,24 @@ export default {
     };
   },
   computed: {
-    isTeacher() {
-      return this.$store.state.login.role == "teacher";
-    }
+    ...mapGetters('login', {
+      isStudent: 'isStudent',
+      isTeacher: 'isTeacher',
+      isAdmin: 'isAdmin',
+    }),
+    // ...mapState({
+    //   courseInfo: state => state.course.course
+    // }),
+    // ...mapGetters('course', {
+    //   courseInfo: 'getCourse'
+    // })    
   },
   created() {
     // 组件创建完后获取数据，
     // 此时 data 已经被 observed 了
     this.fetchCourseInfo();
+    // this.$store.dispatch('course/getData', this.$route.params.course)
+    // console.log("course created()",this.courseInfo)
   },
   beforeRouteUpdate(to, from, next) {
     // 在当前路由改变，但是该组件被复用时调用
@@ -92,12 +104,14 @@ export default {
     // 可以访问组件实例 `this`
     this.course_id = to.params.course;
     this.fetchCourseInfo();
+      // this.$store.dispatch('course/getData', to.params.course)
     next();
   },
 
   methods: {
     fetchCourseInfo() {
       this.courseInfo = {};
+      // this.$store.dispatch('course/getData', this.course_id)
       this.$http("get", "/notice", { sec_id: this.course_id }).then(res => {
         this.$set(this.courseInfo, "notices", res.data.notice);
       });

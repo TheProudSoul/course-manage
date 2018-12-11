@@ -93,20 +93,15 @@ export default {
           this.$http("post", "/login", this.loginForm).then(res => {
             if (res.data.status == 0) {
               if (this.loginForm.group == 3) {
-                this.$store.commit("userType", "student");
+                this.$store.commit("login/userType", "student");
                 this.$router.push("home");
               } else if (this.loginForm.group === 2) {
-                this.$store.commit("userType", "teacher");
+                this.$store.commit("login/userType", "teacher");
                 this.$router.push("home");
               } else if (this.loginForm.group === 1) {
-                this.$router.push({
-                  path: "/home",
-                  params: {
-                    username: this.loginForm.id
-                  }
-                });
-              }
-              
+                this.$store.commit("login/userType", "admin");
+                this.$router.push("home");
+              }              
             } else {
               this.$message.error("用户名或密码错误");
             }

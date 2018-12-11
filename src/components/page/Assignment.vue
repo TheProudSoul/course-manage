@@ -6,8 +6,8 @@
       <el-table-column prop="release_time" label="发布时间" width="250"></el-table-column>
       <el-table-column prop="deadline" label="截止时间" width="200"></el-table-column>
       <el-table-column fixed="right" label="操作" width="300">
-        <template v-show="!isTeacher" slot-scope="scope">
-          <el-button v-show="!isTeacher" @click="getAssignment(scope.row)" type="text" size="small">开始</el-button>
+        <template slot-scope="scope">
+          <el-button v-show="isStudent" @click="getAssignment(scope.row)" type="text" size="small">开始</el-button>
           <el-button v-show="isTeacher" @click="getAssignment(scope.row)" type="text" size="small">查看</el-button>
         </template>
       </el-table-column>
@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex'
+
 export default {
   data() {
     return {
@@ -23,9 +25,11 @@ export default {
     };
   },
   computed: {
-    isTeacher() {
-      return this.$store.state.login.role == "teacher";
-    }
+    ...mapGetters('login', {
+      isStudent: 'isStudent',
+      isTeacher: 'isTeacher',
+      isAdmin: 'isAdmin',
+    })
   },
   created() {
     // 组件创建完后获取数据，

@@ -1,0 +1,63 @@
+import http from '../../util/request'
+
+const state = {
+  sidebarItems: []
+}
+
+const getters = {
+  getSidebarItems: state => state.sidebarItems
+}
+
+const actions = {
+  getData ({ state, commit, rootState }) {
+    let data = []
+    if (rootState.login.role === 'admin') {
+      data = [{
+        id: '',
+        name: '课程',
+        icon: '',
+        path: '/coursemgt'
+      }, {
+        id: 'student',
+        name: '学生用户',
+        icon: '',
+        path: '/usermgt'
+      }, {
+        id: 'teacher',
+        name: '教师用户',
+        icon: '',
+        path: '/usermgt'
+      }]
+    } else {
+      http('get', '/section').then(res => {
+        res.data.forEach(element => {
+          data.push({
+            id: element.section_id,
+            name: element.course_title,
+            icon: 'fa fa-book fa-2x',
+            path: '/course'
+          })
+        })
+      })
+    }
+    commit('setSidebarItems', {
+      items: data
+    })
+  }
+}
+
+const mutations = {
+  setSidebarItems (state, {
+    items
+  }) {
+    state.sidebarItems = items
+  }
+}
+
+export default {
+  namespaced: true,
+  state,
+  getters,
+  actions,
+  mutations
+}

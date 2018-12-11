@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex'
+
 export default {
   data() {
     return {
@@ -30,9 +32,11 @@ export default {
     };
   },
   computed: {
-    isTeacher() {
-      return this.$store.state.login.role == "teacher";
-    }
+    ...mapGetters('login', {
+      isStudent: 'isStudent',
+      isTeacher: 'isTeacher',
+      isAdmin: 'isAdmin',
+    })
   },
   methods: {
     getCheckedKeys() {

@@ -40,6 +40,7 @@ new Vue({
     if (localStorage.getItem('role') === null) {
       localStorage.setItem('role', '')
     }
-    this.$store.state.login.role = localStorage.getItem('role')
+    this.$store.commit('login/userType', localStorage.getItem('role'))
+    // this.$store.state.login.role = localStorage.getItem('role')
   }
 })

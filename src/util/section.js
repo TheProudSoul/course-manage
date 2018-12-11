@@ -20,7 +20,7 @@ const Data = req => {
   let course_name = ''
   let teacher_name = ''
   console.log('req.body.sec_id', req.body.sec_id)
-  if (req.body.sec_id == 1) {
+  if (req.body.sec_id === 1) {
     course_id = '1'
     course_name = 'IT项目管理'
     teacher_name = '李红'
