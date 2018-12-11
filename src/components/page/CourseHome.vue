@@ -39,7 +39,7 @@
           </el-dialog>
 
         </div>
-        <div v-for="notice in courseInfo.notices" :key="notice.notice_id" class="text item">
+        <div v-for="notice in notices" :key="notice.notice_id" class="text item">
           <i class="fa fa-comment"></i>
           <span style="margin-left: 10px">{{notice.title}}</span>
         </div>
@@ -54,20 +54,20 @@ import { mapGetters, mapState } from 'vuex'
 export default {
   data() {
     return {
-      course_id: this.$route.params.course,
-      courseInfo: {
-        notices: "",
-        course_name: "",
-        course_intro: "",
-        course_credit: "",
-        school: "",
-        section_week: "",
-        time_slot: "",
-        building: "",
-        room: "",
-        teacher_id: "",
-        teacher_name: ""
-      },
+      // course_id: this.$route.params.course,
+      // courseInfo: {
+      //   notices: "",
+      //   course_name: "",
+      //   course_intro: "",
+      //   course_credit: "",
+      //   school: "",
+      //   section_week: "",
+      //   time_slot: "",
+      //   building: "",
+      //   room: "",
+      //   teacher_id: "",
+      //   teacher_name: ""
+      // },
       dialogFormVisible: false,
       form: {
         action: "post",
@@ -83,18 +83,17 @@ export default {
       isTeacher: 'isTeacher',
       isAdmin: 'isAdmin',
     }),
-    // ...mapState({
-    //   courseInfo: state => state.course.course
-    // }),
-    // ...mapGetters('course', {
-    //   courseInfo: 'getCourse'
-    // })    
+    ...mapState({
+      courseInfo: state => state.course.course,
+      notices: state => state.notice.noticeList
+    })
   },
   created() {
     // 组件创建完后获取数据，
     // 此时 data 已经被 observed 了
-    this.fetchCourseInfo();
-    // this.$store.dispatch('course/getData', this.$route.params.course)
+    // this.fetchCourseInfo();
+    this.$store.dispatch('course/getData', this.$route.params.course)
+    this.$store.dispatch('notice/getCourseNotice', this.$route.params.course)
     // console.log("course created()",this.courseInfo)
   },
   beforeRouteUpdate(to, from, next) {
@@ -102,35 +101,34 @@ export default {
     // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
     // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
     // 可以访问组件实例 `this`
-    this.course_id = to.params.course;
-    this.fetchCourseInfo();
-      // this.$store.dispatch('course/getData', to.params.course)
+    // this.fetchCourseInfo();
+    this.$store.dispatch('course/getData', to.params.course)
+    this.$store.dispatch('notice/getCourseNotice', to.params.course)
     next();
   },
 
   methods: {
-    fetchCourseInfo() {
-      this.courseInfo = {};
-      // this.$store.dispatch('course/getData', this.course_id)
-      this.$http("get", "/notice", { sec_id: this.course_id }).then(res => {
-        this.$set(this.courseInfo, "notices", res.data.notice);
-      });
-      this.$http("get", "/section", { sec_id: this.course_id }).then(res => {
-        console.log("res", res);
-        this.courseInfo = Object.assign({}, this.courseInfo, {
-          course_name: res.data.course_name,
-          course_intro: res.data.course_intro,
-          course_credit: res.data.course_credit,
-          school: res.data.school,
-          section_week: res.data.section_week,
-          time_slot: res.data.time_slot,
-          building: res.data.building,
-          room: res.data.room,
-          teacher_id: res.data.teacher_id,
-          teacher_name: res.data.teacher_name
-        });
-      });
-    },
+    // fetchCourseInfo() {
+    //   this.$store.dispatch('course/getData', this.course_id)
+      // this.$http("get", "/notice", { sec_id: this.course_id }).then(res => {
+      //   this.$set(this.courseInfo, "notices", res.data.notice);
+      // });
+      // this.$http("get", "/section", { sec_id: this.course_id }).then(res => {
+      //   console.log("res", res);
+      //   this.courseInfo = Object.assign({}, this.courseInfo, {
+      //     course_name: res.data.course_name,
+      //     course_intro: res.data.course_intro,
+      //     course_credit: res.data.course_credit,
+      //     school: res.data.school,
+      //     section_week: res.data.section_week,
+      //     time_slot: res.data.time_slot,
+      //     building: res.data.building,
+      //     room: res.data.room,
+      //     teacher_id: res.data.teacher_id,
+      //     teacher_name: res.data.teacher_name
+      //   });
+      // });
+    // },
     handleAddNotice() {
       this.$http("post", "/notice.1", this.form).then(res => {
         if (res.data.status == 0) {
