@@ -5,7 +5,7 @@
         <span class="notice-title">通知</span>
       </div>
       <div v-for="notice in notices" :key="notice.notice_id" class="text item" >
-        <img  v-bind:src="notice.img" style="height:15px; width: 15px;"/>
+        <img  v-bind:src="notice.img" style="height:20px; width: 20px;"/>
         <span style="margin-left: 10px">{{notice.title}}</span>
       </div>
     </el-card>
