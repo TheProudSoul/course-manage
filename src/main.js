@@ -5,14 +5,7 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import store from './store'
-import LoginMock from './util/login_mock'
-import section from './util/section'
-import notice from './util/notice'
-import homework from './util/assignment'
-import online_test from './util/online_test'
-import test from './util/online_test-test_id'
-import ass from './util/assignment-ass_id'
-import resource from './util/resource'
+import mock from './util/mock'
 import axios from 'axios'
 import request from './util/request'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -41,6 +34,5 @@ new Vue({
       localStorage.setItem('role', '')
     }
     this.$store.commit('login/userType', localStorage.getItem('role'))
-    // this.$store.state.login.role = localStorage.getItem('role')
   }
 })

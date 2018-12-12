@@ -22,19 +22,8 @@ export default {
     })
   },
   created () {
-    // 组件创建完后获取数据，
-    // 此时 data 已经被 observed 了
-    // this.fetchNotice()
-    this.$store.dispatch('notice/getNotice')
-
+    this.$store.dispatch('notice/fetchNotice', -1)
   }
-  // methods: {
-  //   fetchNotice() {
-  //     this.$http('get', '/notice').then(res => {
-  //       this.notices = res.data.notice
-  //     })
-  //   }
-  // }
 }
 </script>
 

@@ -4,18 +4,6 @@ const domain = '/api' // 定义默认域名，随便写
 const Data = req => {
   req.body = JSON.parse(req.body)
   console.log(req.body) // 请求体，用于获取参数
-  let course = [{
-    'section_id': '1',
-    'course_title': 'IT项目管理'
-  },
-  {
-    'section_id': '2',
-    'course_title': '软件架构'
-  }
-  ]
-  if (!req.body.sec_id) {
-    return course
-  }
   let course_id = ''
   let course_name = ''
   let teacher_name = ''
@@ -68,4 +56,4 @@ const Data = req => {
 }
 
 // 定义请求链接，类型，还有返回数据
-Mock.mock(`${domain}/section`, 'get', Data)
+Mock.mock(`${domain}/section/1`, 'get', Data)

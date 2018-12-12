@@ -9,16 +9,8 @@ const getters = {
 }
 
 const actions = {
-  getCourseNotice ({ state, commit }, course) {
-    http('get', '/notice', { sec_id: course }).then(res => {
-      commit('setNoticeList', {
-        item: res.data.notice
-      })
-    })
-  },
-
-  getNotice ({ state, commit }) {
-    http('get', '/notice').then(res => {
+  fetchNotice ({ state, commit }, course) {
+    http('get', '/notice/' + course ).then(res => {
       commit('setNoticeList', {
         item: res.data.notice
       })

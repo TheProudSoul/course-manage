@@ -1,18 +1,21 @@
 <template>
     <div class="content-box">
-      <vTabs :course_id="course_id"></vTabs>
-<router-view></router-view>
+      <vTabs v-if="!isAdmin"></vTabs>
+    <router-view></router-view>
     </div>
 </template>
 
 <script>
 import vTabs from '../common/CourseTabs'
+import { mapGetters, mapState } from 'vuex'
+
 export default {
-  data() {
-    return {
-      course_id: this.$route.params.course,
-    };
-  },
+  computed: {
+    ...mapGetters('login', {
+      isStudent: 'isStudent',
+      isTeacher: 'isTeacher',
+      isAdmin: 'isAdmin',
+    })},
   components: {
     vTabs
   }

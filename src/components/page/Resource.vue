@@ -75,17 +75,21 @@ export default {
         this.resourceList.forEach(resource=>{
           resource.leaf= true;
         })
-        resolve(this.resourceList);
-      }, 500);
+        resolve(this.resourceList)
+      }, 500)
+    },
+    handleAdd(){
+
+    },
+    handleDelete(){
+      
     }
   }
 };
 </script>
 <style>
 .content {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: 100px;
+  margin: 20px;
   font-size: 24px;
 }
 .buttons {

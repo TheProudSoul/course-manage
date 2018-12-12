@@ -21,4 +21,4 @@ const Data = req => {
 }
 
 // 定义请求链接，类型，还有返回数据
-Mock.mock(`${domain}/notice`, 'get', Data)
+Mock.mock(`${domain}/notice/1`, 'get', Data)

@@ -12,14 +12,13 @@
 
 <script>
 export default {
-  props: ["course_id"],
 
   methods: {
     handleClick(tab, event) {
       this.$router.push({
         name: tab.name,
         params: {
-            course: this.course_id
+            course: this.$route.params.course
           }
       });
     }

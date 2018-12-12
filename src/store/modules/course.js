@@ -9,8 +9,8 @@ const getters = {
 }
 
 const actions = {
-  getData ({ state, commit }, course) {
-    http('get', '/section', { sec_id: course }).then(res => {
+  fetchCourse ({ state, commit }, course) {
+    http('get', '/section/' + course).then(res => {
       commit('setCourse', {
         item: res.data
       })

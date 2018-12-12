@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <!-- 在分数旁边弄个按钮评分 -->
+  <div class="content">
+    <!-- 返回键 -->
+    <el-button class="btn-return" icon="el-icon-back" circle @click="back"></el-button>
   </div>
 </template>
 
@@ -15,6 +16,9 @@ export default {
     };
   },
   methods: {
+    back(){
+      this.$router.go(-1)
+    },
     setMark() {}
   }
 };

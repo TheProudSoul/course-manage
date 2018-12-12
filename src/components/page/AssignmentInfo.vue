@@ -1,17 +1,8 @@
 <template>
   <div class="content">
     <div>
-      <el-button
-        class="btn-return"
-        icon="el-icon-back"
-        circle
-        style="align-content: left; float: left"
-        @click="back"
-      ></el-button>
-      <h3
-        class="title"
-        style="font-size: 24px; margin-top: 10px; margin-bottom: 15px"
-      >{{assignmentInfo.title}}</h3>
+      <el-button class="btn-return" icon="el-icon-back" circle @click="back"></el-button>
+      <h3 class="title">{{assignmentInfo.title}}</h3>
     </div>
     <hr color="gold">
     <div class="desc">
@@ -64,7 +55,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState } from "vuex";
 
 export default {
   data() {
@@ -95,10 +86,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('login', {
-      isStudent: 'isStudent',
-      isTeacher: 'isTeacher',
-      isAdmin: 'isAdmin',
+    ...mapGetters("login", {
+      isStudent: "isStudent",
+      isTeacher: "isTeacher",
+      isAdmin: "isAdmin"
     })
   },
   created() {
@@ -168,26 +159,59 @@ export default {
           assign_id: this.$route.params.assign_id
         }
       });
+    },
+    submitDelete() {
+      this.$confirm(
+        '是否确认删除"' + this.assignmentInfo.title + '"这个作业?',
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }
+      ).then(() => {
+          // 真正路径  '/assignment'
+          this.$http("post", "/admin/course", {
+            action: "delete",
+            test_id: this.$route.params.assign_id
+          }).then(res => {
+            if (res.data.status == 0) {
+              this.$message({ type: "success", message: "删除成功!" });
+              setTimeout(() => {
+                this.$router.push({
+                  name: "assignment",
+                  params: { course: this.$route.params.course }
+                });
+              }, 1000);
+            } else {
+              this.$message({ type: "info", message: res.data.error_msg });
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     }
   }
 };
 </script>
 
 <style scoped>
-.btn-return,
 .title {
   display: inline-block;
-}
-.btn-return {
-  margin-top: 10px;
-  margin-left: 5px;
+  font-size: 24px; 
+  margin-top: 10px; 
+  margin-bottom: 15px
 }
 .desc-title,
-.desc-content {
-  display: inline-block;
-}
+.desc-content,
 .file-title,
-.btn-file {
+.btn-file,
+.date-content,
+.date-title  {
   display: inline-block;
 }
 .btn-file {
@@ -206,10 +230,6 @@ export default {
 .desc-content {
   margin-top: 10px;
   margin-left: 5px;
-}
-.date-content,
-.date-title {
-  display: inline-block;
 }
 .date-content {
   padding-top: 4px;

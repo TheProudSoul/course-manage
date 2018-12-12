@@ -17,14 +17,20 @@
         style="margin-top: 5px; margin-left: 60px; margin-bottom: 10px"
       >{{courseInfo.building}}-{{courseInfo.room}}</p>
     </div>
-    <hr class="hr" color="#ffd700">
-    <div v-show="!isAdmin" class="course-box" align="center">
+    <hr v-if="!isAdmin" class="hr" color="#ffd700">
+    <!-- 管理员 -->
+    <el-button v-if="isAdmin" type="primary" icon="el-icon-edit" @click="setCourse">编辑</el-button>
+    <el-button v-if="isAdmin" type="danger" icon="el-icon-delete" @click="handleDelete">删除</el-button>
+
+    <!-- 非管理员 -->
+    <div v-if="!isAdmin" class="course-box" align="center">
       <el-card class="box-card" shadow="never" body-style="padding-left: 40px; padding-top: 20px">
         <div slot="header" class="clearfix" style="text-align: center">
           <span style="font-style: unset; font-size: 18px">通知</span>
-          <el-button v-show='isTeacher' type="text" @click="dialogFormVisible = true">发布</el-button>
-
-          <el-dialog title="发布公告" :visible.sync="dialogFormVisible">
+          <!-- 教师操作 -->
+          <el-button v-if="isTeacher" type="text" @click="addFormVisible = true">发布</el-button>
+          <!-- 发布公告弹框 -->
+          <el-dialog title="发布公告" :visible.sync="addFormVisible">
             <el-form :model="form">
               <el-form-item label="公告标题" label-width="120px">
                 <el-input v-model="form.title" autocomplete="off"></el-input>
@@ -37,7 +43,6 @@
               <el-button type="primary" @click="handleAddNotice">确认发布</el-button>
             </div>
           </el-dialog>
-
         </div>
         <div v-for="notice in notices" :key="notice.notice_id" class="text item">
           <i class="fa fa-comment"></i>
@@ -49,26 +54,12 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState } from "vuex";
 
 export default {
   data() {
     return {
-      // course_id: this.$route.params.course,
-      // courseInfo: {
-      //   notices: "",
-      //   course_name: "",
-      //   course_intro: "",
-      //   course_credit: "",
-      //   school: "",
-      //   section_week: "",
-      //   time_slot: "",
-      //   building: "",
-      //   room: "",
-      //   teacher_id: "",
-      //   teacher_name: ""
-      // },
-      dialogFormVisible: false,
+      addFormVisible: false,
       form: {
         action: "post",
         sec_id: this.$route.params.course,
@@ -78,10 +69,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('login', {
-      isStudent: 'isStudent',
-      isTeacher: 'isTeacher',
-      isAdmin: 'isAdmin',
+    ...mapGetters("login", {
+      isStudent: "isStudent",
+      isTeacher: "isTeacher",
+      isAdmin: "isAdmin"
     }),
     ...mapState({
       courseInfo: state => state.course.course,
@@ -89,57 +80,70 @@ export default {
     })
   },
   created() {
-    // 组件创建完后获取数据，
-    // 此时 data 已经被 observed 了
-    // this.fetchCourseInfo();
-    this.$store.dispatch('course/getData', this.$route.params.course)
-    this.$store.dispatch('notice/getCourseNotice', this.$route.params.course)
-    // console.log("course created()",this.courseInfo)
+    this.$store.dispatch("course/fetchCourse", this.$route.params.course);
+    this.$store.dispatch("notice/fetchNotice", this.$route.params.course);
   },
   beforeRouteUpdate(to, from, next) {
-    // 在当前路由改变，但是该组件被复用时调用
-    // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
-    // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
-    // 可以访问组件实例 `this`
-    // this.fetchCourseInfo();
-    this.$store.dispatch('course/getData', to.params.course)
-    this.$store.dispatch('notice/getCourseNotice', to.params.course)
+    this.$store.dispatch("course/fetchCourse", to.params.course);
+    this.$store.dispatch("notice/fetchNotice", to.params.course);
     next();
   },
 
   methods: {
-    // fetchCourseInfo() {
-    //   this.$store.dispatch('course/getData', this.course_id)
-      // this.$http("get", "/notice", { sec_id: this.course_id }).then(res => {
-      //   this.$set(this.courseInfo, "notices", res.data.notice);
-      // });
-      // this.$http("get", "/section", { sec_id: this.course_id }).then(res => {
-      //   console.log("res", res);
-      //   this.courseInfo = Object.assign({}, this.courseInfo, {
-      //     course_name: res.data.course_name,
-      //     course_intro: res.data.course_intro,
-      //     course_credit: res.data.course_credit,
-      //     school: res.data.school,
-      //     section_week: res.data.section_week,
-      //     time_slot: res.data.time_slot,
-      //     building: res.data.building,
-      //     room: res.data.room,
-      //     teacher_id: res.data.teacher_id,
-      //     teacher_name: res.data.teacher_name
-      //   });
-      // });
-    // },
     handleAddNotice() {
-      this.$http("post", "/notice.1", this.form).then(res => {
+      // 真正路径 '/notice'
+      this.$http("post", "/admin/course", this.form).then(res => {
         if (res.data.status == 0) {
           this.$alert("发布成功", "消息", {
+            confirmButtonText: "确定",
+            beforeClose: (action, instance, done) => {
+              this.$router.go("0");
+          }
+         }) // setTimeout(() => {}, 1000);
+        } else {
+          this.$alert(res.data.error_msg, "发布失败", {
             confirmButtonText: "确定"
           });
-          this.dialogFormVisible = false;
-        }else{
-            this.$alert("发布失败！！！", "消息", {
-            confirmButtonText: "确定"
+        }
+      });
+    },
+    handleDelete() {
+      this.$confirm(
+        '是否确认删除"' + this.courseInfo.course_name + '"这门课程?',
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }
+      ).then(() => {
+          this.$http("post", "/admin/course", {
+            action: "delete",
+            section_id: this.$route.params.course
+          }).then(res => {
+            if (res.data.status == 0) {
+              this.$message({type: "success", message: "删除成功!"});
+              setTimeout(() => { this.$router.push('/coursemgt')}, 1000)
+            } else {
+              this.$message({
+                type: "info",
+                message: "删除失败"
+              });
+            }
           });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    setCourse() {
+      this.$router.push({
+        name: "setCourse",
+        params: {
+          operation: 'edit'
         }
       });
     }

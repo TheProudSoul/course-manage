@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState } from "vuex";
 
 export default {
   data() {
@@ -96,22 +96,16 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('login', {
-      isStudent: 'isStudent',
-      isTeacher: 'isTeacher',
-      isAdmin: 'isAdmin',
+    ...mapGetters("login", {
+      isStudent: "isStudent",
+      isTeacher: "isTeacher",
+      isAdmin: "isAdmin"
     })
   },
   created() {
-    // 组件创建完后获取数据，
-    // 此时 data 已经被 observed 了
     this.fetchTestInfo();
   },
   beforeRouteUpdate(to, from, next) {
-    // 在当前路由改变，但是该组件被复用时调用
-    // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
-    // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
-    // 可以访问组件实例 `this`
     this.fetchTestInfo();
     next();
   },
@@ -123,7 +117,6 @@ export default {
       this.$http("get", "/online_test/" + this.test_id, {
         test_id: this.test_id
       }).then(res => {
-        console.log(res);
         this.testInfo.test_id = res.data.test_id;
         this.testInfo.title = res.data.title;
         this.testInfo.content = res.data.content;
@@ -169,19 +162,49 @@ export default {
           test_id: this.$route.params.test_id
         }
       });
+    },
+    submitDelete() {
+      this.$confirm(
+        '是否确认删除"' + this.testInfo.title + '"这个测试?',
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }
+      ).then(() => {
+          // 真正路径  '/online_test'
+          this.$http("post", "/admin/course", {
+            action: "delete",
+            test_id: this.$route.params.test_id
+          }).then(res => {
+            if (res.data.status == 0) {
+              this.$message({ type: "success", message: "删除成功!" });
+              setTimeout(() => {
+                this.$router.push({
+                  name: "onlinetest",
+                  params: { course: this.$route.params.course }
+                });
+              }, 1000);
+            } else {
+              this.$message({ type: "info", message: res.data.error_msg });
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     }
   }
 };
 </script>
 
 <style scoped>
-.btn-return,
 .title {
   display: inline-block;
-}
-.btn-return {
-  margin-top: 10px;
-  margin-left: 5px;
 }
 .desc-title,
 .desc-content {

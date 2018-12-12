@@ -8,11 +8,11 @@
     >
       <el-menu-item index="/home" class="el-menu-item">
         <i class="fa fa-home fa-2x" aria-hidden="true"></i>
-        <span>主页</span>
+        <span class="icon">主页</span>
       </el-menu-item>
       <el-menu-item v-for="item in items" :key="item.id" :index="item.path+'/'+item.id" class="el-menu-item">
         <i :class="item.icon" aria-hidden="true"></i>
-        <span>{{item.name}}</span>
+        <span class="icon">{{item.name}}</span>
       </el-menu-item>
     </el-menu>
   </div>
@@ -29,26 +29,17 @@ export default {
   created() {
     this.$store.dispatch('sidebar/getData');
   }
-  // methods: {
-  //   fetchCourse(key, keyPath) {
-  //     if (key != "home") {
-  //       this.$router.push({
-  //         name: "coursehome",
-  //         params: {
-  //           course: key
-  //         }
-  //       });
-  //     } else {
-  //       this.$router.push("/home");
-  //     }
-  //   }
-  // }
 }
 </script>
 
 <style scoped>
 .el-menu-vertical-demo {
   text-align: left;
+}
+.icon{
+  position: fixed;
+  left: 80px;
+
 }
 .sidebar {
   width: 220px;

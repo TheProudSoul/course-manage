@@ -15,17 +15,17 @@ const actions = {
       data = [{
         id: '',
         name: '课程',
-        icon: '',
+        icon: 'fa fa-book fa-2x',
         path: '/coursemgt'
       }, {
         id: 'student',
         name: '学生用户',
-        icon: '',
+        icon: 'fa fa-graduation-cap fa-2x',
         path: '/usermgt'
       }, {
         id: 'teacher',
         name: '教师用户',
-        icon: '',
+        icon: 'fa fa-user fa-2x',
         path: '/usermgt'
       }]
     } else {
@@ -47,9 +47,7 @@ const actions = {
 }
 
 const mutations = {
-  setSidebarItems (state, {
-    items
-  }) {
+  setSidebarItems (state, {items}) {
     state.sidebarItems = items
   }
 }

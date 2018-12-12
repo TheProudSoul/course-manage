@@ -38,7 +38,7 @@ a {
     width: auto;
     height: 100%;
     padding: 10px;
-    overflow-y: scroll;
+    overflow-y: auto;
     box-sizing: border-box;
 }
 
@@ -193,4 +193,11 @@ a {
   .el-table .cell {
     font-size: 15px;
     border: #000000;
+  }
+
+  .btn-return{
+    margin-left: 20px;
+    margin-top: 3px;
+    float: left;
+    margin-top: 10px
   }

@@ -1,33 +1,43 @@
 <template>
-  <div>
+  <div class="content">
     <!-- 返回键 -->
+    <el-button class="btn-return" icon="el-icon-back" circle @click="back"></el-button>
     <!-- 弄个可以点击的列表 跟通知页差不多，id嵌进去-->
+    <el-table ref="submitTable" :data="submitList" highlight-current-row @current-change="getSubmit" style="width: 100%">
+    <el-table-column property="student_no" label="学号" width="400"></el-table-column>
+    <el-table-column property="student_name" label="学生姓名" width="350"></el-table-column>
+    <el-table-column property="mark" label="分数"></el-table-column>
+    </el-table>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex'
+
 export default {
-  data() {
-    return {
-      result: [
-        {
-          submit_id: 1,
-          student_no: "201630661234",
-          content: "老师大恩大德，给个及格",
-          file_id: 1,
-          file_name: "test1_001.docx",
-          mark: 97
-        },
-        {
-          submit_id: 2,
-          student_no: "201630661235",
-          content: "张殷齐nb",
-          file_id: 2,
-          file_name: "test1_002.docx",
-          mark: 66
+  computed:{
+    ...mapGetters('test', {
+      submitList: 'getSubmitList'
+    })
+  },
+  created () {
+    this.$store.dispatch('test/fetchSubmits', this.$route.params.test_id)
+  },
+  methods:{
+    back(){
+      this.$router.go(-1)
+    },
+    getSubmit(val){
+      this.$store.dispatch("test/fetchSubmit", val.submit_id);
+      this.$router.push({
+        name: 'testSubmit',
+        params:{
+          course: this.$route.params.course,
+          test_id: this.$route.params.test_id,
+          submit_id: val.submit_id
         }
-      ]
-    };
+      })
+    }
   }
 };
 </script>
