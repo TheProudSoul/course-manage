@@ -10,7 +10,7 @@ const getters = {
 
 const actions = {
   fetchNotice ({ state, commit }, course) {
-    http('get', '/notice/' + course ).then(res => {
+    http('get', '/notice/' + course).then(res => {
       commit('setNoticeList', {
         item: res.data.notice
       })
@@ -21,7 +21,6 @@ const actions = {
 const mutations = {
   setNoticeList (state, {item}) {
     state.noticeList = item
-    // console.log(state.course)
   }
 }
 

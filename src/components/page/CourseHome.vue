@@ -1,20 +1,20 @@
 <template>
   <div class="content">
     <div class="course-box">
-      <h1 class="course-name" style="text-align: center">{{courseInfo.course_name}}</h1>
-      <h3 style="margin-left: 60px">简介：</h3>
+      <h1 class="course-name" style="text-align: center; font-size: 28px;">{{courseInfo.course_name}}</h1>
+      <h3 style="margin-left: 40px">简介：</h3>
       <p class="p">{{courseInfo.course_intro}}</p>
-      <h3 class="course_teacher">授课教师：</h3>
+      <h3 class="course-item">授课教师：</h3>
       <p class="p">{{courseInfo.teacher_name}}</p>
-      <h3 class="course-time">上课时间：</h3>
+      <h3 class="course-item">上课时间：</h3>
       <p
         style="margin-left: 60px; margin-top: 10px"
         v-for="(time,index) in courseInfo.time_slot"
         :key="index"
       >周{{time.week_day}} &ensp;第{{time.period}}节课 &ensp;{{time.start_time}}-{{time.end_time}}</p>
-      <h3 class="course-place">课室：</h3>
+      <h3 class="course-item">课室：</h3>
       <p
-        style="margin-top: 5px; margin-left: 60px; margin-bottom: 10px"
+        style="margin-top: 5px; margin-left: 60px; margin-bottom: 15px"
       >{{courseInfo.building}}-{{courseInfo.room}}</p>
     </div>
     <hr v-if="!isAdmin" class="hr" color="#ffd700">
@@ -160,21 +160,14 @@ export default {
 .course-name {
   margin-bottom: 20px;
 }
-.course-time {
+.course-item{
   margin-top: 20px;
-  margin-left: 60px;
-}
-.course-place {
-  margin-top: 20px;
-  margin-left: 60px;
-}
-.course_teacher {
-  margin-top: 20px;
-  margin-left: 60px;
+  margin-left: 40px;
 }
 .hr {
-  margin-left: 30px;
-  margin-right: 30px;
+  margin-left: 50px;
+  margin-right: 50px;
+  height:1px;
 }
 .p {
   margin-right: 20px;
@@ -213,5 +206,14 @@ export default {
   border: 0;
   width: 100%;
   height: 100%;
+}
+
+.release {
+  padding-left: 15px;
+  padding-right: 15px;
+  background: cornflowerblue;
+  color: #fff;
+  font-size: 12px;
+  float: right;
 }
 </style>

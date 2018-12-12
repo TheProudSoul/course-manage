@@ -5,7 +5,8 @@
         <span class="notice-title">通知</span>
       </div>
       <div v-for="notice in notices" :key="notice.notice_id" class="text item" >
-        <i class="fa fa-comment"></i>
+        <img  src="../../assets/i2.png" style="height:20px; width: 20px;"/>
+        <!-- <i class="fa fa-comment"></i> -->
         <span style="margin-left: 10px">{{notice.title}}</span>
       </div>
     </el-card>
@@ -42,11 +43,9 @@ export default {
 .item:hover{
   background: aliceblue;
 }
-
 .item {
   margin-bottom: 5px;
 }
-
 .clearfix:before,
 .clearfix:after {
   display: table;
@@ -55,20 +54,18 @@ export default {
 .clearfix:after {
   clear: both;
 }
-
 .box-card {
   width: 100%;
   height: 100%;
 }
-
 .notice-title{
   font-style: unset;
   font-size: 24px;
+  font-weight: bold;
 }
-
 .el-card__header {
   border-bottom: 3px solid gold;
-  margin-left: 30px;
-  margin-right: 30px;
+  margin-left: 40px;
+  margin-right: 40px;
 }
 </style>

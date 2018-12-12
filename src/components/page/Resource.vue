@@ -89,14 +89,15 @@ export default {
 </script>
 <style>
 .content {
-  margin: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 100px;
   font-size: 24px;
 }
 .buttons {
   margin-top: 50px;
   margin-right: 120px;
 }
-
 .clear,
 .download {
   padding-left: 30px;
@@ -104,6 +105,7 @@ export default {
   background: cornflowerblue;
   color: #fff;
   font-size: 13px;
+  
 }
 .el-tree-node__content {
   margin-bottom: 10px;
