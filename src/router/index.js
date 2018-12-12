@@ -141,7 +141,7 @@ export default new Router({
       component: resolve => require(['../components/page/UserMgt.vue'], resolve)
     },
     {
-      path: '/course/set',
+      path: '/set',
       name: 'setCourse',
       component: resolve => require(['../components/page/SetCourse.vue'], resolve),
       meta: {title: '设置课程'}
