@@ -4,8 +4,14 @@
   <div class="content">
     <div class="new-test-header">
       <h1 class="title">{{title}}</h1>
-      <el-button class="btn-return" icon="el-icon-back" circle @click="back"></el-button>
-      <hr color="#d3d3d3" style="margin-bottom: 20px; margin-top: 20px"/>
+      <el-button
+        class="btn-return"
+        icon="el-icon-back"
+        circle
+        style="float: left; margin-top: 10px"
+        @click="back"
+      ></el-button>
+      <hr color="#d3d3d3" style="margin-bottom: 10px; margin-top: 5px"/>
     </div>
     <el-form :model="testInfo" ref="testInfo" label-width="50px" label-position="left" class="form-test">
       <el-form-item class="item-title" label="名称：" label-width="60px">

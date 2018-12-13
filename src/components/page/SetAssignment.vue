@@ -5,7 +5,7 @@
     <div class="new-assign-header">
       <h1 class="title">{{title}}</h1>
       <el-button class="btn-return" icon="el-icon-back" circle @click="back"></el-button>
-      <hr color="#d3d3d3" style="margin-bottom: 20px; margin-top: 20px"/>
+      <hr color="#d3d3d3" style="margin-bottom: 10px; margin-top: 5px"/>
     </div>
     <el-form
       :model="assignmentInfo"
@@ -85,11 +85,13 @@ export default {
   }
   .item-title{
     margin-right: 240px;
-    margin-left: 300px
+    margin-left: 300px;
+    font-weight: bold;
   }
   .item{
     margin-right: 200px;
     margin-left: 300px;
-    margin-top: 30px
+    margin-top: 30px;
+    font-weight: bold;
   }
 </style>
