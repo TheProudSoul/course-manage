@@ -2,12 +2,14 @@
   <div class="content-box">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
+        <h3 style="float:left">{{type}}用户管理</h3>
         <el-button style="float: right" type="primary" @click="handleAdd">
           <i class="fa fa-plus" aria-hidden="true"></i>
           添加{{type}}用户
         </el-button>
       </div>
-      <el-collapse accordion @change="fetchUserList">
+      <div align="center">
+      <el-collapse accordion @change="fetchUserList" style="width:95%">
         <el-collapse-item
           v-for="school in schoolList"
           :key="school.id"
@@ -58,6 +60,7 @@
           </el-table>
         </el-collapse-item>
       </el-collapse>
+      </div>
     </el-card>
 
     <!-- 添加用户弹框 -->

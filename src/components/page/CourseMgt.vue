@@ -1,7 +1,13 @@
 <template>
   <div class="content-box">
-    <el-button type="primary" icon="el-icon-edit" @click="setCourse">发布课程</el-button>
-    <el-collapse accordion @change="fetchCourseList">
+  <div align="right">
+    <el-button type="primary" icon="el-icon-edit" @click="setCourse" class="release" >发布课程</el-button>
+  </div>
+  <div align="center">
+        <hr class="hr" color="#ffd700" style="width:90%; margin-bottom:20px;height:1px;">
+  </div>
+  <div align="center">
+    <el-collapse accordion @change="fetchCourseList" style="width:90%;">
       <el-collapse-item
         v-for="school in schoolList"
         :key="school.id"
@@ -12,13 +18,14 @@
           <el-table-column prop="course_name" label="课程名称" width="auto"></el-table-column>
           <el-table-column label="操作" width="300">
             <template slot-scope="scope">
-              <el-button size="mini" type="info" @click="getCourse(scope.$index, scope.row)">详情</el-button>
-              <el-button size="mini" type="info" @click="getDiscuss(scope.$index, scope.row)">讨论区</el-button>
+              <el-button size="mini" type="info" @click="getCourse(scope.$index, scope.row)" style="  background: cornflowerblue;">详情</el-button>
+              <el-button size="mini" type="info" @click="getDiscuss(scope.$index, scope.row)" style="  background: cornflowerblue;">讨论区</el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-collapse-item>
     </el-collapse>
+   </div>
   </div>
 </template>
 
@@ -64,3 +71,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.release{
+   margin-right: 20px;
+   margin-top:10px;
+   margin-bottom: 10px;
+}
+</style>
