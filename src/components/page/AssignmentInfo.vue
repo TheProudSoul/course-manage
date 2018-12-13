@@ -17,9 +17,9 @@
       <p class="date-title">截止日期：</p>
       <p class="date-content">{{assignmentInfo.deadline}}</p>
     </div>
-    <div class="file">
+    <div class="file" v-if="testInfo.file_flag==0">
       <p class="file-title">附件：</p>
-      <el-button type="text" class="btn-file">{{assignmentInfo.file_name}}</el-button>
+      <el-button type="primary" plain icon="el-icon-download">下载附件</el-button>
     </div>
 
     <!-- 学生操作 -->
