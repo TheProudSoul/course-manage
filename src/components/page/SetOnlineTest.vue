@@ -4,13 +4,7 @@
   <div class="content">
     <div class="new-test-header">
       <h1 class="title">{{title}}</h1>
-      <el-button
-        class="btn-return"
-        icon="el-icon-back"
-        circle
-        style="float: left; margin-top: 10px"
-        @click="back"
-      ></el-button>
+      <el-button class="btn-return" icon="el-icon-back" circle @click="back"></el-button>
       <hr color="#d3d3d3" style="margin-bottom: 20px; margin-top: 20px"/>
     </div>
     <el-form :model="testInfo" ref="testInfo" label-width="50px" label-position="left" class="form-test">
@@ -21,11 +15,7 @@
         <el-input type="text" v-model="testInfo.start_time" placeholder="2016-06-06 19:00" clearable></el-input>
       </el-form-item>
       <el-form-item class="item" label="截止时间：" label-width="100px">
-        <el-input
-          type="text"
-          v-model="testInfo.start_time"
-          placeholder="2016-06-06 21:00"
-          clearable></el-input>
+        <el-input type="text" v-model="testInfo.start_time" placeholder="2016-06-06 21:00"></el-input>
       </el-form-item>
       <el-form-item class="item" label="添加附件：" label-width="100px">
         <el-button type="primary" plain icon="el-icon-upload2" style="float: left">上传附件</el-button>

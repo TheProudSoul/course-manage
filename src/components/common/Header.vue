@@ -7,10 +7,22 @@
       </div>
       <div class="header-right">
           <div class="user-avator"><img src="../../assets/avator.png"></div>
-          <el-button type="text" class="logout">退出</el-button>
+          <el-button type="text" class="logout" @click="logout">退出</el-button>
       </div>
     </div>
 </template>
+
+<script>
+export default {
+  methods:{
+    logout(){
+      localStorage.setItem('role', '')
+      this.$store.commit('login/userType', localStorage.getItem('role'))
+      this.$router.push('/login');
+    }
+  }
+}
+</script>
 
 
 <style>

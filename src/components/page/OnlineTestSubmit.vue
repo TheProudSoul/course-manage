@@ -36,7 +36,6 @@
       <el-col :span="2"></el-col>
     </el-row>
     </div>
-    <!-- 在分数旁边弄个按钮评分 -->
   </div>
 </template>
 

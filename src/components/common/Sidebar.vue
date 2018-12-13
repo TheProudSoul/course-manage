@@ -38,8 +38,10 @@ export default {
 }
 .icon{
   position: fixed;
-  left: 80px;
-
+  left: 60px;
+  font-weight: bold;
+  font-size: 18px;
+  color: #606266
 }
 .sidebar {
   width: 220px;

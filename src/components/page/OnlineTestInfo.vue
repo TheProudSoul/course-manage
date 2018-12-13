@@ -28,7 +28,7 @@
     </div>
     <div class="file">
       <p class="file-title">附件：</p>
-      <el-button type="text" class="btn-file">{{testInfo.file_name}}</el-button>
+      <el-button type="primary" plain icon="el-icon-download">下载附件</el-button>
     </div>
 
     <!-- 学生操作 -->
@@ -58,7 +58,7 @@
     <div v-show="isTeacher">
       <el-button type="text" @click="editAss">修改</el-button>
       <!-- 批改？评分？查收？ -->
-      <el-button type="text" @click="getSubmit">批改</el-button>
+      <el-button type="text" @click="getSubmit">评分</el-button>
       <el-button type="text" @click="submitDelete">删除</el-button>
     </div>
   </div>

@@ -23,6 +23,17 @@ Vue.prototype.$http = request
 //   components: { App },
 //   template: '<App/>'
 // })
+
+// 使用钩子函数对路由进行权限跳转
+router.beforeEach((to, from, next) => {
+  const role = localStorage.getItem('role')
+  if (role == '' && to.path !== '/login') {
+    next('/login')
+  } else {
+    next()
+  }
+})
+
 new Vue({
   el: '#app',
   store,

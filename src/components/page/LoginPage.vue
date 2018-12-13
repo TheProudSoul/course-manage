@@ -63,8 +63,8 @@ export default {
     };
     return {
       loginForm: {
-        id: "",
-        passwd: "",
+        id: "111",
+        passwd: "111",
         group: 3
       },
 
