@@ -5,7 +5,7 @@
         <span class="notice-title">通知</span>
       </div>
       <div v-for="notice in notices" :key="notice.notice_id" class="text item" >
-        <img  src="../../assets/i2.png" style="height:20px; width: 20px;"/>
+        <img  src="../../assets/i6.png" style="height:20px; width: 20px;"/>
         <!-- <i class="fa fa-comment"></i> -->
         <span style="margin-left: 10px">{{notice.title}}</span>
       </div>

@@ -28,7 +28,7 @@
         <div slot="header" class="clearfix" style="text-align: center">
           <span style="font-style: unset; font-size: 18px">通知</span>
           <!-- 教师操作 -->
-          <el-button v-if="isTeacher" type="text" @click="addFormVisible = true">发布</el-button>
+          <el-button v-if="isTeacher" type="text" @click="addFormVisible = true" class="release">发布</el-button>
           <!-- 发布公告弹框 -->
           <el-dialog title="发布公告" :visible.sync="addFormVisible">
             <el-form :model="form">
@@ -45,7 +45,7 @@
           </el-dialog>
         </div>
         <div v-for="notice in notices" :key="notice.notice_id" class="text item">
-          <i class="fa fa-comment"></i>
+            <img  src="../../assets/i6.png" style="height:18px; width: 18px;"/>
           <span style="margin-left: 10px">{{notice.title}}</span>
         </div>
       </el-card>
