@@ -1,9 +1,13 @@
 <template>
   <div class="content">
     <!-- 返回键 -->
-    <el-button class="btn-return" icon="el-icon-back" circle @click="back"></el-button>
+    <div class="new-submits-header">
+      <h2 class="title">测试批改列表</h2>
+      <el-button class="btn-return" icon="el-icon-back" circle @click="back"></el-button>
+    </div>
+    <hr color="#d3d3d3" style="clear: both"/>
     <!-- 弄个可以点击的列表 跟通知页差不多，id嵌进去-->
-    <el-table ref="submitTable" :data="submitList" highlight-current-row @current-change="getSubmit" style="width: 100%">
+    <el-table class="table" ref="submitTable" :data="submitList" highlight-current-row @current-change="getSubmit">
     <el-table-column property="student_no" label="学号" width="400"></el-table-column>
     <el-table-column property="student_name" label="学生姓名" width="350"></el-table-column>
     <el-table-column property="mark" label="分数"></el-table-column>
@@ -41,3 +45,25 @@ export default {
   }
 };
 </script>
+<style>
+  .title,
+  .btn-return{
+    display: inline-block;
+  }
+  .title{
+    margin-top: 0;
+    margin-right: 25px;
+  }
+  .btn-return{
+    margin-bottom: 10px;
+  }
+  .table{
+    margin-right: 80px;
+    margin-left: 70px;
+    width: 90%;
+    margin-top: 30px;
+  }
+  .el-table .cell {
+    text-align: center;
+  }
+</style>
