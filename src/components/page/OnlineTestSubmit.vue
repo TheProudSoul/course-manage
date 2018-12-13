@@ -4,59 +4,124 @@
       <el-button class="btn-return" icon="el-icon-back" circle @click="back"></el-button>
       <h3 class="title">{{submit.student_name}}的提交记录</h3>
     </div>
-    <hr color="#d3d3d3" style="margin-bottom: 20px; margin-top: 20px"/>
+    <hr color="#d3d3d3" style="margin-bottom: 20px; margin-top: 20px">
+
+    <!-- <el-row :gutter="10" type="flex" class="row-bg" justify="center">
+      <el-col :span="3"><div class="grid-content vector-label">测试标题：</div></el-col>
+      <el-col :span="12"><div class="grid-content">{{submit.student_name}}</div></el-col>
+    </el-row> -->
     <div class="vector">
-      <div class="vector-label">学生姓名：</div>
-      <div class="vector-data">{{submit.student_name}}</div>
-    </div>
-    <div class="vector">
-      <div class="vector-label">测试标题：</div>
-      <div class="vector-data">{{submit.test_title}}</div>
-    </div>
-    <div class="vector">
-      <div class="vector-label">学号：</div>
-      <div class="vector-data">{{submit.student_no}}</div>
-    </div>
-    <div class="vector">
-      <div class="vector-label">提交时间：</div>
-      <div class="vector-data">{{submit.time}}</div>
-    </div>
-    <div class="vector">
-      <div class="vector-label">提交内容：</div>
-      <div class="vector-data">{{submit.content}}</div>
-    </div>
-    <div class="vector">
-      <div class="vector-label">分数：</div>
-      <div class="vector-data mark">{{submit.mark}}</div>
-      <el-button type="primary" plain icon="el-icon-download">评分</el-button>
-    </div>
-    <div class="vector">
-      <div class="vector-label">附件：</div>
-      <el-button type="primary" plain icon="el-icon-download">下载附件</el-button>
-      <!-- <el-button type="text" class="btn-file">{{assignmentInfo.file_name}}</el-button> -->
+    <el-row type="flex" class="row">
+      <el-col :span="2" :offset="6"><div class="grid-content vector-label">学生姓名：</div></el-col>
+      <el-col :span="12"><div class="grid-content">{{submit.student_name}}</div></el-col>
+    </el-row>
+    <el-row  type="flex" class="row">
+      <el-col :span="2" :offset="6"><div class="grid-content vector-label">学号：</div></el-col>
+      <el-col :span="12"><div class="grid-content">{{submit.student_no}}</div></el-col>
+    </el-row>
+    <el-row type="flex" class="row">
+      <el-col :span="2" :offset="6"><div class="grid-content vector-label">提交内容：</div></el-col>
+      <el-col :span="12"><div class="grid-content">{{submit.content}}</div></el-col>
+    </el-row>
+    <el-row type="flex" v-if="submit.file_flag==0" class="row">
+      <el-col :span="2" :offset="6"><div class="grid-content vector-label">附件：</div></el-col>
+      <el-col :span="12"><div class="grid-content"><el-button type="primary" plain icon="el-icon-download">下载附件</el-button></div></el-col>
+    </el-row>
+    <el-row type="flex" class="row">
+      <el-col :span="2" :offset="6"><div class="grid-content vector-label">分数：</div></el-col>
+      <el-col :span="12">      
+        <el-input class="point" max="100" size="small" suffix-icon="el-icon-star-on" v-model="mark"></el-input>
+        <el-button type="primary" plain @click="setMark">评分</el-button>
+      </el-col>
+      <el-col :span="2"></el-col>
+    </el-row>
     </div>
     <!-- 在分数旁边弄个按钮评分 -->
   </div>
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState } from "vuex";
 
 export default {
-  computed:{
-    ...mapGetters('test', {
-      submit: 'getSubmit'
+  data() {
+    return {
+      mark: ""
+    };
+  },
+  computed: {
+    ...mapGetters("test", {
+      submit: "getSubmit"
     })
   },
-  created () {
-    this.$store.dispatch('test/fetchSubmit', this.$route.params.submit_id)
+  created() {
+    this.$store.dispatch("test/fetchSubmit", this.$route.params.submit_id);
+    this.mark = this.submit.mark;
   },
-  methods:{
-    back(){
-      this.$router.go(-1)
+  methods: {
+    back() {
+      this.$router.go(-1);
     },
-    setMark(){
-
+    setMark() {
+      let message = "";
+      if (this.mark == "") {
+        this.$message({
+          showClose: true,
+          message: "分数不能为空！",
+          type: "error"
+        });
+      } else if (this.mark == this.submit.mark) {
+        this.$message({
+          showClose: true,
+          message: "不要重复提交相同的分数哦~",
+          type: "error"
+        });
+      } else {
+        if (this.submit.mark != "") {
+          message =
+            "您已有评分记录：“" +
+            this.submit.mark +
+            "”,是否确定重新提交分数：“" +
+            this.mark +
+            "”";
+        } else {
+          message = "您的评分为“" + this.mark + "”";
+        }
+        this.$confirm(message, "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            // 真正路径  '/test_submit'
+            this.$http("post", "/admin/course", {
+              action: "put",
+              submit_id: this.$route.params.submit_id,
+              mark: this.mark
+            }).then(res => {
+              if (res.data.status == 0) {
+                this.$message({ type: "success", message: "分数提交成功!" });
+                setTimeout(() => {
+                  this.$router.push({
+                    name: "testSubmits",
+                    params: {
+                      course: this.$route.params.course,
+                      test_id: this.$route.params.test_id
+                    }
+                  });
+                }, 1000);
+              } else {
+                this.$message({ type: "info", message: res.data.error_msg });
+              }
+            });
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消删除"
+            });
+          });
+      }
     }
   }
 };
@@ -65,15 +130,29 @@ export default {
 <style>
 .title {
   display: inline-block;
-  font-size: 24px; 
-  margin-top: 10px; 
-  margin-bottom: 15px
+  font-size: 24px;
+  margin-top: 10px;
+  margin-bottom: 15px;
 }
-.vector-label,
+.vector{
+  text-align: left;
+}
+.row{
+  margin-bottom: 30px
+}
+.vector-label{
+  font: 1em 'Microsoft YaHei';
+  font-weight: bold;
+  
+}
 .vector-data {
-    display: inline-block;
+  display: inline-block;
+  width: 50%;
+  
 }
-.mark{
-  color:"#ff9900"
+.point {
+  color: "#ff9900";
+  display: inline-block;
+  width: 4rem;
 }
 </style>
