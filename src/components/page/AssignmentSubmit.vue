@@ -1,14 +1,16 @@
 <template>
   <div class="content">
+    <!-- 返回键 -->
+    <!--<el-button class="btn-return" icon="el-icon-back" circle @click="back"></el-button>-->
     <div>
       <el-button class="btn-return" icon="el-icon-back" circle @click="back"></el-button>
       <h3 class="title">{{submit.student_name}}的提交记录</h3>
     </div>
-    <hr color="#d3d3d3" style="margin-bottom: 20px; margin-top: 20px">
-
+    <hr color="#d3d3d3" style="clear: both">
     <!-- <el-row :gutter="10" type="flex" class="row-bg" justify="center">
       <el-col :span="3"><div class="grid-content vector-label">测试标题：</div></el-col>
       <el-col :span="12"><div class="grid-content">{{submit.student_name}}</div></el-col>
+<<<<<<< Updated upstream
     </el-row>-->
     <div class="vector">
       <el-row type="flex" class="row">
@@ -69,7 +71,7 @@
 import { mapGetters, mapState } from "vuex";
 
 export default {
-  data() {
+  data () {
     return {
       mark: ""
     };
@@ -152,7 +154,7 @@ export default {
       }
     }
   }
-};
+}
 </script>
 
 <style>

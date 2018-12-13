@@ -46,10 +46,10 @@
     </div>
 
     <!-- 教师操作 -->
-    <div v-show="isTeacher">
-      <el-button type="text" @click="editAss">修改</el-button>
-      <el-button type="text" @click="getSubmit">批改</el-button>
-      <el-button type="text" @click="submitDelete">删除</el-button>
+    <div v-show="isTeacher" class="buttons-T">
+      <el-button type="primary" @click="editAss">修改</el-button>
+      <el-button type="primary" @click="getSubmit">批改</el-button>
+      <el-button type="danger" @click="submitDelete">删除</el-button>
     </div>
   </div>
 </template>
@@ -202,8 +202,8 @@ export default {
 <style scoped>
 .title {
   display: inline-block;
-  font-size: 24px; 
-  margin-top: 10px; 
+  font-size: 24px;
+  margin-top: 10px;
   margin-bottom: 15px
 }
 .desc-title,
@@ -248,4 +248,15 @@ export default {
   color: #fff;
   font-size: 13px;
 }
+  .buttons-T{
+    float: right;
+    margin-right: 80px;
+    margin-top: 30px;
+  }
+  .date-title,
+  .file-title,
+  .desc-title,
+  .answer-title{
+    font-weight: bold;
+  }
 </style>

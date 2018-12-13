@@ -4,7 +4,7 @@
       <el-button class="btn-return" icon="el-icon-back" circle @click="back"></el-button>
       <h3 class="title">{{submit.student_name}}的提交记录</h3>
     </div>
-    <hr color="#d3d3d3" style="margin-bottom: 20px; margin-top: 20px">
+    <hr color="#d3d3d3" style="clear: both">
 
     <!-- <el-row :gutter="10" type="flex" class="row-bg" justify="center">
       <el-col :span="3"><div class="grid-content vector-label">测试标题：</div></el-col>
@@ -29,7 +29,7 @@
     </el-row>
     <el-row type="flex" class="row">
       <el-col :span="2" :offset="6"><div class="grid-content vector-label">分数：</div></el-col>
-      <el-col :span="12">      
+      <el-col :span="12">
         <el-input class="point" max="100" size="small" suffix-icon="el-icon-star-on" v-model="mark"></el-input>
         <el-button type="primary" plain @click="setMark">评分</el-button>
       </el-col>
@@ -135,6 +135,7 @@ export default {
 }
 .vector{
   text-align: left;
+  margin-top: 20px;
 }
 .row{
   margin-bottom: 30px
@@ -142,12 +143,12 @@ export default {
 .vector-label{
   font: 1em 'Microsoft YaHei';
   font-weight: bold;
-  
+
 }
 .vector-data {
   display: inline-block;
   width: 50%;
-  
+
 }
 .point {
   color: "#ff9900";

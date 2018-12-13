@@ -55,11 +55,11 @@
     </div>
 
     <!-- 教师操作 -->
-    <div v-show="isTeacher">
-      <el-button type="text" @click="editAss">修改</el-button>
+    <div v-show="isTeacher" class="buttons-T">
+      <el-button type="primary" @click="editAss">修改</el-button>
       <!-- 批改？评分？查收？ -->
-      <el-button type="text" @click="getSubmit">评分</el-button>
-      <el-button type="text" @click="submitDelete">删除</el-button>
+      <el-button type="primary" @click="getSubmit">批改</el-button>
+      <el-button type="danger" @click="submitDelete">删除</el-button>
     </div>
   </div>
 </template>
@@ -253,4 +253,14 @@ export default {
   font-size: 13px;
   margin-left: 10px;
 }
+  .buttons-T{
+    float: right;
+    margin-right: 80px;
+    margin-top: 30px;
+  }
+  .desc-title,
+  .file-title,
+  .date-title{
+    font-weight: bold;
+  }
 </style>
