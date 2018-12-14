@@ -29,11 +29,11 @@ const actions = {
         path: '/usermgt'
       }]
     } else {
-      http('get', '/section').then(res => {
+      http('get', '/v1/section').then(res => {
         res.data.forEach(element => {
           data.push({
             id: element.section_id,
-            name: element.course_title,
+            name: element.course_name,
             icon: 'fa fa-book fa-2x',
             path: '/course'
           })

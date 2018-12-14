@@ -156,7 +156,7 @@ export default {
   },
   methods: {
     submit() {
-      this.$http("post", "/test_submit", {
+      this.$http("post", "/v1/test_submit", {
         action: "post",
         course_id: this.id,
         credit: this.credit,

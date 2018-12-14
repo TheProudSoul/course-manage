@@ -23,7 +23,7 @@ export default {
     })
   },
   created () {
-    this.$store.dispatch('notice/fetchNotice', -1)
+    this.$store.dispatch('notice/fetchNotice')
   }
 }
 </script>

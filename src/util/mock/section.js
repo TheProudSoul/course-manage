@@ -1,4 +1,5 @@
 const Mock = require('mockjs') // 获取mock对象
+const Random = Mock.Random
 const domain = '/api' // 定义默认域名，随便写
 
 const Data = req => {
@@ -15,29 +16,28 @@ const Data = req => {
   } else {
     course_id = '2'
     course_name = '软件架构'
-    teacher_name = '杨磊'
+    teacher_name = Random.cname()
   }
 
-  let course_intro = 'balabala'
+  let course_intro = Random.cparagraph(5)
   let course_credit = 3
   let school = '软件学院'
-  let section_week = [2, 3, 4, 5, 6, 7]
+  let section_week = Random.range(1, 20, 7)
   let time_slot = [{
-    'week_day': 1,
+    'week_day|1-5': 1,
     'period': [1, 2],
     'start_time': '8:50',
     'end_time': '10:25'
   },
   {
-    'week_day': 2,
+    'week_day|1-5': 2,
     'period': [3, 4],
     'start_time': '10:40',
     'end_time': '12:15'
-  }
-  ]
+  }]
   let building = 'A2'
-  let room = '302'
-  let teacher_id = '100010'
+  let room = Random.string(number, 3)
+  let teacher_id = Random.string(number, 8)
 
   // 返回状态码和文章数据posts
   return {
@@ -54,6 +54,28 @@ const Data = req => {
     teacher_name
   }
 }
+let templete = {
+  'course_id': 1,
+  'course_name': '数据结构',
+  'course_intro': Random.cparagraph(10),
+  'course_credit|1-6': 3,
+  'section_week': Random.range(1, 20, 7),
+  'time_block': [{
+    'week_day|1-5': 1,
+    'period': [1, 2],
+    'start_time': '8:50',
+    'end_time': '10:25'
+  },
+  {
+    'week_day|1-5': 2,
+    'period': [3, 4],
+    'start_time': '10:40',
+    'end_time': '12:15'
+  }],
+  'building': 'A1',
+  'room': Random.string('number', 3),
+  'teacher_name': Random.cname()
+}
 
 // 定义请求链接，类型，还有返回数据
-Mock.mock(`${domain}/section/1`, 'get', Data)
+Mock.mock(/\/api\/v1\/section\/\d*/, 'get', templete)

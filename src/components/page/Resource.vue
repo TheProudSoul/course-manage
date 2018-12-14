@@ -4,14 +4,15 @@
       show-checkbox
       :load="fetchReourseList"
       lazy
-      node-key="res_id"
+      node-key="file_id"
       ref="tree"
       highlight-current
       :props="defaultProps"
+      empty-text="empty"
     ></el-tree>
     <div class="buttons" align="right">
       <el-button v-show='isTeacher' @click="handleAdd" class="download">发布</el-button>
-      <el-button @click="getCheckedKeys" class="download">下载</el-button>
+      <el-button @click="download" class="download">下载</el-button>
       <el-button v-show='isTeacher' @click="handleDelete" class="download">删除</el-button>
       <el-button @click="resetChecked" class="clear">清空</el-button>
     </div>
@@ -20,15 +21,17 @@
 
 <script>
 import { mapGetters, mapState } from 'vuex'
+import JSZip from 'jszip'
+import FileSaver from 'file-saver'
 
 export default {
   data() {
     return {
-      resourceList: [],
       defaultProps: {
         label: "res_name",
         isLeaf: "leaf"
-      }
+      },
+      nameToId:[{"courseware":0},{"exam":1},{"experiment":2},{"reference":3}]
     };
   },
   computed: {
@@ -36,47 +39,72 @@ export default {
       isStudent: 'isStudent',
       isTeacher: 'isTeacher',
       isAdmin: 'isAdmin',
+    }),
+    ...mapGetters('resource', {
+      resourceType:'getResourceType',
+      resourceList: 'getResourceList',
+      types: 'getTypeName',
+      typeResources: 'getResourceByType'
     })
   },
+  created() {
+    this.$store.dispatch('resource/fetchResource');
+  },
   methods: {
-    getCheckedKeys() {
-      console.log(this.$refs.tree.getCheckedNodes());
+    download() {
+      let downloadPath = '/file/v1/resource/file/'
+      let file_ids = this.$refs.tree.getCheckedKeys(true)
+      let want = this.$refs.tree.getCheckedKeys()
+      want.forEach(element => {
+        if(this.types.includes(element)){
+          file_ids = file_ids.concat(this.typeResources(this.types.indexOf(element)))
+        }
+      })
+      file_ids = [...new Set(file_ids.sort())]
+      // 获取下载链接
+      let link = []
+      for (let i = 0; i < file_ids.length; i++){
+        link[i] = downloadPath + file_ids[i]
+      }
+      const zip = new JSZip()
+      const cache = {}
+      const promises = []
+      link.forEach(item => {
+        console.log(item)
+        const promise = this.$http('get',item,{}, {responseType: 'arraybuffer'}).then(res=>{
+        const arr_name = item.split("/")
+        const file_name = arr_name[arr_name.length - 1] // 获取文件名
+        zip.file(file_name, res.data, { binary: true }) // 逐个添加文件
+        cache[file_name] = res.data
+      })
+        promises.push(promise)
+      })
+      console.log(promises.length)
+      const tmp = Promise.all(promises)
+      tmp.then(()=>{
+        zip.generateAsync({type:"blob"}).then(content => { // 生成二进制流
+            FileSaver.saveAs(content, "resources.zip") // 利用file-saver保存文件
+        })
+      })
     },
+
     resetChecked() {
       this.$refs.tree.setCheckedKeys([]);
     },
+
     fetchReourseList(node, resolve) {
       if (node.level === 0) {
-        return resolve([
-          { res_name: "课件" },
-          { res_name: "试卷" },
-          { res_name: "实验资料" },
-          { res_name: "参考资料" }
-        ]);
+        return resolve(this.resourceType);
       }
-      var type;
       if (node.data.res_name === "课件") {
-        type = 0;
+        resolve(this.resourceList[0])
       } else if (node.data.res_name === "试卷") {
-        type = 1;
+        resolve(this.resourceList[1])
       } else if (node.data.res_name === "实验资料") {
-        type = 2;
+        resolve(this.resourceList[2])
       } else {
-        type = 3;
+        resolve(this.resourceList[3])
       }
-      this.$http("get", "/resource", {
-        sec_id: this.$route.params.course,
-        type: type
-      }).then(res => {
-        this.resourceList = res.data.resource;
-      });
-
-      setTimeout(() => {
-        this.resourceList.forEach(resource=>{
-          resource.leaf= true;
-        })
-        resolve(this.resourceList)
-      }, 500)
     },
     handleAdd(){
 

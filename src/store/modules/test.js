@@ -12,8 +12,7 @@ const getters = {
 
 const actions = {
   fetchSubmit ({ state, commit }, id) {
-    // 真正路径 '/test_submit/'
-    http('get', '/assign_submit/' + id).then(res => {
+    http('get', '/v1/test_submit/' + id).then(res => {
       let item = res.data
       if (item.mark == -1) {
         item.mark = ''
@@ -26,7 +25,7 @@ const actions = {
 
   fetchSubmits ({ state, commit }, id) {
     // 真正路径 '/test_submit/'
-    http('get', '/assign_submits/' + id).then(res => {
+    http('get', '/v1/test_submit/' + id).then(res => {
       commit('setSubmitList', {
         item: res.data.result
       })

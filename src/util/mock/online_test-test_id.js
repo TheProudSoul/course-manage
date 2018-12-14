@@ -1,4 +1,5 @@
 const Mock = require('mockjs') // 获取mock对象
+const Random = Mock.Random
 const domain = '/api' // 定义默认域名，随便写
 
 const Data = req => {
@@ -22,5 +23,13 @@ const Data = req => {
   }
 }
 
+let templete = {
+  "test_id|1-10": 1, 
+  "title": "第一次上机",
+  "content": Random.cparagraph(1, 3),
+  "start_time": Random.datetime('yyyy-MM-dd A HH:mm:ss'),
+  "end_time": Random.datetime('yyyy-MM-dd A HH:mm:ss'),
+}
+
 // 定义请求链接，类型，还有返回数据
-Mock.mock(`${domain}/online_test/1`, 'get', Data)
+Mock.mock(/\/api\/v1\/online_test\/\d*/, 'get', templete)

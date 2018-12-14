@@ -16,7 +16,7 @@ const actions = {
   getSchool ({ state, commit }) {
     let data = []
 
-    http('get', '/admin/school').then(res => {
+    http('get', '/v1/admin/school').then(res => {
       res.data.forEach(element => {
         data.push({
           id: element.school_id,
@@ -30,7 +30,7 @@ const actions = {
   },
 
   getCourse ({ state, commit }, school) {
-    http('get', '/admin/course/' + school).then(res => {
+    http('get', '/v1/admin/course/' + school).then(res => {
       commit('setCourseList', {
         item: res.data
       })
@@ -38,7 +38,7 @@ const actions = {
   },
 
   getUser ({ state, commit }, {type, school}) {
-    http('get', '/account/' + type + '/' + school).then(res => {
+    http('get', '/v1/account/' + type + '/' + school).then(res => {
       commit('setUserList', {
         item: res.data
       })

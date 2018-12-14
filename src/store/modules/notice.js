@@ -10,9 +10,13 @@ const getters = {
 
 const actions = {
   fetchNotice ({ state, commit }, course) {
-    http('get', '/notice/' + course).then(res => {
+    if (course == null) {
+      course = ''
+    }
+    http('get', '/v1/notice/' + course).then(res => {
+      console.log(res)
       commit('setNoticeList', {
-        item: res.data.notice
+        item: res.data
       })
     })
   }

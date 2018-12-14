@@ -9,7 +9,7 @@
       <h3 class="course-item">上课时间：</h3>
       <p
         style="margin-left: 60px; margin-top: 10px"
-        v-for="(time,index) in courseInfo.time_slot"
+        v-for="(time,index) in courseInfo.time_block"
         :key="index"
       >周{{time.week_day}} &ensp;第{{time.period}}节课 &ensp;{{time.start_time}}-{{time.end_time}}</p>
       <h3 class="course-item">课室：</h3>
@@ -92,7 +92,7 @@ export default {
   methods: {
     handleAddNotice() {
       // 真正路径 '/notice'
-      this.$http("post", "/admin/course", this.form).then(res => {
+      this.$http("post", "/v1/admin/course", this.form).then(res => {
         if (res.data.status == 0) {
           this.$alert("发布成功", "消息", {
             confirmButtonText: "确定",
@@ -117,7 +117,7 @@ export default {
           type: "warning"
         }
       ).then(() => {
-          this.$http("post", "/admin/course", {
+          this.$http("post", "/v1/admin/course", {
             action: "delete",
             section_id: this.$route.params.course
           }).then(res => {

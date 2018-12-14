@@ -1,4 +1,5 @@
 const Mock = require('mockjs') // 获取mock对象
+const Random = Mock.Random
 const domain = '/api' // 定义默认域名，随便写
 
 const Data = req => {
@@ -7,14 +8,14 @@ const Data = req => {
     {
       'submit_id': 1,
       'student_no': '201630661234',
-      'student_name': '张殷齐',
-      'mark': 97
+      'student_name': Random.cname(),
+      'mark': Random.natural(60, 100)
     },
     {
       'submit_id': 2,
       'student_no': '201630661235',
-      'student_name': '连木名',
-      'mark': 66
+      'student_name': Random.cname(),
+      'mark': Random.natural(60, 100)
     }
   ]
   return {
@@ -23,4 +24,4 @@ const Data = req => {
 }
 
 // 定义请求链接，类型，还有返回数据
-Mock.mock(`${domain}/assign_submits/1`, 'get', Data)
+Mock.mock(/\/api\/v1\/assign_submit\?ass_id=\/\d*/, 'get', Data)

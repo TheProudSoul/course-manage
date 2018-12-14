@@ -17,9 +17,9 @@
       <p class="date-title">截止日期：</p>
       <p class="date-content">{{assignmentInfo.deadline}}</p>
     </div>
-    <div class="file" v-if="testInfo.file_flag==0">
+    <div class="file" v-if="assignmentInfo.file_flag==0">
       <p class="file-title">附件：</p>
-      <el-button type="primary" plain icon="el-icon-download">下载附件</el-button>
+      <el-button type="primary" plain icon="el-icon-download" @click="download">下载附件</el-button>
     </div>
 
     <!-- 学生操作 -->
@@ -69,7 +69,8 @@ export default {
         release_time: "",
         deadline: "",
         file_id: "",
-        file_name: ""
+        file_name: "",
+        file_flag:0
       },
       fileList: [
         {
@@ -110,7 +111,7 @@ export default {
       this.$router.go(-1);
     },
     fetchAssignmentInfo() {
-      this.$http("get", "/assignment/" + this.assignment_id, {
+      this.$http("get", "/v1/assignment/" + this.assignment_id, {
         ass_id: this.assignment_id
       }).then(res => {
         console.log(res);
@@ -134,7 +135,7 @@ export default {
       });
     },
     submit() {
-      this.$http("post", "/assign_submit", {
+      this.$http("post", "/v1/assign_submit", {
         action: "post",
         ass_id: this.assignment_id,
         content: this.content
@@ -171,7 +172,7 @@ export default {
         }
       ).then(() => {
           // 真正路径  '/assignment'
-          this.$http("post", "/admin/course", {
+          this.$http("post", "/v1/admin/course", {
             action: "delete",
             test_id: this.$route.params.assign_id
           }).then(res => {
@@ -194,6 +195,14 @@ export default {
             message: "已取消删除"
           });
         });
+    },
+    download(){
+      let downloadUrl = 'http://localhost:3000/v1/assignment/file/' + this.$route.params.assign_id
+      let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = downloadUrl
+        document.body.appendChild(link)
+        link.click()
     }
   }
 };

@@ -181,7 +181,7 @@ export default {
       })
         .then(() => {
           // 真正路径  '/account/student'
-          this.$http("post", "/admin/course", {
+          this.$http("post", "/v1/account/student", {
             action: "delete",
             student_id: row.id
           }).then(res => {
@@ -204,8 +204,7 @@ export default {
         });
     },
     addUser() {
-      // 真正路径 '/account/'+'type'
-      this.$http('post', '/admin/course', this.userInfo).then(res=>{
+      this.$http('post', '/v1/account/'+'type',userInfo).then(res=>{
         if (res.data.status == 0) {
               this.$message({ type: "success", message: "添加成功!" });
               setTimeout(() => {

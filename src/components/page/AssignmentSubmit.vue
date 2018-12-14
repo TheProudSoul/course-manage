@@ -43,7 +43,7 @@
         </el-col>
         <el-col :span="12">
           <div class="grid-content">
-            <el-button type="primary" plain icon="el-icon-download">下载附件</el-button>
+            <el-button type="primary" plain icon="el-icon-download" @click="download">下载附件</el-button>
           </div>
         </el-col>
       </el-row>
@@ -124,7 +124,7 @@ export default {
         })
           .then(() => {
             // 真正路径  '/assign_submit'
-            this.$http("post", "/admin/course", {
+            this.$http("post", "/v1/admin/course", {
               action: "put",
               submit_id: this.$route.params.submit_id,
               mark: this.mark
@@ -152,6 +152,14 @@ export default {
             });
           });
       }
+    },
+    download(){
+      let downloadUrl = 'http://localhost:3000/v1/assign_submit/file/' + this.$route.params.submit_id
+      let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = downloadUrl
+        document.body.appendChild(link)
+        link.click()
     }
   }
 }

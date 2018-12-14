@@ -90,7 +90,7 @@ export default {
     submitInfo() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.$http("post", "/login", this.loginForm).then(res => {
+          this.$http("post", "/v1/login", this.loginForm).then(res => {
             if (res.data.status == 0) {
               if (this.loginForm.group == 3) {
                 this.$store.commit("login/userType", "student");

@@ -13,6 +13,9 @@ const request = (method, url, params = {}, config = {contentType: 'application/j
   let headers = {
     'Content-Type': config.contentType
   }
+  if (typeof (config.responseType) !== 'undefined') {
+    headers.responseType = config.responseType
+  }
   if (config.contentType !== 'application/json') {
     params = qs.stringify(params)
   }

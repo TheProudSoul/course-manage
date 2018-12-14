@@ -7,6 +7,7 @@ import notice from './modules/notice'
 import admin from './modules/admin'
 import assignment from './modules/assignment'
 import test from './modules/test'
+import resource from './modules/resource'
 
 Vue.use(Vuex)
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     notice,
     admin,
     assignment,
-    test
+    test,
+    resource
   }
 })

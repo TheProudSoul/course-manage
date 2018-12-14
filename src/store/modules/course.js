@@ -10,7 +10,7 @@ const getters = {
 
 const actions = {
   fetchCourse ({ state, commit }, course) {
-    http('get', '/section/' + course).then(res => {
+    http('get', '/v1/section/' + course).then(res => {
       commit('setCourse', {
         item: res.data
       })
@@ -21,7 +21,6 @@ const actions = {
 const mutations = {
   setCourse (state, {item}) {
     state.course = item
-    console.log(state.course)
   }
 }
 

@@ -28,7 +28,7 @@
     </div>
     <div class="file" v-if="testInfo.file_flag==0">
       <p class="file-title">附件：</p>
-      <el-button type="primary" plain icon="el-icon-download">下载附件</el-button>
+      <el-button type="primary" plain icon="el-icon-download" @click="download">下载附件</el-button>
     </div>
 
     <!-- 学生操作 -->
@@ -66,6 +66,7 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
+// import fileDownload from 'js-file-download'
 
 export default {
   data() {
@@ -78,7 +79,8 @@ export default {
         start_time: "",
         end_time: "",
         file_id: "",
-        file_name: ""
+        file_name: "",
+        file_flag: 0
       },
       content: "",
       fileList: [
@@ -114,7 +116,7 @@ export default {
       this.$router.go(-1);
     },
     fetchTestInfo() {
-      this.$http("get", "/online_test/" + this.test_id, {
+      this.$http("get", "/v1/online_test/" + this.test_id, {
         test_id: this.test_id
       }).then(res => {
         this.testInfo.test_id = res.data.test_id;
@@ -137,7 +139,7 @@ export default {
       });
     },
     submit() {
-      this.$http("post", "/test_submit", {
+      this.$http("post", "/v1/test_submit", {
         action: "post",
         test_id: this.test_id,
         content: this.content
@@ -172,9 +174,10 @@ export default {
           cancelButtonText: "取消",
           type: "warning"
         }
-      ).then(() => {
+      )
+        .then(() => {
           // 真正路径  '/online_test'
-          this.$http("post", "/admin/course", {
+          this.$http("post", "/v1/admin/course", {
             action: "delete",
             test_id: this.$route.params.test_id
           }).then(res => {
@@ -197,6 +200,14 @@ export default {
             message: "已取消删除"
           });
         });
+    },
+    download() {
+      let downloadUrl = "http://localhost:3000/v1/online_test/file/" + this.$route.params.test_id;
+      let link = document.createElement('a')
+      link.style.display = 'none'
+      link.href = downloadUrl
+      document.body.appendChild(link)
+      link.click()
     }
   }
 };
@@ -253,14 +264,14 @@ export default {
   font-size: 13px;
   margin-left: 10px;
 }
-  .buttons-T{
-    float: right;
-    margin-right: 80px;
-    margin-top: 30px;
-  }
-  .desc-title,
-  .file-title,
-  .date-title{
-    font-weight: bold;
-  }
+.buttons-T {
+  float: right;
+  margin-right: 80px;
+  margin-top: 30px;
+}
+.desc-title,
+.file-title,
+.date-title {
+  font-weight: bold;
+}
 </style>
