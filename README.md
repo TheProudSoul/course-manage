@@ -5,6 +5,9 @@
 #### 这个图标网站太好看了把嘻嘻嘻
 https://www.flaticon.com
 
+#### Vue 中批量下载文件并打包
+https://www.mmxiaowu.com/article/59b23f5d5b06a403cf687ed6
+
 ## Build Setup
 
 ``` bash
