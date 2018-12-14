@@ -7,7 +7,7 @@
 
 #### [Vue 中批量下载文件并打包](https://www.mmxiaowu.com/article/59b23f5d5b06a403cf687ed6)
 
-#### [Mock.js 1.0 Wiki](https://github.com/nuysoft/Mock/wiki）
+#### [Mock.js 1.0 Wiki](https://github.com/nuysoft/Mock/wiki)
 
 ## Build Setup
 
