@@ -26,20 +26,20 @@
     <div v-show="isStudent">
       <div class="answer">
         <p class="answer-title">回答：</p>
-        <el-input type="textarea" :autosize="{ minRows: 5}" placeholder="请输入内容" v-model="content"></el-input>
+        <el-input type="textarea" :autosize="{ minRows: 5}" placeholder="请输入内容" v-model="params.content"></el-input>
 
         <div class="button">
           <el-upload
             class="upload-demo"
             ref="upload"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
+            :action="uploadUrl"
+            :data="params"
+            :on-success="handleSuccess"
             :on-remove="handleRemove"
-            :file-list="fileList"
             :auto-upload="false"
           >
-            <el-button class="add-file" slot="trigger" size="small">上传附件</el-button>
-            <el-button class="submit" size="small" @click="submitUpload">提交</el-button>
+            <el-button class="add-file" slot="trigger" size="small" @click="fileInclude = true">上传附件</el-button>
+            <el-button class="submit" size="small" @click="submit">提交</el-button>
           </el-upload>
         </div>
       </div>
@@ -73,8 +73,10 @@ export default {
         deadline: "",
         file_id: "",
         file_name: "",
-        file_flag:0
-      }
+        file_flag: 0
+      },
+      uploadUrl: '/api/file/v1/resource',
+      fileInclude: false
     }
   },
   computed: {
@@ -87,13 +89,9 @@ export default {
   created() {
     this.fetchAssignmentInfo();
   },
-  beforeRouteUpdate(to, from, next) {
-    this.fetchAssignmentInfo();
-    next();
-  },
   methods: {
     back() {
-      this.$router.go(-1);
+      this.$router.go(-1)
     },
     fetchAssignmentInfo() {
       this.$http("get", "/v1/assignment/" + this.assignment_id, {
@@ -120,22 +118,22 @@ export default {
       });
     },
     submit() {
-      this.$http("post", "/v1/assign_submit", {
-        action: "post",
-        ass_id: this.assignment_id,
-        content: this.content
-      });
-    },
-    submitUpload() {
-      this.$refs.upload.submit();
+      // console.log(fileList)
+      // if(this.params.res_type==''){
+      //   this.$notify.error({
+      //     title: '错误',
+      //     message: "您没有选择资源类型哦~"
+      //   })
+      // }else{
+        this.$refs.upload.submit()        
+      // }
     },
     // 文件列表移除文件时的钩子
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      console.log(file, fileList)
     },
-    // 点击文件列表中已上传的文件时的钩子
-    handlePreview(file) {
-      console.log(file);
+    handleSuccess(response, file, fileList){
+      console.log(response)
     },
     getSubmit() {
       this.$router.push({
