@@ -19,6 +19,9 @@ const request = (method, url, params = {}, config = {contentType: 'application/j
   if (config.contentType !== 'application/json') {
     params = qs.stringify(params)
   }
+  if (config.contentType == 'multipart/form-data') {
+    headers.contentType = false
+  }
 
   const reqConfig = {
     method: method,

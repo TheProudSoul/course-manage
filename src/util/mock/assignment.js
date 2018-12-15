@@ -4,7 +4,6 @@ const domain = '/api' // 定义默认域名，随便写
 
 const Data = req => {
   req.body = JSON.parse(req.body)
-  console.log(req.body) // 请求体，用于获取参数
   let assignment = [{
     'assign_id': 1,
     'title': '第一次作业',

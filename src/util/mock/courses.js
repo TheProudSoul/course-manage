@@ -3,7 +3,6 @@ const Random = Mock.Random
 const domain = '/api' // 定义默认域名，随便写
 
 const Data = req => {
-  req.body = JSON.parse(req.body)
   let course = [
     {
       'course_id': 1,

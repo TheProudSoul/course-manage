@@ -180,7 +180,6 @@ export default {
         type: "warning"
       })
         .then(() => {
-          // 真正路径  '/account/student'
           this.$http("post", "/v1/account/student", {
             action: "delete",
             student_id: row.id
@@ -188,9 +187,8 @@ export default {
             if (res.data.status == 0) {
               this.$message({ type: "success", message: "删除成功!" });
               setTimeout(() => {
-                this.$router.go("0");
+                this.$router.go(0);
               }, 1000);
-              // this.$router.go("0");
             } else {
               this.$message({ type: "info", message: res.data.error_msg });
             }

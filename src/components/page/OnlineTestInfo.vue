@@ -202,7 +202,7 @@ export default {
         });
     },
     download() {
-      let downloadUrl = "http://localhost:3000/v1/online_test/file/" + this.$route.params.test_id;
+      let downloadUrl = "/api/file/v1/online_test/file/" + this.$route.params.test_id;
       let link = document.createElement('a')
       link.style.display = 'none'
       link.href = downloadUrl

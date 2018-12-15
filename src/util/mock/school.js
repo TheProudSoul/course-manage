@@ -2,7 +2,6 @@ const Mock = require('mockjs') // 获取mock对象
 const domain = '/api' // 定义默认域名，随便写
 
 const Data = req => {
-  req.body = JSON.parse(req.body)
   let school = [{
     'school_id': 1,
     'school_name': '软件学院'

@@ -62,7 +62,6 @@ export default {
       addFormVisible: false,
       form: {
         action: "post",
-        sec_id: this.$route.params.course,
         title: "",
         content: ""
       }
@@ -93,21 +92,28 @@ export default {
 
   methods: {
     handleAddNotice() {
-      // 真正路径 '/notice'
-      this.$http("post", "/v1/admin/course", this.form).then(res => {
-        if (res.data.status == 0) {
-          this.$alert("发布成功", "消息", {
-            confirmButtonText: "确定",
-            beforeClose: (action, instance, done) => {
-              this.$router.go("0");
+      if(this.form.title==''||this.form.content==''){
+        this.$notify({
+          title: '警告',
+          message: '请确认公告标题及公告内容不为空！',
+          type: 'warning'
+        });
+      }else{
+        this.$http("post", "/v1/notice", this.form).then(res => {
+          if (res.data.status == 0) {
+            this.$alert("发布成功", "消息", {
+              confirmButtonText: "确定",
+              beforeClose: (action, instance, done) => {
+                this.$router.go("0");
+            }
+          }) // setTimeout(() => {}, 1000);
+          } else {
+            this.$alert(res.data.error_msg, "发布失败", {
+              confirmButtonText: "确定"
+            });
           }
-         }) // setTimeout(() => {}, 1000);
-        } else {
-          this.$alert(res.data.error_msg, "发布失败", {
-            confirmButtonText: "确定"
-          });
-        }
-      });
+        });
+      }
     },
     handleDelete() {
       this.$confirm(

@@ -3,8 +3,7 @@ const Random = Mock.Random
 const domain = '/api' // 定义默认域名，随便写
 
 const Data = req => {
-  req.body = JSON.parse(req.body)
-  let status = 0
+  let status = 1
   let error_msg = '课程删除失败'
   return {status, error_msg}
 }

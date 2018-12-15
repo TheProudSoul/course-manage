@@ -6,14 +6,18 @@ const Data = req => {
   console.log(req) // 请求体，用于获取参数
   let notice = [
     {
-      'notice_id': '1',
+      'notice_id': 1,
+      'title': Random.cparagraph(1),
+      'content': Random.cparagraph(3),
       'release_time': '2018-11-03 12:00',
-      'title': Random.cparagraph(1)
+      'teacher_name': Random.cname()
     },
     {
-      'notice_id': '2',
-      'release_time': '2018-11-03 12:00',
-      'title': Random.cparagraph(1)
+      'notice_id': 2,
+      'title': Random.cparagraph(1),
+      'content': Random.cparagraph(3),
+      'release_time': '2018-12-15 10:19',
+      'teacher_name': Random.cname()
     }
   ]
   return notice

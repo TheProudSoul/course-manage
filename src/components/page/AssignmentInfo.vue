@@ -56,12 +56,15 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
+import FileSaver from 'file-saver'
 
 export default {
   data() {
     return {
       assignment_id: this.$route.params.assign_id,
-      content: "",
+      params:{
+        content: ""
+      },
       assignmentInfo: {
         assign_id: "",
         title: "",
@@ -71,20 +74,8 @@ export default {
         file_id: "",
         file_name: "",
         file_flag:0
-      },
-      fileList: [
-        {
-          name: "food.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        },
-        {
-          name: "food2.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        }
-      ]
-    };
+      }
+    }
   },
   computed: {
     ...mapGetters("login", {
@@ -94,15 +85,9 @@ export default {
     })
   },
   created() {
-    // 组件创建完后获取数据，
-    // 此时 data 已经被 observed 了
     this.fetchAssignmentInfo();
   },
   beforeRouteUpdate(to, from, next) {
-    // 在当前路由改变，但是该组件被复用时调用
-    // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
-    // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
-    // 可以访问组件实例 `this`
     this.fetchAssignmentInfo();
     next();
   },
@@ -197,12 +182,24 @@ export default {
         });
     },
     download(){
-      let downloadUrl = 'http://localhost:3000/v1/assignment/file/' + this.$route.params.assign_id
-      let link = document.createElement('a')
-        link.style.display = 'none'
-        link.href = downloadUrl
-        document.body.appendChild(link)
+      let downloadUrl = '/file/v1/assignment/file/' + this.$route.params.assign_id
+      this.$http('get',downloadUrl, {},{responseType: 'arraybuffer'}).then(res=>{
+        let url = window.URL.createObjectURL(res.data)
+        let link = document.createElement('a')
+        link.href = url
+        link.download = 'bell.png'
+        // document.body.appendChild(link)
         link.click()
+        window.URL.revokeObjectURL(this.src)
+        // let blob = new Blob([res.data])
+        // console.log(typeof(res.data))
+        // FileSaver.saveAs(url,"bell.png")
+      })
+      // let link = document.createElement('a')
+      //   link.style.display = 'none'
+      //   link.href = downloadUrl
+      //   document.body.appendChild(link)
+      //   link.click()
     }
   }
 };

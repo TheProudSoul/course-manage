@@ -127,7 +127,7 @@ export default {
       }
     },
     download(){
-      let downloadUrl = '/file/v1/test_submit/file/' + this.$route.params.submit_id
+      let downloadUrl = 'http://localhost:3000/v1/test_submit/file/' + this.$route.params.submit_id
       let link = document.createElement('a')
       link.style.display = 'none'
       link.href = downloadUrl
