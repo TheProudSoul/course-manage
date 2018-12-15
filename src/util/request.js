@@ -10,18 +10,24 @@ import qs from 'qs'
  * @returns Promise
  */
 const request = (method, url, params = {}, config = {contentType: 'application/json'}) => {
-  let headers = {
-    'Content-Type': config.contentType
+  let headers
+  if (config.contentType !== 'multipart/form-data') {
+    headers = {
+      'Content-Type': config.contentType
+    }
+  } else {
+    headers = {
+      'Content-Type': false
+    }
   }
+
   if (typeof (config.responseType) !== 'undefined') {
     headers.responseType = config.responseType
   }
   if (config.contentType !== 'application/json') {
     params = qs.stringify(params)
   }
-  if (config.contentType == 'multipart/form-data') {
-    headers.contentType = false
-  }
+
 
   const reqConfig = {
     method: method,

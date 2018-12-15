@@ -27,7 +27,16 @@
           <el-option label="参考资料" value="3"></el-option>
         </el-select>
         <div class="block">
-          <el-upload ref="upload" class="upload-demo" :on-success="handleSuccess" :on-error="handleError" drag :action="uploadUrl" :data="params" :auto-upload="false">
+          <el-upload 
+            ref="upload" 
+            class="upload-demo" 
+            :on-success="handleSuccess" 
+            :on-error="handleError" 
+            drag 
+            :action="uploadUrl" 
+            :data="params" 
+            :auto-upload="false"
+          >
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或 <em>点击上传</em></div>
           </el-upload>
@@ -145,7 +154,6 @@ export default {
       this.uploadVisible = true;
     },
     handleSuccess(res, file, fileList){
-      console.log(res, file,fileList)
       if(res.status==1){
         this.$notify.error({
           title: '错误',
@@ -193,7 +201,7 @@ export default {
           title: "警告",
           message: "你并没有选中任何内容！",
           type: "warning"
-        });
+        })
       } else {
         let fileToDelete = [];
         want_nodes.forEach(element => {

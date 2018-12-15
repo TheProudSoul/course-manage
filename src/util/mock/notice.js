@@ -9,14 +9,14 @@ const Data = req => {
       'notice_id': 1,
       'title': Random.cparagraph(1),
       'content': Random.cparagraph(3),
-      'release_time': '2018-11-03 12:00',
+      'release_time': '2018-11-03 12:00:00',
       'teacher_name': Random.cname()
     },
     {
       'notice_id': 2,
       'title': Random.cparagraph(1),
       'content': Random.cparagraph(3),
-      'release_time': '2018-12-15 10:19',
+      'release_time': '2018-12-15 10:19:00',
       'teacher_name': Random.cname()
     }
   ]

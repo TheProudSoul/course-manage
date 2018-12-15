@@ -4,12 +4,18 @@
       <div slot="header" class="clearfix">
         <span class="notice-title">通知</span>
       </div>
-      <div v-for="notice in notices" :key="notice.notice_id" class="text item" >
-        <img  src="../../assets/i6.png" style="height:20px; width: 20px"/>
-        <!-- <i class="fa fa-comment"></i> -->
-        <span style="margin-left: 10px">{{notice.title}}</span>
-      </div>
+      <el-table ref="singleTable" :show-header="false" :data="notices" highlight-current-row @row-click="showNotice" style="padding-left:20px;padding-right:20px">
+        <el-table-column width="30">
+          <template slot-scope="scope">
+            <img src="../../assets/i6.png" style="height:20px; width: 20px"/>
+          </template>
+        </el-table-column>
+        <el-table-column property="release_time" label="发布时间" width="180"></el-table-column>
+        <el-table-column property="teacher_name" label="发布者" width="80"></el-table-column>
+        <el-table-column property="title" label="公告标题"></el-table-column>   
+      </el-table>
     </el-card>
+
   </div>
 </template>
 
@@ -24,6 +30,14 @@ export default {
   },
   created () {
     this.$store.dispatch('notice/fetchNotice')
+  },
+  methods:{
+    showNotice(row, event, column){
+      console.log(row)
+      this.$alert(row.content, row.title, {
+        confirmButtonText: '确定'
+      })
+    }
   }
 }
 </script>

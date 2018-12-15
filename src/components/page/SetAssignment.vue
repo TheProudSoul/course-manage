@@ -36,10 +36,18 @@
           placeholder="请输入作业要求"
           clearable="true"></el-input>
       </el-form-item>
-      <el-form-item class="item" label="添加附件：" label-width="100px">
-        <el-button type="primary" plain icon="el-icon-upload2" style="float: left">上传附件</el-button>
-      </el-form-item>
-      <el-button type="primary" style="float: right; margin-right: 200px; margin-top: 15px">确   认</el-button>
+      <el-upload
+            class="upload-demo"
+            ref="upload"
+            :action="uploadUrl"
+            :data="params"
+            :on-success="handleSuccess"
+            :on-remove="handleRemove"
+            :auto-upload="false"
+          >
+            <el-button class="add-file" slot="trigger" size="small">上传附件</el-button>
+            <el-button class="submit" size="small" @click="submit">提交</el-button>
+          </el-upload>
     </el-form>
   </div>
 </template>

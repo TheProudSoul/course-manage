@@ -34,11 +34,12 @@
             ref="upload"
             :action="uploadUrl"
             :data="params"
+            :on-change="onChange"
             :on-success="handleSuccess"
             :on-remove="handleRemove"
             :auto-upload="false"
           >
-            <el-button class="add-file" slot="trigger" size="small" @click="fileInclude = true">上传附件</el-button>
+            <el-button class="add-file" slot="trigger" size="small">上传附件</el-button>
             <el-button class="submit" size="small" @click="submit">提交</el-button>
           </el-upload>
         </div>
@@ -63,7 +64,9 @@ export default {
     return {
       assignment_id: this.$route.params.assign_id,
       params:{
-        content: ""
+        action: 'post',
+        content: '',
+        assignment_id: this.$route.params.assign_id
       },
       assignmentInfo: {
         assign_id: "",
@@ -97,7 +100,6 @@ export default {
       this.$http("get", "/v1/assignment/" + this.assignment_id, {
         ass_id: this.assignment_id
       }).then(res => {
-        console.log(res);
         this.assignmentInfo.assign_id = res.data.assign_id;
         this.assignmentInfo.title = res.data.title;
         this.assignmentInfo.content = res.data.content;
@@ -118,22 +120,64 @@ export default {
       });
     },
     submit() {
-      // console.log(fileList)
-      // if(this.params.res_type==''){
-      //   this.$notify.error({
-      //     title: '错误',
-      //     message: "您没有选择资源类型哦~"
-      //   })
-      // }else{
-        this.$refs.upload.submit()        
-      // }
+      if(this.fileInclude){
+        this.$refs.upload.submit()
+      } else if(this.params.content==''){
+        this.$notify({
+          title: "警告",
+          message: "不可以提交空的答案哟！",
+          type: "warning"
+        })
+      } else {
+        this.$http('post','/v1/assign_submit',this.params).then(res=>{
+          if(res.data.status==0){
+            this.$alert("提交成功", "消息", {
+              confirmButtonText: "确定",
+              beforeClose: (action, instance, done) => {
+                this.$router.go(-1)
+              }
+            })
+          } else {
+            this.$alert(res.data.error_msg, "提交失败", {
+              confirmButtonText: "确定"
+            })
+          }
+        })
+      }
+    },
+    onChange(file,fileList){
+      if(fileList.length==0){
+        this.fileInclude = false
+      }else{
+        this.fileInclude = true
+      }
     },
     // 文件列表移除文件时的钩子
-    handleRemove(file, fileList) {
-      console.log(file, fileList)
+    handleRemove(file,fileList){
+      if(fileList.length==0){
+        this.fileInclude = false
+      }
     },
-    handleSuccess(response, file, fileList){
-      console.log(response)
+    
+    handleSuccess(res, file, fileList){
+      if(res.status==1){
+        this.$alert(res.error_msg, "提交失败", {
+          confirmButtonText: "确定"
+      })
+      }else{
+        this.$alert("提交成功", "消息", {
+          confirmButtonText: "确定",
+          beforeClose: (action, instance, done) => {
+            this.$router.go(-1)
+          }
+        })
+      }
+    },
+    handleError(err, file, fileList){
+      this.$notify.error({
+        title: '错误',
+        message: `啊哦~提交失败了！`
+      })
     },
     getSubmit() {
       this.$router.push({
@@ -142,7 +186,7 @@ export default {
           course: this.$route.params.course,
           assign_id: this.$route.params.assign_id
         }
-      });
+      })
     },
     submitDelete() {
       this.$confirm(
@@ -180,24 +224,25 @@ export default {
         });
     },
     download(){
-      let downloadUrl = '/file/v1/assignment/file/' + this.$route.params.assign_id
-      this.$http('get',downloadUrl, {},{responseType: 'arraybuffer'}).then(res=>{
-        let url = window.URL.createObjectURL(res.data)
-        let link = document.createElement('a')
-        link.href = url
-        link.download = 'bell.png'
+      let downloadUrl = '/api/file/v1/assignment/file/' + this.$route.params.assign_id
+      let link = document.createElement('a')
+      link.style.display = 'none'
+      link.href = downloadUrl
+      document.body.appendChild(link)
+      link.click()
+
+      // this.$http('get',downloadUrl, {},{responseType: 'arraybuffer'}).then(res=>{
+      //   let url = window.URL.createObjectURL(res.data)
+      //   let link = document.createElement('a')
+      //   link.href = url
+      //   link.download = 'bell.png'
         // document.body.appendChild(link)
-        link.click()
-        window.URL.revokeObjectURL(this.src)
+        // link.click()
+        // window.URL.revokeObjectURL(this.src)
         // let blob = new Blob([res.data])
         // console.log(typeof(res.data))
         // FileSaver.saveAs(url,"bell.png")
-      })
-      // let link = document.createElement('a')
-      //   link.style.display = 'none'
-      //   link.href = downloadUrl
-      //   document.body.appendChild(link)
-      //   link.click()
+      // })
     }
   }
 };

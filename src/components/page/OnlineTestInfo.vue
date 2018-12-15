@@ -35,20 +35,21 @@
     <div v-show="isStudent">
       <div class="answer">
         <p class="answer-title">回答：</p>
-        <el-input type="textarea" :autosize="{ minRows: 5}" placeholder="请输入内容" v-model="content"></el-input>
+        <el-input type="textarea" :autosize="{ minRows: 5}" placeholder="请输入内容" v-model="params.content"></el-input>
 
         <div class="button">
           <el-upload
             class="upload-demo"
             ref="upload"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
+            :action="uploadUrl"
+            :data="params"
+            :on-change="onChange"
+            :on-success="handleSuccess"
             :on-remove="handleRemove"
-            :file-list="fileList"
             :auto-upload="false"
           >
             <el-button class="add-file" slot="trigger" size="small">上传附件</el-button>
-            <el-button class="submit" size="small" @click="submitUpload">提交</el-button>
+            <el-button class="submit" size="small" @click="submit">提交</el-button>
           </el-upload>
         </div>
       </div>
@@ -66,7 +67,6 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
-// import fileDownload from 'js-file-download'
 
 export default {
   data() {
@@ -82,19 +82,13 @@ export default {
         file_name: "",
         file_flag: 0
       },
-      content: "",
-      fileList: [
-        {
-          name: "food.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        },
-        {
-          name: "food2.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        }
-      ]
+      params:{
+        action: 'post',
+        content: '',
+        test_id: this.$route.params.test_id
+      },
+      uploadUrl: '/api/file/v1/resource',
+      fileInclude: false
     };
   },
   computed: {
@@ -106,10 +100,6 @@ export default {
   },
   created() {
     this.fetchTestInfo();
-  },
-  beforeRouteUpdate(to, from, next) {
-    this.fetchTestInfo();
-    next();
   },
   methods: {
     back() {
@@ -139,22 +129,57 @@ export default {
       });
     },
     submit() {
-      this.$http("post", "/v1/test_submit", {
-        action: "post",
-        test_id: this.test_id,
-        content: this.content
-      });
+      if(this.fileInclude){
+        this.$refs.upload.submit()
+      } else if(this.params.content==''){
+        this.$notify({
+          title: "警告",
+          message: "不可以提交空的答案哟！",
+          type: "warning"
+        })
+      } else {
+        this.$http('post','/v1/assign_submit',this.params).then(res=>{
+          if(res.data.status==0){
+            this.$alert("提交成功", "消息", {
+              confirmButtonText: "确定",
+              beforeClose: (action, instance, done) => {
+                this.$router.go(-1)
+              }
+            })
+          } else {
+            this.$alert(res.data.error_msg, "提交失败", {
+              confirmButtonText: "确定"
+            })
+          }
+        })
+      }
     },
-    submitUpload() {
-      this.$refs.upload.submit();
+    onChange(file,fileList){
+      if(fileList.length==0){
+        this.fileInclude = false
+      }else{
+        this.fileInclude = true
+      }
     },
-    // 文件列表移除文件时的钩子
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
+    handleRemove(file,fileList){
+      if(fileList.length==0){
+        this.fileInclude = false
+      }
     },
-    // 点击文件列表中已上传的文件时的钩子
-    handlePreview(file) {
-      console.log(file);
+    
+    handleSuccess(res, file, fileList){
+      if(res.status==1){
+        this.$alert(res.error_msg, "提交失败", {
+          confirmButtonText: "确定"
+      })
+      }else{
+        this.$alert("提交成功", "消息", {
+          confirmButtonText: "确定",
+          beforeClose: (action, instance, done) => {
+            this.$router.go(-1)
+          }
+        })
+      }
     },
     getSubmit() {
       this.$router.push({

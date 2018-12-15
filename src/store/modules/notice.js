@@ -1,7 +1,7 @@
 import http from '../../util/request'
 
 const state = {
-  noticeList: {}
+  noticeList: []
 }
 
 const getters = {

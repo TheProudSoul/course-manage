@@ -32,7 +32,6 @@
         label-position="left"
       >
         <el-form-item label="账号" prop="id" label-width="50px">
-          <!-- http://element.eleme.io/#/zh-CN/component/input#ji-chu-yong-fa -->
           <el-input type="text" v-model="loginForm.id" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="passwd" label-width="50px">

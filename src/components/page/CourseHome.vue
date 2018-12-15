@@ -44,10 +44,16 @@
             </div>
           </el-dialog>
         </div>
-        <div v-for="notice in notices" :key="notice.notice_id" class="text item">
-            <img  src="../../assets/i6.png" style="height:18px; width: 18px;"/>
-          <span style="margin-left: 10px">{{notice.title}}</span>
-        </div>
+      <el-table ref="singleTable" :show-header="false" :data="notices" highlight-current-row @row-click="showNotice" style="padding-left:20px;padding-right:20px">
+        <el-table-column width="30">
+          <template slot-scope="scope">
+            <img src="../../assets/i6.png" style="height:20px; width: 20px"/>
+          </template>
+        </el-table-column>
+        <el-table-column property="release_time" label="发布时间" width="180"></el-table-column>
+        <el-table-column property="teacher_name" label="发布者" width="80"></el-table-column>
+        <el-table-column property="title" label="公告标题"></el-table-column>   
+      </el-table>
       </el-card>
     </div>
   </div>
@@ -104,13 +110,13 @@ export default {
             this.$alert("发布成功", "消息", {
               confirmButtonText: "确定",
               beforeClose: (action, instance, done) => {
-                this.$router.go("0");
+                this.$router.go(0)
             }
           }) // setTimeout(() => {}, 1000);
           } else {
             this.$alert(res.data.error_msg, "发布失败", {
               confirmButtonText: "确定"
-            });
+            })
           }
         });
       }
@@ -154,6 +160,12 @@ export default {
           operation: 'edit'
         }
       });
+    },
+    showNotice(row, event, column){
+      console.log(row)
+      this.$alert(row.content, row.title, {
+        confirmButtonText: '确定'
+      })
     }
   }
 };
