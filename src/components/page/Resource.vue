@@ -30,8 +30,7 @@ export default {
       defaultProps: {
         label: "res_name",
         isLeaf: "leaf"
-      },
-      nameToId:[{"courseware":0},{"exam":1},{"experiment":2},{"reference":3}]
+      }
     };
   },
   computed: {
@@ -42,9 +41,7 @@ export default {
     }),
     ...mapGetters('resource', {
       resourceType:'getResourceType',
-      resourceList: 'getResourceList',
-      types: 'getTypeName',
-      typeResources: 'getResourceByType'
+      resourceList: 'getResourceList'
     })
   },
   created() {
@@ -53,39 +50,48 @@ export default {
   methods: {
     download() {
       let downloadPath = '/file/v1/resource/file/'
-      let file_ids = this.$refs.tree.getCheckedKeys(true)
-      let want = this.$refs.tree.getCheckedKeys()
-      want.forEach(element => {
-        if(this.types.includes(element)){
-          file_ids = file_ids.concat(this.typeResources(this.types.indexOf(element)))
-        }
-      })
-      file_ids = [...new Set(file_ids.sort())]
-      // 获取下载链接
-      let link = []
-      for (let i = 0; i < file_ids.length; i++){
-        link[i] = downloadPath + file_ids[i]
-      }
-      const zip = new JSZip()
-      const cache = {}
-      const promises = []
-      link.forEach(item => {
-        console.log(item)
-        const promise = this.$http('get',item,{}, {responseType: 'arraybuffer'}).then(res=>{
-        const arr_name = item.split("/")
-        const file_name = arr_name[arr_name.length - 1] // 获取文件名
-        zip.file(file_name, res.data, { binary: true }) // 逐个添加文件
-        cache[file_name] = res.data
-      })
-        promises.push(promise)
-      })
-      console.log(promises.length)
-      const tmp = Promise.all(promises)
-      tmp.then(()=>{
-        zip.generateAsync({type:"blob"}).then(content => { // 生成二进制流
-            FileSaver.saveAs(content, "resources.zip") // 利用file-saver保存文件
+      // let file_ids = this.$refs.tree.getCheckedKeys(true)
+      // let want = this.$refs.tree.getCheckedKeys()
+      let want_nodes = this.$refs.tree.getCheckedNodes()
+      if(want_nodes.length==0){
+        this.$notify({
+          title: '警告',
+          message: '你并没有选中任何内容！',
+          type: 'warning'
+        });
+      }else{
+        let fileToDownload = []
+        want_nodes.forEach(element=>{
+          if(this.resourceType.includes(element)){
+            if(fileToDownload.length==0){
+              fileToDownload = this.resourceList[element.type_id]
+            }else{
+              fileToDownload = fileToDownload.concat(this.resourceList[element.type_id])
+            }
+          }else {
+            if(!fileToDownload.includes(element)){
+              fileToDownload.push(element)
+            }
+          }
         })
-      })
+        const zip = new JSZip()
+        const cache = {}
+        const promises = []
+        fileToDownload.forEach(item => {
+          console.log(item)
+          const promise = this.$http('get', downloadPath + item.file_id, {}, {responseType: 'arraybuffer'}).then(res=>{
+          const file_name = item.res_name // 获取文件名
+          zip.file(file_name, res.data, { binary: true }) // 逐个添加文件
+          cache[file_name] = res.data
+        })
+          promises.push(promise)
+        })
+        Promise.all(promises).then(()=>{
+          zip.generateAsync({type:"blob"}).then(content => { // 生成二进制流
+              FileSaver.saveAs(content, "resources.zip") // 利用file-saver保存文件
+          })
+        })
+      }
     },
 
     resetChecked() {

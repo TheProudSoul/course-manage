@@ -43,6 +43,8 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
+import JSZip from 'jszip'
+import FileSaver from 'file-saver'
 
 export default {
   data() {
@@ -125,12 +127,12 @@ export default {
       }
     },
     download(){
-      let downloadUrl = 'http://localhost:3000/v1/test_submit/file/' + this.$route.params.submit_id
+      let downloadUrl = '/file/v1/test_submit/file/' + this.$route.params.submit_id
       let link = document.createElement('a')
-        link.style.display = 'none'
-        link.href = downloadUrl
-        document.body.appendChild(link)
-        link.click()
+      link.style.display = 'none'
+      link.href = downloadUrl
+      document.body.appendChild(link)
+      link.click()
     }
   }
 };

@@ -80,14 +80,16 @@ export default {
     })
   },
   created() {
+    console.log("created")
     this.$store.dispatch("course/fetchCourse", this.$route.params.course);
     this.$store.dispatch("notice/fetchNotice", this.$route.params.course);
   },
-  beforeRouteUpdate(to, from, next) {
-    this.$store.dispatch("course/fetchCourse", to.params.course);
-    this.$store.dispatch("notice/fetchNotice", to.params.course);
-    next();
-  },
+  // beforeRouteUpdate(to, from, next) {
+  //   console.log("bru")
+  //   this.$store.dispatch("course/fetchCourse", to.params.course);
+  //   this.$store.dispatch("notice/fetchNotice", to.params.course);
+  //   next();
+  // },
 
   methods: {
     handleAddNotice() {
@@ -211,8 +213,8 @@ export default {
 .release {
   padding-left: 15px;
   padding-right: 15px;
-  background: cornflowerblue;
-  color: #fff;
+  background: #ffd700;
+  color: #606266;
   font-size: 12px;
   float: right;
 }

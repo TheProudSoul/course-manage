@@ -3,7 +3,6 @@ const Random = Mock.Random
 const domain = '/api' // 定义默认域名，随便写
 
 const Data = req => {
-  console.log(req) // 请求体，用于获取参数
   let result = [
     {
       'submit_id': 1,
@@ -24,4 +23,4 @@ const Data = req => {
 }
 
 // 定义请求链接，类型，还有返回数据
-Mock.mock(/\/api\/v1\/assign_submit\?ass_id=\/\d*/, 'get', Data)
+Mock.mock(/\/api\/v1\/(assign_submit\?ass_id=|test_submit\?test_id=)\d*/, 'get', Data)

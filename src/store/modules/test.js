@@ -25,7 +25,7 @@ const actions = {
 
   fetchSubmits ({ state, commit }, id) {
     // 真正路径 '/test_submit/'
-    http('get', '/v1/test_submit/' + id).then(res => {
+    http('get', '/v1/test_submit?test_id=' + id).then(res => {
       commit('setSubmitList', {
         item: res.data.result
       })
