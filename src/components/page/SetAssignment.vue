@@ -64,7 +64,9 @@ export default {
         deadline: '',
         file_id: '',
         file_name: ''
-      }
+      },
+      uploadUrl: '/api/file/v1/resource',
+      fileInclude: false
     }
   },
   created () {
@@ -81,7 +83,67 @@ export default {
   },
   methods:{
     back(){this.$router.go(-1)}
-  }
+  },
+      submit() {
+      if(this.fileInclude){
+        this.$refs.upload.submit()
+      } else if(this.params.content==''){
+        this.$notify({
+          title: "警告",
+          message: "不可以提交空的答案哟！",
+          type: "warning"
+        })
+      } else {
+        this.$http('post','/v1/assign_submit',this.params).then(res=>{
+          if(res.data.status==0){
+            this.$alert("提交成功", "消息", {
+              confirmButtonText: "确定",
+              beforeClose: (action, instance, done) => {
+                this.$router.go(-1)
+              }
+            })
+          } else {
+            this.$alert(res.data.error_msg, "提交失败", {
+              confirmButtonText: "确定"
+            })
+          }
+        })
+      }
+    },
+    onChange(file,fileList){
+      if(fileList.length==0){
+        this.fileInclude = false
+      }else{
+        this.fileInclude = true
+      }
+    },
+    // 文件列表移除文件时的钩子
+    handleRemove(file,fileList){
+      if(fileList.length==0){
+        this.fileInclude = false
+      }
+    },
+    
+    handleSuccess(res, file, fileList){
+      if(res.status==1){
+        this.$alert(res.error_msg, "提交失败", {
+          confirmButtonText: "确定"
+      })
+      }else{
+        this.$alert("提交成功", "消息", {
+          confirmButtonText: "确定",
+          beforeClose: (action, instance, done) => {
+            this.$router.go(-1)
+          }
+        })
+      }
+    },
+    handleError(err, file, fileList){
+      this.$notify.error({
+        title: '错误',
+        message: `啊哦~提交失败了！`
+      })
+    },
 }
 </script>
 <style>

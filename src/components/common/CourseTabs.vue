@@ -20,10 +20,10 @@ export default {
         params: {
             course: this.$route.params.course
           }
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style scoped>

@@ -26,24 +26,18 @@
 import { mapGetters, mapState } from 'vuex'
 
 export default {
-  data () {
-    return {
-      onlineTestList: []
-    }
-  },
   computed: {
     ...mapGetters('login', {
       isStudent: 'isStudent',
       isTeacher: 'isTeacher',
       isAdmin: 'isAdmin'
+    }),
+    ...mapGetters('test', {
+      onlineTestList: 'getTestList'
     })
   },
   created () {
-    this.fetchTestList()
-  },
-  beforeRouteUpdate (to, from, next) {
-    this.fetchTestList()
-    next()
+    this.$store.dispatch('test/fetchTestList')
   },
   methods: {
     fetchTestList () {
@@ -59,7 +53,6 @@ export default {
           course: this.$route.params.course
         }
       })
-      console.log(row)
     },
     handleAdd () {
       this.$router.push({

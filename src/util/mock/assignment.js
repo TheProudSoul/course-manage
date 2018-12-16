@@ -19,9 +19,7 @@ const Data = req => {
     'file_id': 2
   }
   ]
-  return {
-    assignment
-  }
+  return assignment
 }
 
 // 定义请求链接，类型，还有返回数据

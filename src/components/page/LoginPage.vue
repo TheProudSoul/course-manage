@@ -37,7 +37,7 @@
         <el-form-item label="密码" prop="passwd" label-width="50px">
           <el-input type="password" v-model="loginForm.passwd" autocomplete="off"></el-input>
         </el-form-item>
-        <el-button type="primary" @click="submitInfo()" class="submit-btn">登 录</el-button>
+        <el-button type="primary" @click="submitInfo" class="submit-btn">登 录</el-button>
       </el-form>
     </el-card>
   </div>
@@ -52,18 +52,18 @@ export default {
       } else {
         callback();
       }
-    };
+    }
     var validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
       } else {
         callback();
       }
-    };
+    }
     return {
       loginForm: {
-        id: "111",
-        passwd: "111",
+        id: "zyqnb",
+        passwd: "zyqnb",
         group: 3
       },
 
@@ -83,7 +83,7 @@ export default {
           }
         ]
       }
-    };
+    }
   },
   methods: {
     submitInfo() {

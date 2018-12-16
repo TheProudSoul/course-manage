@@ -71,17 +71,6 @@ import { mapGetters, mapState } from "vuex";
 export default {
   data() {
     return {
-      test_id: this.$route.params.test_id,
-      testInfo: {
-        test_id: "",
-        title: "",
-        content: "",
-        start_time: "",
-        end_time: "",
-        file_id: "",
-        file_name: "",
-        file_flag: 0
-      },
       params:{
         action: 'post',
         content: '',
@@ -96,27 +85,17 @@ export default {
       isStudent: "isStudent",
       isTeacher: "isTeacher",
       isAdmin: "isAdmin"
+    }),
+    ...mapGetters("test", {
+      testInfo: "getTest"
     })
   },
   created() {
-    this.fetchTestInfo();
+    this.$store.dispatch('test/fetchTest', this.$route.params.test_id)
   },
   methods: {
     back() {
       this.$router.go(-1);
-    },
-    fetchTestInfo() {
-      this.$http("get", "/v1/online_test/" + this.test_id, {
-        test_id: this.test_id
-      }).then(res => {
-        this.testInfo.test_id = res.data.test_id;
-        this.testInfo.title = res.data.title;
-        this.testInfo.content = res.data.content;
-        this.testInfo.start_time = res.data.start_time;
-        this.testInfo.end_time = res.data.end_time;
-        this.testInfo.file_id = res.data.file_id;
-        this.testInfo.file_name = res.data.file_name;
-      });
     },
     editAss() {
       this.$router.push({
@@ -138,7 +117,7 @@ export default {
           type: "warning"
         })
       } else {
-        this.$http('post','/v1/assign_submit',this.params).then(res=>{
+        this.$http('post','/v1/test_submit',this.params).then(res=>{
           if(res.data.status==0){
             this.$alert("提交成功", "消息", {
               confirmButtonText: "确定",

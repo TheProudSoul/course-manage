@@ -62,21 +62,10 @@ import FileSaver from 'file-saver'
 export default {
   data() {
     return {
-      assignment_id: this.$route.params.assign_id,
       params:{
         action: 'post',
         content: '',
         assignment_id: this.$route.params.assign_id
-      },
-      assignmentInfo: {
-        assign_id: "",
-        title: "",
-        content: "",
-        release_time: "",
-        deadline: "",
-        file_id: "",
-        file_name: "",
-        file_flag: 0
       },
       uploadUrl: '/api/file/v1/resource',
       fileInclude: false
@@ -87,27 +76,17 @@ export default {
       isStudent: "isStudent",
       isTeacher: "isTeacher",
       isAdmin: "isAdmin"
+    }),
+    ...mapGetters("assignment", {
+      assignmentInfo: "getAssignment"
     })
   },
   created() {
-    this.fetchAssignmentInfo();
+    this.$store.dispatch('assignment/fetchAssignment', this.$route.params.assign_id)
   },
   methods: {
     back() {
       this.$router.go(-1)
-    },
-    fetchAssignmentInfo() {
-      this.$http("get", "/v1/assignment/" + this.assignment_id, {
-        ass_id: this.assignment_id
-      }).then(res => {
-        this.assignmentInfo.assign_id = res.data.assign_id;
-        this.assignmentInfo.title = res.data.title;
-        this.assignmentInfo.content = res.data.content;
-        this.assignmentInfo.release_time = res.data.release_time;
-        this.assignmentInfo.deadline = res.data.deadline;
-        this.assignmentInfo.file_id = res.data.file_id;
-        this.assignmentInfo.file_name = res.data.file_name;
-      });
     },
     editAss() {
       this.$router.push({

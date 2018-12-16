@@ -2,12 +2,16 @@ import http from '../../util/request'
 
 const state = {
   submitList: [],
-  submit: {}
+  submit: {},
+  assignment: {},
+  assignmentList: []
 }
 
 const getters = {
   getSubmit: state => state.submit,
-  getSubmitList: state => state.submitList
+  getSubmitList: state => state.submitList,
+  getAssignment: state => state.assignment,
+  getAssignmentList: state => state.assignmentList
 }
 
 const actions = {
@@ -29,6 +33,22 @@ const actions = {
         item: res.data.result
       })
     })
+  },
+
+  fetchAssignment ({ state, commit }, id) {
+    http('get', '/v1/assignment/' + id).then(res => {
+      commit('setAssignment', {
+        item: res.data
+      })
+    })
+  },
+
+  fetchAssignmentList ({ state, commit }) {
+    http('get', '/v1/assignment').then(res => {
+      commit('setAssignmentList', {
+        item: res.data
+      })
+    })
   }
 }
 
@@ -39,6 +59,14 @@ const mutations = {
 
   setSubmitList (state, {item}) {
     state.submitList = item
+  },
+
+  setAssignment (state, {item}) {
+    state.assignment = item
+  },
+
+  setAssignmentList (state, {item}) {
+    state.assignmentList = item
   }
 }
 

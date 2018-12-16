@@ -18,9 +18,7 @@ const Data = req => {
       'end_time': '2018-11-04 21:00:00'
     }
   ]
-  return {
-    online_test
-  }
+  return online_test
 }
 
 // 定义请求链接，类型，还有返回数据

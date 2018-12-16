@@ -31,12 +31,12 @@
           <el-button v-if="isTeacher" type="text" @click="addFormVisible = true" class="release">发布</el-button>
           <!-- 发布公告弹框 -->
           <el-dialog title="发布公告" :visible.sync="addFormVisible">
-            <el-form :model="form">
+            <el-form :model="params">
               <el-form-item label="公告标题" label-width="120px">
-                <el-input v-model="form.title" autocomplete="off"></el-input>
+                <el-input v-model="params.title" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item label="公告内容" label-width="120px">
-                <el-input v-model="form.content" type="textarea" :rows="5" autocomplete="off"></el-input>
+                <el-input v-model="params.content" type="textarea" :rows="5" autocomplete="off"></el-input>
               </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -66,7 +66,7 @@ export default {
   data() {
     return {
       addFormVisible: false,
-      form: {
+      params: {
         action: "post",
         title: "",
         content: ""
@@ -98,14 +98,14 @@ export default {
 
   methods: {
     handleAddNotice() {
-      if(this.form.title==''||this.form.content==''){
+      if(this.params.title==''||this.params.content==''){
         this.$notify({
           title: '警告',
           message: '请确认公告标题及公告内容不为空！',
           type: 'warning'
         });
       }else{
-        this.$http("post", "/v1/notice", this.form).then(res => {
+        this.$http("post", "/v1/notice", this.params).then(res => {
           if (res.data.status == 0) {
             this.$alert("发布成功", "消息", {
               confirmButtonText: "确定",

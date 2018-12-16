@@ -28,31 +28,20 @@
 import { mapGetters, mapState } from 'vuex'
 
 export default {
-  data () {
-    return {
-      assignmentList: []
-    }
-  },
   computed: {
     ...mapGetters('login', {
       isStudent: 'isStudent',
       isTeacher: 'isTeacher',
       isAdmin: 'isAdmin'
+    }),
+    ...mapGetters('assignment', {
+      assignmentList: 'getAssignmentList'
     })
   },
   created () {
-    this.fetchAssignmentList()
-  },
-  beforeRouteUpdate (to, from, next) {
-    this.fetchAssignmentList()
-    next()
+    this.$store.dispatch('assignment/fetchAssignmentList')
   },
   methods: {
-    fetchAssignmentList () {
-      this.$http('get', '/v1/assignment').then(res => {
-        this.assignmentList = res.data.assignment
-      })
-    },
     getAssignment (row) {
       this.$router.push({
         name: 'assignmentInfo',
