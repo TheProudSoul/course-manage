@@ -1,146 +1,85 @@
 <template>
-  <div class="content-box">
-    <div class="content">
-      <div>
-        <el-button class="btn-return" icon="el-icon-back" circle @click="back"></el-button>
-        <h3 class="title" style="font-size: 24px; margin-top: 10px; margin-bottom: 15px">添加课程</h3>
-        <hr color="#d3d3d3" style="margin-bottom: 10px; margin-top: 5px"/>
-      </div>
-      <div>
-        <div class="desc">
-          <p class="id" style="float:left">课程编号：</p>
-          <div class="id-content">
-            <el-input
-              placeholder="请输入内容"
-              v-model="content"
-              class="id-c"
-              id="id"
-            >{{this.id}}</el-input>
-          </div>
-        </div>
-        <div class="desc">
-          <p class="credit" style="float:left">课程学分：</p>
-          <div class="credit-content">
-            <el-input
-              placeholder="请输入内容"
-              v-model="content"
-              class="id-c"
-              id="credit"
-            >{{this.credit}}</el-input>
-          </div>
-        </div>
-        <div class="date">
-          <p class="start-year" style="float:left">开课年份：</p>
-          <div class="year-content">
-            <el-input
-              placeholder="请输入内容"
-              v-model="content"
-              class="id-c"
-              id="year"
-            >{{this.year}}</el-input>
-          </div>
-        </div>
-        <div class="date">
-          <p class="start-semester" style="float:left">开课学期：</p>
-          <div class="semester-content">
-            <el-input
-              type="textarea"
-              :autosize="{ maxRows: 1}"
-              placeholder="请输入内容"
-              v-model="content"
-              class="id-c"
-              id="semester"
-            >{{this.semester}}</el-input>
-          </div>
-        </div>
-        <div class="time">
-          <p class="course-time" style="float:left">上课时间：</p>
-          <div class="time-content">
-            <el-input
-              type="textarea"
-              :autosize="{ maxRows: 1}"
-              placeholder="请输入内容"
-              v-model="content"
-              class="id-c"
-              id="time"
-            >{{this.time}}</el-input>
-          </div>
-        </div>
-        <div class="time">
-          <p class="course-week" style="float:left">上课周：</p>
-          <div class="week-content">
-            <el-input
-              type="textarea"
-              :autosize="{ maxRows: 1}"
-              placeholder="请输入内容"
-              v-model="content"
-              class="id-c"
-              id="week"
-            >{{this.week}}</el-input>
-          </div>
-        </div>
-        <div class="where">
-          <p class="building" style="float:left">教学楼：</p>
-          <div class="building-content">
-            <el-input
-              type="textarea"
-              :autosize="{ maxRows: 1}"
-              placeholder="请输入内容"
-              v-model="content"
-              class="id-c"
-              id="building"
-            >{{this.building}}</el-input>
-          </div>
-        </div>
-        <div class="where">
-          <p class="classroon" style="float:left">教室：</p>
-          <div class="classroom-content">
-            <el-input
-              type="textarea"
-              :autosize="{ maxRows: 1}"
-              placeholder="请输入内容"
-              v-model="content"
-              class="id-c"
-              id="classroom"
-            >{{this.building}}</el-input>
-          </div>
-        </div>
-        <div class="teacher">
-          <p class="tea" style="float:left">教室编号：</p>
-          <div class="teacher-content">
-            <el-input
-              type="textarea"
-              :autosize="{ maxRows: 1}"
-              placeholder="请输入内容"
-              v-model="content"
-              class="id-c"
-              id="tea"
-            >{{this.teacher}}</el-input>
-          </div>
-        </div>
-      </div>
+  <div class="content">
+    <div>
+      <el-button class="btn-return" icon="el-icon-back" circle @click="back"></el-button>
+      <h3 class="title" style="font-size: 24px; margin-top: 10px; margin-bottom: 15px">添加课程</h3>
+      <hr color="#d3d3d3" style="margin-bottom: 10px; margin-top: 5px"/>
+    </div>
+      <el-form label-width="150px">
+        <el-form-item label="课程编号：" required>
+          <el-select v-model="course_id" placeholder="请选择">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="课程学分：" required>
+          <el-input-number v-model="credit" @change="handleChange" :min="1" :max="10"></el-input-number>
+        </el-form-item>
+        <el-form-item label="开课年份：" required>
+          <el-date-picker v-model="year" type="year" placeholder="选择开课年份"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="开课学期：" required>
+          <el-select v-model="semester" placeholder="请选择开课学期">
+            <el-option label="上学期" value="1"></el-option>
+            <el-option label="下学期" value="2"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="上课时间：" required>
+        </el-form-item>
+        <el-form-item label="开课周：" required>
+        </el-form-item>
+        <el-form-item label="上课教学楼：" required>
+        </el-form-item>
+        <el-form-item label="上课教教室：" required>
+        </el-form-item>
+        <el-form-item label="授课老师：" required>
+          <el-select v-model="course_id" placeholder="请选择">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>      
+
       <div class="buttons" align="center">
         <el-button @click="submit" class="confirm">确认</el-button>
         <el-button @click="clear" class="clear">清空</el-button>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
+import { mapGetters, mapState } from "vuex";
+import _ from "lodash";
+
+const mapFields = (namespace, fields) => {
+  return _.mapValues(fields, path => {
+    return {
+      get() {
+        return _.get(this.$store.state[namespace], path);
+      },
+      set(value) {
+        this.$store.commit(`${namespace}/updateUser`, { path, value });
+      }
+    }
+  })
+}
+
 export default {
   data() {
     return {
-      id: "",
-      credit: "",
-      year: "",
-      semester: "",
-      time: "",
-      week: "",
-      building: "",
-      classroom: "",
-      teacher: ""
-    };
+
+    }
+  },
+  computed:{
+    ...mapFields("admin", {
+      course_id: "courseInfo.course_id",
+      credit: "courseInfo.credit",
+      year: "courseInfo.year",
+      semester: "courseInfo.semester",
+      time_slot: "courseInfo.time_slot",
+      week: "courseInfo.week",
+      building: "courseInfo.building",
+      room: "courseInfo.room",
+      teacher_id: "courseInfo.teacher_id"
+    }),
   },
   methods: {
     submit() {

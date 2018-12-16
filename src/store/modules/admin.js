@@ -5,7 +5,8 @@ const state = {
   schoolList: [],
   courseList: [],
   userList: [],
-  userInfo: []
+  userInfo: [],
+  courseInfo: []
 }
 
 const getters = {

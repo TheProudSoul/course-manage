@@ -65,36 +65,36 @@
 
     <!-- 添加用户弹框 -->
     <el-dialog :title="'添加'+type+'用户'" :visible.sync="addFormVisible">
-      <el-form :hide-required-asterisk="false" status-icon>
+      <el-form :hide-required-asterisk="false" label-width="120px" status-icon>
         <template v-if="type=='教师'">
-          <el-form-item label="教师编号" label-width="120px" required>
+          <el-form-item label="教师编号" required>
             <el-input  v-model="id" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="教师姓名" label-width="120px" required>
+          <el-form-item label="教师姓名" required>
             <el-input v-model="name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="学院编号" label-width="120px" required>
+          <el-form-item label="学院编号" required>
             <el-input v-model="school_id" autocomplete="off"></el-input>
           </el-form-item>
         </template>
 
         <template v-else>
-          <el-form-item label="学号" label-width="120px" required>
+          <el-form-item label="学号" required>
             <el-input v-model="id" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="姓名" label-width="120px" required>
+          <el-form-item label="姓名" required>
             <el-input v-model="name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="学院编号" label-width="120px" required>
+          <el-form-item label="学院编号" required>
             <el-input v-model="school_id" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="专业" label-width="120px" required>
+          <el-form-item label="专业" required>
             <el-input v-model="major" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="年级" label-width="120px" required>
+          <el-form-item label="年级" required>
             <el-input v-model="grade" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="班级" label-width="120px" required>
+          <el-form-item label="班级" required>
             <el-input v-model="theClass" autocomplete="off"></el-input>
           </el-form-item>
         </template>
