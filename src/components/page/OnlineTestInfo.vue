@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     back() {
-      this.$router.go(-1);
+      this.$router.go(-1)
     },
     editAss() {
       this.$router.push({

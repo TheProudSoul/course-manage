@@ -10,4 +10,4 @@ const Data = req => {
 }
 
 // 定义请求链接，类型，还有返回数据
-Mock.mock(/\/api\/v1\/(assign_submit|test_submit)/, 'post', Data)
+Mock.mock(/\/api\/v1\/(assign_submit|test_submit|notice)/, 'post', Data)

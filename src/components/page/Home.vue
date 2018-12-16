@@ -15,7 +15,6 @@
         <el-table-column property="title" label="公告标题"></el-table-column>   
       </el-table>
     </el-card>
-
   </div>
 </template>
 

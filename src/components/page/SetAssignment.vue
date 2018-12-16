@@ -1,49 +1,30 @@
 <template>
-  <!-- 按钮统一为“确认” -->
-  <!-- 使用input动态绑定value -->
   <div class="content">
     <div class="new-assign-header">
       <h1 class="title">{{title}}</h1>
       <el-button class="btn-return" icon="el-icon-back" circle @click="back"></el-button>
       <hr color="#d3d3d3" style="margin-bottom: 10px; margin-top: 5px"/>
     </div>
-    <el-form
-      :model="assignmentInfo"
-      ref="assignmentInfo"
-      label-width="50px"
-      label-position="left"
-      class="form-assign"
-    >
-      <el-form-item class="item-title" label="标题：" label-width="60px">
-        <el-input
-          type="text"
-          v-model="assignmentInfo.name"
-          placeholder="请输入作业名称"
-          clearable="true" style="margin-left: 40px"></el-input>
+    <el-form :model="assignmentInfo" label-width="100px" label-position="left" class="form-assign">
+      <el-form-item class="item-title" label="标题：" required>
+        <el-input type="text" v-model="assignmentInfo.title" placeholder="请输入作业名称" style="width:220px;float:left"></el-input>
       </el-form-item>
-      <el-form-item class="item" label="截止时间：" label-width="100px">
-        <el-input
-          type="text"
-          v-model="assignmentInfo.deadline"
-          placeholder="请输入截止时间"
-          clearable="true"></el-input>
+      <el-form-item class="item-title" label="截止时间：" required>
+        <el-date-picker v-model="assignmentInfo.deadline" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" style="float: left" placeholder="选择截止时间"></el-date-picker>
       </el-form-item>
-      <el-form-item class="item" label="作业要求：" label-width="100px">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 4, maxRows: 7}"
-          v-model="assignmentInfo.content"
-          placeholder="请输入作业要求"
-          clearable="true"></el-input>
+      <el-form-item class="item-title" label="作业要求："  required>
+        <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 7}" v-model="assignmentInfo.content" placeholder="请输入作业要求"></el-input>
       </el-form-item>
       <el-upload
             class="upload-demo"
             ref="upload"
             :action="uploadUrl"
-            :data="params"
+            :data="assignmentInfo"
+            :on-change="onChange"
             :on-success="handleSuccess"
             :on-remove="handleRemove"
             :auto-upload="false"
+            :on-error="handleError"
           >
             <el-button class="add-file" slot="trigger" size="small">上传附件</el-button>
             <el-button class="submit" size="small" @click="submit">提交</el-button>
@@ -53,24 +34,28 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from "vuex"
+
 export default {
   data () {
     return {
       assignmentInfo: {
-        section_id: '',
-        // 去api看看
-        name: '',
+        action: 'post',
+        title: '',
         content: '',
-        deadline: '',
-        file_id: '',
-        file_name: ''
+        deadline: ''
       },
-      uploadUrl: '/api/file/v1/resource',
+      uploadUrl: '/api/file/v1/assign_submit',
       fileInclude: false
     }
   },
   created () {
-    console.log(this.$route.params.section_id)
+    if (this.$route.params.operation == "edit"){
+      this.assignmentInfo.title = this.originalAssignmentInfo.title,
+      this.assignmentInfo.content = this.originalAssignmentInfo.content,
+      this.assignmentInfo.assign_id = this.$route.params.assign_id,
+      this.assignmentInfo.deadline = this.originalAssignmentInfo.deadline
+    }
   },
   computed: {
     title () {
@@ -79,22 +64,28 @@ export default {
       } else {
         return '修改作业'
       }
-    }
+    },
+    ...mapGetters("assignment", {
+      originalAssignmentInfo: "getAssignment"
+    })
   },
   methods:{
-    back(){this.$router.go(-1)}
-  },
-      submit() {
+    back(){this.$router.go(-1)},
+    submit() {
+      for(let key in this.assignmentInfo){
+        if(this.assignmentInfo[key]===''){
+          this.$notify({
+            title: '警告',
+            message: '请确认信息填写完整！',
+            type: 'warning'
+          })
+          return
+        }
+      }
       if(this.fileInclude){
         this.$refs.upload.submit()
-      } else if(this.params.content==''){
-        this.$notify({
-          title: "警告",
-          message: "不可以提交空的答案哟！",
-          type: "warning"
-        })
-      } else {
-        this.$http('post','/v1/assign_submit',this.params).then(res=>{
+      }else{
+        this.$http('post','/v1/assign_submit',this.assignmentInfo).then(res=>{
           if(res.data.status==0){
             this.$alert("提交成功", "消息", {
               confirmButtonText: "确定",
@@ -108,9 +99,10 @@ export default {
             })
           }
         })
-      }
+      }      
     },
     onChange(file,fileList){
+      console.log(file,fileList)
       if(fileList.length==0){
         this.fileInclude = false
       }else{
@@ -143,7 +135,8 @@ export default {
         title: '错误',
         message: `啊哦~提交失败了！`
       })
-    },
+    }
+  }
 }
 </script>
 <style>

@@ -10,16 +10,15 @@ const Data = req => {
   let content = Random.cparagraph(1, 3)
   let release_time = '2018-11-08 12:00'
   let deadline = '2018-11-08 14:00'
-  let file_id = 1
-  let file_name = '第一章作业.docx'
+  let file_flag = 1
+
   return {
     assign_id,
     title,
     content,
     release_time,
     deadline,
-    file_id,
-    file_name
+    file_flag
   }
 }
 

@@ -85,7 +85,6 @@ export default {
     })
   },
   created() {
-    console.log("created")
     this.$store.dispatch("course/fetchCourse", this.$route.params.course);
     this.$store.dispatch("notice/fetchNotice", this.$route.params.course);
   },
@@ -103,7 +102,7 @@ export default {
           title: '警告',
           message: '请确认公告标题及公告内容不为空！',
           type: 'warning'
-        });
+        })
       }else{
         this.$http("post", "/v1/notice", this.params).then(res => {
           if (res.data.status == 0) {

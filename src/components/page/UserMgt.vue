@@ -65,36 +65,36 @@
 
     <!-- 添加用户弹框 -->
     <el-dialog :title="'添加'+type+'用户'" :visible.sync="addFormVisible">
-      <el-form>
+      <el-form :hide-required-asterisk="false" status-icon>
         <template v-if="type=='教师'">
-          <el-form-item label="教师编号" label-width="120px">
-            <el-input v-model="id" autocomplete="off"></el-input>
+          <el-form-item label="教师编号" label-width="120px" required>
+            <el-input  v-model="id" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="教师姓名" label-width="120px">
+          <el-form-item label="教师姓名" label-width="120px" required>
             <el-input v-model="name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="学院编号" label-width="120px">
+          <el-form-item label="学院编号" label-width="120px" required>
             <el-input v-model="school_id" autocomplete="off"></el-input>
           </el-form-item>
         </template>
 
         <template v-else>
-          <el-form-item label="学号" label-width="120px">
+          <el-form-item label="学号" label-width="120px" required>
             <el-input v-model="id" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="姓名" label-width="120px">
+          <el-form-item label="姓名" label-width="120px" required>
             <el-input v-model="name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="学院编号" label-width="120px">
+          <el-form-item label="学院编号" label-width="120px" required>
             <el-input v-model="school_id" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="专业" label-width="120px">
+          <el-form-item label="专业" label-width="120px" required>
             <el-input v-model="major" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="年级" label-width="120px">
+          <el-form-item label="年级" label-width="120px" required>
             <el-input v-model="grade" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="班级" label-width="120px">
+          <el-form-item label="班级" label-width="120px" required>
             <el-input v-model="theClass" autocomplete="off"></el-input>
           </el-form-item>
         </template>
@@ -119,9 +119,9 @@ const mapFields = (namespace, fields) => {
       set(value) {
         this.$store.commit(`${namespace}/updateUser`, { path, value });
       }
-    };
-  });
-};
+    }
+  })
+}
 
 export default {
   data() {
@@ -167,12 +167,14 @@ export default {
       this.$store.dispatch("admin/initUserInfo", this.$route.params.type);
       this.addFormVisible = true;
     },
+    
     handleEdit(index, row) {
       this.$alert("没有这个功能哟", "提示", {
         confirmButtonText: "确定",
         callback: action => {}
       });
     },
+
     handleDelete(index, row) {
       this.$confirm('是否确认删除"' + row.name + '"这名学生?', "提示", {
         confirmButtonText: "确定",
@@ -201,15 +203,25 @@ export default {
           });
         });
     },
+
     addUser() {
-      this.$http('post', '/v1/account/'+'type',userInfo).then(res=>{
+      for(let key in this.userInfo){
+        if(this.userInfo[key]===''){
+          this.$notify({
+            title: '警告',
+            message: '请确认所有用户信息均不为空！',
+            type: 'warning'
+          })
+          return
+        }
+      }
+      this.$http('post', '/v1/account/'+'type',this.userInfo).then(res=>{
         if (res.data.status == 0) {
               this.$message({ type: "success", message: "添加成功!" });
               setTimeout(() => {
-                this.$router.go("0");
+                this.$router.go(0);
               }, 1000);
-              // this.$router.go("0");
-            } else {this.$message({ type: "info", message: res.data.error_msg });}
+            } else {this.$message({ type: "info", message: res.data.error_msg })}
       })
     }
   }

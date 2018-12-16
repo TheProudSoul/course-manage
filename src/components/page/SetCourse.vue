@@ -2,23 +2,15 @@
   <div class="content-box">
     <div class="content">
       <div>
-        <el-button
-          class="btn-return"
-          icon="el-icon-back"
-          circle
-          style="align-content: left; float: left"
-          @click="back"
-        ></el-button>
+        <el-button class="btn-return" icon="el-icon-back" circle @click="back"></el-button>
         <h3 class="title" style="font-size: 24px; margin-top: 10px; margin-bottom: 15px">添加课程</h3>
+        <hr color="#d3d3d3" style="margin-bottom: 10px; margin-top: 5px"/>
       </div>
-      <hr color="gold">
       <div>
         <div class="desc">
           <p class="id" style="float:left">课程编号：</p>
           <div class="id-content">
             <el-input
-              type="textarea"
-              :autosize="{ maxRows: 1}"
               placeholder="请输入内容"
               v-model="content"
               class="id-c"
@@ -30,8 +22,6 @@
           <p class="credit" style="float:left">课程学分：</p>
           <div class="credit-content">
             <el-input
-              type="textarea"
-              :autosize="{ maxRows: 1}"
               placeholder="请输入内容"
               v-model="content"
               class="id-c"
@@ -43,8 +33,6 @@
           <p class="start-year" style="float:left">开课年份：</p>
           <div class="year-content">
             <el-input
-              type="textarea"
-              :autosize="{ maxRows: 1}"
               placeholder="请输入内容"
               v-model="content"
               class="id-c"

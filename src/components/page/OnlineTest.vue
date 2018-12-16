@@ -9,10 +9,10 @@
                @click="handleAdd">发布</el-button>
     <hr class="cut-line" color="gray" />
     <el-table :data="onlineTestList" border style="width: 90%" class="el-table-test">
-      <el-table-column fixed prop="title" label="标题" width="auto"></el-table-column>
+      <el-table-column prop="title" label="标题" width="auto"></el-table-column>
       <el-table-column prop="start_time" label="开始时间" width="250"></el-table-column>
-      <el-table-column prop="end_time" label="结束时间" width="200"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="300">
+      <el-table-column prop="end_time" label="结束时间" width="250"></el-table-column>
+      <el-table-column fixed="right" label="操作" width="200">
         <template slot-scope="scope">
           <el-button v-show="isStudent" @click="getTest(scope.row)" type="text" size="small">开始</el-button>
           <el-button v-show="isTeacher" @click="getTest(scope.row)" type="text" size="small">查看</el-button>

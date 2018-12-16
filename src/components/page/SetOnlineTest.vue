@@ -1,16 +1,22 @@
 <template>
-  <!-- 按钮统一为“确认” -->
-  <!-- 使用input动态绑定value -->
   <div class="content">
     <div class="new-test-header">
       <h1 class="title">{{title}}</h1>
       <el-button class="btn-return" icon="el-icon-back" circle @click="back"></el-button>
       <hr color="#d3d3d3" style="margin-bottom: 10px; margin-top: 5px"/>
     </div>
-    <el-form :model="testInfo" label-width="100px" ref="testInfo" :hide-required-asterisk="false" status-icon
-        :rules="submitRules" label-position="left" class="form-test">
+    <el-form :model="testInfo" label-width="100px" :hide-required-asterisk="false" status-icon
+        label-position="left" class="form-test">
       <el-form-item class="item-title" label="名称：" required>
-        <el-input type="text" v-model="testInfo.title" placeholder="请输入测试名称" clearable style="float: left;width: 220px"></el-input>
+        <el-input type="text" v-model="testInfo.title" placeholder="请输入测试名称" style="float: left;width: 220px"></el-input>
+      </el-form-item>
+      <el-form-item class="item-title" label="测试内容：" required>
+        <el-input
+          type="textarea"
+          :autosize="{ minRows: 4, maxRows: 7}"
+          v-model="testInfo.content"
+          placeholder="请输入测试内容"
+        ></el-input>
       </el-form-item>
       <el-form-item class="item" label="开始时间：" required>
         <el-date-picker v-model="testInfo.start_time" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" style="float: left" placeholder="选择开始时间"></el-date-picker>
@@ -27,6 +33,7 @@
             :on-success="handleSuccess"
             :on-remove="handleRemove"
             :auto-upload="false"
+            :on-error="handleError"
           >
             <el-button class="add-file" slot="trigger" size="small">上传附件</el-button>
             <el-button class="submit" size="small" @click="submit">提交</el-button>
@@ -36,29 +43,10 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from "vuex"
+
 export default {
   data () {
-    var validateTitle = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入标题"));
-      } else {
-        callback();
-      }
-    }
-    var validateST = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
-      } else {
-        callback();
-      }
-    }
-    var validateET = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
-      } else {
-        callback();
-      }
-    }
     return {
       testInfo: {
         action: 'post',
@@ -66,34 +54,6 @@ export default {
         start_time: '',
         end_time: '',
         content: ''
-      },
-      submitRules: {
-        title: [
-          {
-            required: true,
-            validator: validateTitle,
-            message: "请输入标题",
-            trigger: "blur"
-          }
-        ],
-        start_time: [
-          {
-            type: 'datetime',
-            required: true,
-            validator: validateST,
-            message: "请选择开始时间",
-            trigger: 'change' 
-          }
-        ],
-        end_time: [
-          {
-            type: 'datetime',
-            required: true,
-            validator: validateET,
-            message: "请选择截止时间",
-            trigger: 'change' 
-          }
-        ]
       },
       uploadUrl: '/api/file/v1/online_test',
       fileInclude: false
@@ -106,41 +66,53 @@ export default {
       } else {
         return "修改在线测试";
       }
+    },
+    ...mapGetters("test", {
+      originalTestInfo: "getTest"
+    })
+  },
+
+  created() {
+    if (this.$route.params.operation == "edit"){
+      this.testInfo.title = this.originalTestInfo.title,
+      this.testInfo.start_time = this.originalTestInfo.start_time,
+      this.testInfo.test_id = this.$route.params.test_id,
+      this.testInfo.end_time = this.originalTestInfo.end_time,
+      this.testInfo.content = this.originalTestInfo.content
     }
   },
+
   methods:{
     back(){this.$router.go(-1)},
     submit() {
-      console.log(this.testInfo)
-      this.$refs.testInfo.validate(valid => {
-        if(valid){
-          if(this.fileInclude){
-            this.$refs.upload.submit()
-          } else {
-            this.$http('post','/v1/assign_submit',this.testInfo).then(res=>{
-              if(res.data.status==0){
-                this.$alert("提交成功", "消息", {
-                  confirmButtonText: "确定",
-                  beforeClose: (action, instance, done) => {
-                    this.$router.go(-1)
-                  }
-                })
-              } else {
-                this.$alert(res.data.error_msg, "提交失败", {
-                  confirmButtonText: "确定"
-                })
+      for(let key in this.testInfo){
+        if(this.testInfo[key]===''){
+          this.$notify({
+            title: '警告',
+            message: '请确认信息填写完整！',
+            type: 'warning'
+          })
+          return
+        }
+      }
+      if (this.fileInclude){
+        this.$refs.upload.submit()
+      } else {
+        this.$http('post','/v1/assign_submit',this.testInfo).then(res=>{
+          if(res.data.status==0){
+            this.$alert("提交成功", "消息", {
+              confirmButtonText: "确定",
+              beforeClose: (action, instance, done) => {
+                this.$router.go(-1)
               }
             })
+          } else {
+            this.$alert(res.data.error_msg, "提交失败", {
+              confirmButtonText: "确定"
+            })
           }
-        } else {
-          this.$notify({
-            title: "警告",
-            message: "您的信息填写有误，请重新检查哟~",
-            type: "warning"
-          })
-        }
-      })
-
+        })        
+      }
     },
     onChange(file,fileList){
       if(fileList.length==0){
