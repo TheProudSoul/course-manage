@@ -10,7 +10,7 @@ const getters = {
 
 const actions = {
   fetchCourse ({ state, commit }, course) {
-    http('get', '/v1/section/' + course).then(res => {
+    http('get', '/currican/section/' + course).then(res => {
       commit('setCourse', {
         item: res.data
       })

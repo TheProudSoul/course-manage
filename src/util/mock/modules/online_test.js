@@ -22,4 +22,4 @@ const Data = req => {
 }
 
 // 定义请求链接，类型，还有返回数据
-Mock.mock(`${domain}/v1/online_test`, 'get', Data)
+Mock.mock(`${domain}/currican/online_test`, 'get', Data)

@@ -13,8 +13,7 @@ const actions = {
     if (course == null) {
       course = ''
     }
-    http('get', '/v1/notice/' + course).then(res => {
-      console.log(res)
+    http('get', '/currican/notice?all=' + course).then(res => {
       commit('setNoticeList', {
         item: res.data
       })

@@ -43,7 +43,7 @@ const actions = {
   fetchResource ({state, commit}, course) {
     let tmp = []
     for (let i = 0; i < 4; i++) {
-      http('get', '/v1/resource/' + i).then(res => {
+      http('get', '/currican/resource/' + i).then(res => {
         tmp[i] = res.data
         tmp[i].forEach(element => {
           element.leaf = true

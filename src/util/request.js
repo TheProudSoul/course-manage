@@ -9,7 +9,7 @@ import qs from 'qs'
  * @param {any} config 其他配置
  * @returns Promise
  */
-const request = (method, url, params = {}, config = {contentType: 'application/json'}) => {
+const request = (method, url, params = {}, config = {contentType: 'application/x-www-form-urlencoded'}) => {
   let headers
   if (config.contentType !== 'multipart/form-data') {
     headers = {
@@ -28,17 +28,17 @@ const request = (method, url, params = {}, config = {contentType: 'application/j
     params = qs.stringify(params)
   }
 
-
   const reqConfig = {
     method: method,
     url: url,
     data: params,
     headers
   }
-
+  console.log(reqConfig)
   return new Promise((resolve, reject) => {
     axios.request(reqConfig)
       .then(res => {
+        console.log(res)
         resolve(res)
       })
       .catch(err => {

@@ -29,7 +29,7 @@ const actions = {
         path: '/usermgt'
       }]
     } else {
-      http('get', '/v1/section').then(res => {
+      http('get', '/currican/section').then(res => {
         res.data.forEach(element => {
           data.push({
             id: element.section_id,

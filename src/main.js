@@ -5,13 +5,14 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import store from './store'
-import mock from './util/mock'
+// import mock from './util/mock'
 import axios from 'axios'
 import request from './util/request'
 import 'element-ui/lib/theme-chalk/index.css'
 
 axios.defaults.timeout = 5000
 axios.defaults.baseURL = process.env.BASE_URL
+axios.defaults.withCredentials = true
 Vue.use(ElementUI, { size: 'small' })
 Vue.config.productionTip = false
 Vue.prototype.$http = request

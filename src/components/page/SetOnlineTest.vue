@@ -55,7 +55,7 @@ export default {
         end_time: '',
         content: ''
       },
-      uploadUrl: '/api/file/v1/online_test',
+      uploadUrl: '/api/file/currican/online_test',
       fileInclude: false
     }
   },
@@ -98,7 +98,7 @@ export default {
       if (this.fileInclude){
         this.$refs.upload.submit()
       } else {
-        this.$http('post','/v1/assign_submit',this.testInfo).then(res=>{
+        this.$http('post','/currican/assign_submit',this.testInfo).then(res=>{
           if(res.data.status==0){
             this.$alert("提交成功", "消息", {
               confirmButtonText: "确定",

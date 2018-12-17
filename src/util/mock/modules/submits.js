@@ -23,4 +23,4 @@ const Data = req => {
 }
 
 // 定义请求链接，类型，还有返回数据
-Mock.mock(/\/api\/v1\/(assign_submit\?ass_id=|test_submit\?test_id=)\d*/, 'get', Data)
+Mock.mock(/\/api\/currican\/(assign_submit\?ass_id=|test_submit\?test_id=)\d*/, 'get', Data)

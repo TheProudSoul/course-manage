@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     fetchTestList () {
-      this.$http('get', '/v1/online_test').then(res => {
+      this.$http('get', '/currican/online_test').then(res => {
         this.onlineTestList = res.data.online_test
       })
     },

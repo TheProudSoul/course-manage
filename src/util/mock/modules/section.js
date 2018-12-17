@@ -78,4 +78,4 @@ let templete = {
 }
 
 // 定义请求链接，类型，还有返回数据
-Mock.mock(/\/api\/v1\/section\/\d*/, 'get', templete)
+Mock.mock(/\/api\/currican\/section\/\d*/, 'get', templete)

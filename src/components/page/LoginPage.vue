@@ -31,8 +31,8 @@
         class="demo-ruleForm"
         label-position="left"
       >
-        <el-form-item label="账号" prop="id" label-width="50px">
-          <el-input type="text" v-model="loginForm.id" autocomplete="off"></el-input>
+        <el-form-item label="账号" prop="account" label-width="50px">
+          <el-input type="text" v-model="loginForm.account" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="passwd" label-width="50px">
           <el-input type="password" v-model="loginForm.passwd" autocomplete="off"></el-input>
@@ -62,13 +62,13 @@ export default {
     }
     return {
       loginForm: {
-        id: "zyqnb",
+        account: "zyqnb",
         passwd: "zyqnb",
         group: 3
       },
 
       loginRules: {
-        id: [
+        account: [
           {
             message: "请输入账号",
             validator: validateId,
@@ -89,7 +89,12 @@ export default {
     submitInfo() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.$http("post", "/v1/login", this.loginForm).then(res => {
+          let params = {
+        'account': "1",
+        'passwd': "1",
+        'group': 3
+      }
+          this.$http("post", "/currican/login", params).then(res => {
             if (res.data.status == 0) {
               if (this.loginForm.group == 3) {
                 this.$store.commit("login/userType", "student");

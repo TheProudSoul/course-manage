@@ -16,7 +16,7 @@ const getters = {
 
 const actions = {
   fetchSubmit ({ state, commit }, id) {
-    http('get', '/v1/assign_submit/' + id).then(res => {
+    http('get', '/currican/assign_submit/' + id).then(res => {
       let item = res.data
       if (item.mark === -1) {
         item.mark = ''
@@ -28,7 +28,7 @@ const actions = {
   },
 
   fetchSubmits ({ state, commit }, id) {
-    http('get', '/v1/assign_submit?ass_id=' + id).then(res => {
+    http('get', '/currican/assign_submit?ass_id=' + id).then(res => {
       commit('setSubmitList', {
         item: res.data.result
       })
@@ -36,7 +36,7 @@ const actions = {
   },
 
   fetchAssignment ({ state, commit }, id) {
-    http('get', '/v1/assignment/' + id).then(res => {
+    http('get', '/currican/assignment/' + id).then(res => {
       commit('setAssignment', {
         item: res.data
       })
@@ -44,7 +44,7 @@ const actions = {
   },
 
   fetchAssignmentList ({ state, commit }) {
-    http('get', '/v1/assignment').then(res => {
+    http('get', '/currican/assignment').then(res => {
       commit('setAssignmentList', {
         item: res.data
       })

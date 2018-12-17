@@ -57,7 +57,7 @@
 
     <!-- 教师操作 -->
     <div v-show="isTeacher" class="buttons-T">
-      <el-button type="primary" @click="editAss">修改</el-button>
+      <el-button type="primary" @click="editTest">修改</el-button>
       <!-- 批改？评分？查收？ -->
       <el-button type="primary" @click="getSubmit">批改</el-button>
       <el-button type="danger" @click="submitDelete">删除</el-button>
@@ -76,7 +76,7 @@ export default {
         content: '',
         test_id: this.$route.params.test_id
       },
-      uploadUrl: '/api/file/v1/resource',
+      uploadUrl: '/api/file/currican/resource',
       fileInclude: false
     };
   },
@@ -97,7 +97,7 @@ export default {
     back() {
       this.$router.go(-1)
     },
-    editAss() {
+    editTest() {
       this.$router.push({
         name: "setOnlinetest",
         params: {
@@ -117,7 +117,7 @@ export default {
           type: "warning"
         })
       } else {
-        this.$http('post','/v1/test_submit',this.params).then(res=>{
+        this.$http('post','/currican/test_submit',this.params).then(res=>{
           if(res.data.status==0){
             this.$alert("提交成功", "消息", {
               confirmButtonText: "确定",
@@ -181,7 +181,7 @@ export default {
       )
         .then(() => {
           // 真正路径  '/online_test'
-          this.$http("post", "/v1/admin/course", {
+          this.$http("post", "/currican/admin/course", {
             action: "delete",
             test_id: this.$route.params.test_id
           }).then(res => {
@@ -206,7 +206,7 @@ export default {
         });
     },
     download() {
-      let downloadUrl = "/api/file/v1/online_test/file/" + this.$route.params.test_id;
+      let downloadUrl = "/api/file/currican/online_test/file/" + this.$route.params.test_id;
       let link = document.createElement('a')
       link.style.display = 'none'
       link.href = downloadUrl

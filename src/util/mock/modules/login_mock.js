@@ -14,4 +14,4 @@ const LoginData = req => {
 }
 
 // 定义请求链接，类型，还有返回数据
-Mock.mock(`${domain}/v1/login`, 'post', LoginData)
+Mock.mock(`${domain}/currican/login`, 'post', LoginData)

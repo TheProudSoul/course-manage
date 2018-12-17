@@ -182,7 +182,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.$http("post", "/v1/account/student", {
+          this.$http("post", "/currican/account/student", {
             action: "delete",
             student_id: row.id
           }).then(res => {
@@ -215,7 +215,7 @@ export default {
           return
         }
       }
-      this.$http('post', '/v1/account/'+'type',this.userInfo).then(res=>{
+      this.$http('post', '/currican/account/'+'type',this.userInfo).then(res=>{
         if (res.data.status == 0) {
               this.$message({ type: "success", message: "添加成功!" });
               setTimeout(() => {

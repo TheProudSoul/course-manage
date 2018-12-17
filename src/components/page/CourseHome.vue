@@ -104,7 +104,7 @@ export default {
           type: 'warning'
         })
       }else{
-        this.$http("post", "/v1/notice", this.params).then(res => {
+        this.$http("post", "/currican/notice", this.params).then(res => {
           if (res.data.status == 0) {
             this.$alert("发布成功", "消息", {
               confirmButtonText: "确定",
@@ -130,7 +130,7 @@ export default {
           type: "warning"
         }
       ).then(() => {
-          this.$http("post", "/v1/admin/course", {
+          this.$http("post", "/currican/admin/course", {
             action: "delete",
             section_id: this.$route.params.course
           }).then(res => {

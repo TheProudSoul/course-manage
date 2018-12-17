@@ -28,11 +28,10 @@ export default {
     })
   },
   created () {
-    this.$store.dispatch('notice/fetchNotice')
+    this.$store.dispatch('notice/fetchNotice', 1)
   },
   methods:{
     showNotice(row, event, column){
-      console.log(row)
       this.$alert(row.content, row.title, {
         confirmButtonText: '确定'
       })

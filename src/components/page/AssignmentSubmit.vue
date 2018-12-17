@@ -124,7 +124,7 @@ export default {
         })
           .then(() => {
             // 真正路径  '/assign_submit'
-            this.$http("post", "/v1/admin/course", {
+            this.$http("post", "/currican/admin/course", {
               action: "put",
               submit_id: this.$route.params.submit_id,
               mark: this.mark
@@ -154,7 +154,7 @@ export default {
       }
     },
     download(){
-      let downloadUrl = 'http://localhost:3000/v1/assign_submit/file/' + this.$route.params.submit_id
+      let downloadUrl = 'http://localhost:3000/currican/assign_submit/file/' + this.$route.params.submit_id
       let link = document.createElement('a')
       link.style.display = 'none'
       link.href = downloadUrl

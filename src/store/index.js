@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import login from './modules/login'
-import sidebar from './modules/sidebar'
-import course from './modules/course'
-import notice from './modules/notice'
-import admin from './modules/admin'
-import assignment from './modules/assignment'
-import test from './modules/test'
-import resource from './modules/resource'
+import login from './modules/loginManager'
+import sidebar from './modules/sidebarManager'
+import course from './modules/courseManager'
+import notice from './modules/noticeManager'
+import admin from './modules/adminManager'
+import assignment from './modules/assignmentManager'
+import test from './modules/testManager'
+import resource from './modules/resourceManager'
 
 Vue.use(Vuex)
 

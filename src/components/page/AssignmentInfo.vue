@@ -67,7 +67,7 @@ export default {
         content: '',
         assignment_id: this.$route.params.assign_id
       },
-      uploadUrl: '/api/file/v1/resource',
+      uploadUrl: '/api/file/currican/resource',
       fileInclude: false
     }
   },
@@ -108,7 +108,7 @@ export default {
           type: "warning"
         })
       } else {
-        this.$http('post','/v1/assign_submit',this.params).then(res=>{
+        this.$http('post','/currican/assign_submit',this.params).then(res=>{
           if(res.data.status==0){
             this.$alert("提交成功", "消息", {
               confirmButtonText: "确定",
@@ -178,7 +178,7 @@ export default {
         }
       ).then(() => {
           // 真正路径  '/assignment'
-          this.$http("post", "/v1/admin/course", {
+          this.$http("post", "/currican/admin/course", {
             action: "delete",
             test_id: this.$route.params.assign_id
           }).then(res => {
@@ -203,7 +203,7 @@ export default {
         });
     },
     download(){
-      let downloadUrl = '/api/file/v1/assignment/file/' + this.$route.params.assign_id
+      let downloadUrl = '/api/file/currican/assignment/file/' + this.$route.params.assign_id
       let link = document.createElement('a')
       link.style.display = 'none'
       link.href = downloadUrl

@@ -62,8 +62,8 @@ export default {
         label: "res_name",
         isLeaf: "leaf"
       },
-      downloadPath: "/file/v1/resource/file/",
-      uploadUrl: '/api/file/v1/resource',
+      downloadPath: "/file/currican/resource/file/",
+      uploadUrl: '/api/file/currican/resource',
       params: {
         action: 'post',
         res_type: "",
@@ -189,7 +189,7 @@ export default {
       // formData.append("res_type", this.res_type)
       // formData.append("action", "post")
 
-      // this.$http("post","/file/v1/resource", formData, {contentType: 'multipart/form-data'}).then(res=>{
+      // this.$http("post","/file/currican/resource", formData, {contentType: 'multipart/form-data'}).then(res=>{
       //   console.log(res)
       // })
     },
@@ -220,8 +220,8 @@ export default {
           }
         })
         fileToDelete.forEach(element=>{
-          // 真正路径 /v1/resource
-          this.$http('post', '/v1/admin/course', {action:'delete',res_id:element.file_id}).then(res=>{
+          // 真正路径 /currican/resource
+          this.$http('post', '/currican/admin/course', {action:'delete',res_id:element.file_id}).then(res=>{
             if (res.data.status==0){
               this.$notify({
                 title: '成功',
