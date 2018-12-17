@@ -9,6 +9,8 @@
 
 #### [Mock.js 1.0 Wiki](https://github.com/nuysoft/Mock/wiki)
 
+#### [vue2 前后端分离项目ajax跨域session问题解决](https://segmentfault.com/a/1190000009208644)
+
 ## Build Setup
 
 ``` bash
