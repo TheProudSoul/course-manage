@@ -152,7 +152,7 @@ export default {
     })
   },
   created() {
-    this.$store.dispatch("admin/getSchool");
+    this.$store.dispatch("admin/getSchool")
   },
   methods: {
     fetchUserList(school_id) {
@@ -160,7 +160,7 @@ export default {
         this.$store.dispatch("admin/getUser", {
           type: this.$route.params.type,
           school: school_id
-        });
+        })
       }
     },
     handleAdd() {

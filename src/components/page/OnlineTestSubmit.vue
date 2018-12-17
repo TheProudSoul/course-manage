@@ -45,6 +45,20 @@
 import { mapGetters, mapState } from "vuex";
 import JSZip from 'jszip'
 import FileSaver from 'file-saver'
+import _ from "lodash";
+
+const mapFields = (namespace, fields) => {
+  return _.mapValues(fields, path => {
+    return {
+      get() {
+        return _.get(this.$store.state[namespace], path);
+      },
+      set(value) {
+        this.$store.commit(`${namespace}/updateUser`, { path, value });
+      }
+    }
+  })
+}
 
 export default {
   data() {
@@ -56,11 +70,16 @@ export default {
   computed: {
     ...mapGetters("test", {
       submit: "getSubmit"
+    }),
+    ...mapFields("test", {
+      mark: "submit.mark"
     })
   },
   created() {
-    this.$store.dispatch("test/fetchSubmit", this.$route.params.submit_id);
-    this.mark = this.submit.mark;
+    this.$store.dispatch("test/fetchSubmit", this.$route.params.submit_id)
+    setTimeout(()=>{
+      this.mark = this.submit.mark
+    },500) 
   },
   methods: {
     back() {

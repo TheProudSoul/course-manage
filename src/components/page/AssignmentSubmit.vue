@@ -86,8 +86,10 @@ export default {
     this.$store.dispatch(
       "assignment/fetchSubmit",
       this.$route.params.submit_id
-    );
-    this.mark = this.submit.mark;
+    )
+    setTimeout(()=>{
+      this.mark = this.submit.mark
+    },500)
   },
   methods: {
     back() {

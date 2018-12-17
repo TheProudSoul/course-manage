@@ -62,7 +62,7 @@ export default {
         label: "res_name",
         isLeaf: "leaf"
       },
-      downloadPath: "http://120.79.191.54:8081/currican/resource/file?id=",
+      downloadPath: "/currican/resource/file?id=",
       uploadUrl: 'http://120.79.191.54:8081/currican/resource',
       params: {
         action: 'post',

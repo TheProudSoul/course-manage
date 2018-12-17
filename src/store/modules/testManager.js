@@ -79,6 +79,11 @@ const mutations = {
 
   setTestList (state, {item}) {
     state.testList = item
+  },
+
+  update (state, payload) {
+    const { path, value } = payload
+    _.set(state, path, value)
   }
 }
 
