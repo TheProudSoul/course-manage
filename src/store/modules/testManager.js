@@ -16,6 +16,9 @@ const getters = {
 
 const actions = {
   fetchSubmit ({ state, commit }, id) {
+    commit('setSubmit', {
+      item: {}
+    })
     http('get', '/currican/test_submit/' + id).then(res => {
       let item = res.data
       if (item.mark == -1) {
@@ -28,15 +31,21 @@ const actions = {
   },
 
   fetchSubmits ({ state, commit }, id) {
+    commit('setSubmitList', {
+      item: []
+    })
     // 真正路径 '/test_submit/'
     http('get', '/currican/test_submit?test_id=' + id).then(res => {
       commit('setSubmitList', {
-        item: res.data.result
+        item: res.data
       })
     })
   },
 
   fetchTest ({ state, commit }, id) {
+    commit('setTest', {
+      item: {}
+    })
     http('get', '/currican/online_test/' + id).then(res => {
       commit('setTest', {
         item: res.data
@@ -45,6 +54,9 @@ const actions = {
   },
 
   fetchTestList ({ state, commit }) {
+    commit('setTestList', {
+      item: []
+    })
     http('get', '/currican/online_test').then(res => {
       commit('setTestList', {
         item: res.data

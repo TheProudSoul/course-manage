@@ -23,7 +23,7 @@
       <el-col :span="2" :offset="6"><div class="grid-content vector-label">提交内容：</div></el-col>
       <el-col :span="12"><div class="grid-content">{{submit.content}}</div></el-col>
     </el-row>
-    <el-row type="flex" v-if="submit.file_flag==0" class="row">
+    <el-row type="flex" v-if="submit.file_flag==1" class="row">
       <el-col :span="2" :offset="6"><div class="grid-content vector-label">附件：</div></el-col>
       <el-col :span="12"><div class="grid-content">
         <el-button type="primary" plain icon="el-icon-download" @click="download">下载附件</el-button></div>
@@ -49,7 +49,8 @@ import FileSaver from 'file-saver'
 export default {
   data() {
     return {
-      mark: ""
+      mark: "",
+      downloadUrl: 'http://120.79.191.54:8081/currican/test_submit/file/' + this.$route.params.submit_id
     };
   },
   computed: {
@@ -127,10 +128,9 @@ export default {
       }
     },
     download(){
-      let downloadUrl = 'http://localhost:3000/currican/test_submit/file/' + this.$route.params.submit_id
       let link = document.createElement('a')
       link.style.display = 'none'
-      link.href = downloadUrl
+      link.href = this.downloadUrl
       document.body.appendChild(link)
       link.click()
     }

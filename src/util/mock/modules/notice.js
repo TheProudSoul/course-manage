@@ -23,4 +23,4 @@ const Data = req => {
 }
 
 // 定义请求链接，类型，还有返回数据
-Mock.mock(/\/api\/currican\/notice\/\d*/, 'get', Data)
+Mock.mock(/\/api\/currican\/notice\?all=\/\d*/, 'get', Data)

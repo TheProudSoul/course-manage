@@ -2,7 +2,6 @@ const Mock = require('mockjs') // 获取mock对象
 const Random = Mock.Random
 
 const Data = req => {
-  req.body = JSON.parse(req.body)
   let resource = [[{
     'res_name': '1第一章课件.ppt',
     'file_id': 1

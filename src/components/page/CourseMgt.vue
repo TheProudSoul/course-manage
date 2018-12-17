@@ -18,7 +18,6 @@
           <el-table-column prop="course_name" label="课程名称" width="auto"></el-table-column>
           <el-table-column label="操作" width="300">
             <template slot-scope="scope">
-              <el-button size="mini" type="info" @click="getCourse(scope.$index, scope.row)" style="  background: cornflowerblue;">详情</el-button>
               <el-button size="mini" type="info" @click="getDiscuss(scope.$index, scope.row)" style="  background: cornflowerblue;">讨论区</el-button>
             </template>
           </el-table-column>
@@ -36,11 +35,12 @@ export default {
   computed: {
     ...mapState({
       schoolList: state => state.admin.schoolList,
-      courseList: state => state.admin.courseList
+      courseList: state => state.admin.courseList,
+      teacherList: state => state.admin.getTeacherList
     })
   },
   created() {
-    this.$store.dispatch("admin/getSchool");
+    this.$store.dispatch("admin/getSchool")
   },
   methods: {
     fetchCourseList(school_id) {

@@ -26,7 +26,7 @@
       <p class="date-title">截止日期：</p>
       <p class="date-content">{{testInfo.end_time}}</p>
     </div>
-    <div class="file" v-if="testInfo.file_flag==0">
+    <div class="file" v-if="testInfo.file_flag==1">
       <p class="file-title">附件：</p>
       <el-button type="primary" plain icon="el-icon-download" @click="download">下载附件</el-button>
     </div>
@@ -76,7 +76,8 @@ export default {
         content: '',
         test_id: this.$route.params.test_id
       },
-      uploadUrl: '/api/file/currican/resource',
+      uploadUrl: 'http://120.79.191.54:8081/currican/test_submit',
+      downloadUrl: "http://120.79.191.54:8081/currican/online_test/file?id=" + this.$route.params.test_id,
       fileInclude: false
     };
   },
@@ -101,7 +102,7 @@ export default {
       this.$router.push({
         name: "setOnlinetest",
         params: {
-          test_id: this.test_id,
+          test_id: this.$route.params.test_id,
           course: this.$route.params.course,
           operation: "edit"
         }
@@ -117,7 +118,7 @@ export default {
           type: "warning"
         })
       } else {
-        this.$http('post','/currican/test_submit',this.params).then(res=>{
+        this.$http('post','/currican/test_submit',this.params,{contentType: 'multipart/form-data'}).then(res=>{
           if(res.data.status==0){
             this.$alert("提交成功", "消息", {
               confirmButtonText: "确定",
@@ -181,7 +182,7 @@ export default {
       )
         .then(() => {
           // 真正路径  '/online_test'
-          this.$http("post", "/currican/admin/course", {
+          this.$http("post", "/currican/online_test", {
             action: "delete",
             test_id: this.$route.params.test_id
           }).then(res => {
@@ -206,10 +207,9 @@ export default {
         });
     },
     download() {
-      let downloadUrl = "/api/file/currican/online_test/file/" + this.$route.params.test_id;
       let link = document.createElement('a')
       link.style.display = 'none'
-      link.href = downloadUrl
+      link.href = this.downloadUrl
       document.body.appendChild(link)
       link.click()
     }

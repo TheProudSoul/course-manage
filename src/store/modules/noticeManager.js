@@ -9,10 +9,11 @@ const getters = {
 }
 
 const actions = {
+
   fetchNotice ({ state, commit }, course) {
-    if (course == null) {
-      course = ''
-    }
+    commit('setNoticeList', {
+      item: []
+    })
     http('get', '/currican/notice?all=' + course).then(res => {
       commit('setNoticeList', {
         item: res.data

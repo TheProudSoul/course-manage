@@ -40,11 +40,6 @@ export default {
     this.$store.dispatch('test/fetchTestList')
   },
   methods: {
-    fetchTestList () {
-      this.$http('get', '/currican/online_test').then(res => {
-        this.onlineTestList = res.data.online_test
-      })
-    },
     getTest (row) {
       this.$router.push({
         name: 'onlinetestInfo',

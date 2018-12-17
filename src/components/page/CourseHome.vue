@@ -86,14 +86,13 @@ export default {
   },
   created() {
     this.$store.dispatch("course/fetchCourse", this.$route.params.course);
-    this.$store.dispatch("notice/fetchNotice", this.$route.params.course);
+    this.$store.dispatch("notice/fetchNotice", 0);
   },
-  // beforeRouteUpdate(to, from, next) {
-  //   console.log("bru")
-  //   this.$store.dispatch("course/fetchCourse", to.params.course);
-  //   this.$store.dispatch("notice/fetchNotice", to.params.course);
-  //   next();
-  // },
+  beforeRouteUpdate(to, from, next) {
+    this.$store.dispatch("course/fetchCourse", to.params.course);
+    this.$store.dispatch("notice/fetchNotice", to.params.course);
+    next();
+  },
 
   methods: {
     handleAddNotice() {

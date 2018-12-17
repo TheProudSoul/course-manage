@@ -31,19 +31,14 @@ const state = {
 const getters = {
   getResourceType: state => state.resourceType,
   getResourceList: state => state.resources
-  // getResourceByType: (state) => (type) => {
-  //   return state.resources[type].map(resource => resource.file_id)
-  // },
-  // getTypeName: state => {
-  //   return state.resourceType.map(resource => resource.file_id)
-  // }
 }
 
 const actions = {
   fetchResource ({state, commit}, course) {
+    commit('setResources', [[], [], [], []])
     let tmp = []
     for (let i = 0; i < 4; i++) {
-      http('get', '/currican/resource/' + i).then(res => {
+      http('get', '/currican/resource?res_type=' + i).then(res => {
         tmp[i] = res.data
         tmp[i].forEach(element => {
           element.leaf = true

@@ -4,7 +4,7 @@
       show-checkbox
       :load="fetchReourseList"
       lazy
-      node-key="file_id"
+      node-key="res_id"
       ref="tree"
       highlight-current
       :props="defaultProps"
@@ -62,8 +62,8 @@ export default {
         label: "res_name",
         isLeaf: "leaf"
       },
-      downloadPath: "/file/currican/resource/file/",
-      uploadUrl: '/api/file/currican/resource',
+      downloadPath: "http://120.79.191.54:8081/currican/resource/file?id=",
+      uploadUrl: 'http://120.79.191.54:8081/currican/resource',
       params: {
         action: 'post',
         res_type: "",
@@ -116,7 +116,7 @@ export default {
         const cache = {};
         const promises = [];
         fileToDownload.forEach(item => {
-          const promise = this.$http("get", this.downloadPath + item.file_id, {}, { responseType: "arraybuffer" }).then(res => {
+          const promise = this.$http("get", this.downloadPath + item.res_id, {}, { responseType: "arraybuffer" }).then(res => {
             const file_name = item.res_name; // 获取文件名
             zip.file(file_name, res.data, { binary: true }); // 逐个添加文件
             cache[file_name] = res.data;
@@ -221,7 +221,7 @@ export default {
         })
         fileToDelete.forEach(element=>{
           // 真正路径 /currican/resource
-          this.$http('post', '/currican/admin/course', {action:'delete',res_id:element.file_id}).then(res=>{
+          this.$http('post', '/currican/resource', {action:'delete',res_id:element.res_id}).then(res=>{
             if (res.data.status==0){
               this.$notify({
                 title: '成功',

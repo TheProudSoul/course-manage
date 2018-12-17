@@ -17,7 +17,7 @@
       <p class="date-title">截止日期：</p>
       <p class="date-content">{{assignmentInfo.deadline}}</p>
     </div>
-    <div class="file" v-if="assignmentInfo.file_flag==0">
+    <div class="file" v-if="assignmentInfo.file_flag==1">
       <p class="file-title">附件：</p>
       <el-button type="primary" plain icon="el-icon-download" @click="download">下载附件</el-button>
     </div>
@@ -67,7 +67,8 @@ export default {
         content: '',
         assignment_id: this.$route.params.assign_id
       },
-      uploadUrl: '/api/file/currican/resource',
+      uploadUrl: 'http://120.79.191.54:8081/currican/assign_submit',
+      downloadUrl: 'http://120.79.191.54:8081/currican/assignment/file?id=' + this.$route.params.assign_id,
       fileInclude: false
     }
   },
@@ -88,11 +89,12 @@ export default {
     back() {
       this.$router.go(-1)
     },
+    
     editAss() {
       this.$router.push({
         name: "setAssignment",
         params: {
-          assign_id: this.assignment_id,
+          assign_id: this.$route.params.assign_id,
           course: this.$route.params.course,
           operation: "edit"
         }
@@ -124,6 +126,7 @@ export default {
         })
       }
     },
+
     onChange(file,fileList){
       if(fileList.length==0){
         this.fileInclude = false
@@ -131,6 +134,7 @@ export default {
         this.fileInclude = true
       }
     },
+
     // 文件列表移除文件时的钩子
     handleRemove(file,fileList){
       if(fileList.length==0){
@@ -152,12 +156,14 @@ export default {
         })
       }
     },
+
     handleError(err, file, fileList){
       this.$notify.error({
         title: '错误',
         message: `啊哦~提交失败了！`
       })
     },
+
     getSubmit() {
       this.$router.push({
         name: "assignmentSubmits",
@@ -167,6 +173,7 @@ export default {
         }
       })
     },
+
     submitDelete() {
       this.$confirm(
         '是否确认删除"' + this.assignmentInfo.title + '"这个作业?',
@@ -177,10 +184,10 @@ export default {
           type: "warning"
         }
       ).then(() => {
-          // 真正路径  '/assignment'
-          this.$http("post", "/currican/admin/course", {
+          // 真正路径  '/'
+          this.$http("post", "/currican/assignment", {
             action: "delete",
-            test_id: this.$route.params.assign_id
+            assign_id: this.$route.params.assign_id
           }).then(res => {
             if (res.data.status == 0) {
               this.$message({ type: "success", message: "删除成功!" });
@@ -202,11 +209,11 @@ export default {
           });
         });
     },
+
     download(){
-      let downloadUrl = '/api/file/currican/assignment/file/' + this.$route.params.assign_id
       let link = document.createElement('a')
       link.style.display = 'none'
-      link.href = downloadUrl
+      link.href = this.downloadUrl
       document.body.appendChild(link)
       link.click()
 

@@ -10,7 +10,7 @@ import axios from 'axios'
 import request from './util/request'
 import 'element-ui/lib/theme-chalk/index.css'
 
-axios.defaults.timeout = 5000
+axios.defaults.timeout = 50000
 axios.defaults.baseURL = process.env.BASE_URL
 axios.defaults.withCredentials = true
 Vue.use(ElementUI, { size: 'small' })

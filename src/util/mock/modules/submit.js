@@ -3,7 +3,6 @@ const Random = Mock.Random
 const domain = '/api' // 定义默认域名，随便写
 
 const Data = req => {
-  console.log(req) // 请求体，用于获取参数
   let result = {
     'submit_id': 1,
     'test_title': '第一次上机考试',

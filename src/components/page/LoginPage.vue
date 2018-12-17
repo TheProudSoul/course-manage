@@ -62,8 +62,8 @@ export default {
     }
     return {
       loginForm: {
-        account: "zyqnb",
-        passwd: "zyqnb",
+        account: "",
+        passwd: "",
         group: 3
       },
 
@@ -89,12 +89,7 @@ export default {
     submitInfo() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          let params = {
-        'account': "1",
-        'passwd': "1",
-        'group': 3
-      }
-          this.$http("post", "/currican/login", params).then(res => {
+          this.$http("post", "/currican/login", this.loginForm).then(res => {
             if (res.data.status == 0) {
               if (this.loginForm.group == 3) {
                 this.$store.commit("login/userType", "student");

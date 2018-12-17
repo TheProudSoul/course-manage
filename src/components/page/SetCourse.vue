@@ -39,7 +39,7 @@
       </el-form>      
 
       <div class="buttons" align="center">
-        <el-button @click="submit" class="confirm">确认</el-button>
+        <el-button @click="submit" class="submit">确认</el-button>
         <el-button @click="clear" class="clear">清空</el-button>
       </div>
     </div>
@@ -78,37 +78,25 @@ export default {
       week: "courseInfo.week",
       building: "courseInfo.building",
       room: "courseInfo.room",
-      teacher_id: "courseInfo.teacher_id"
+      teacher_id: "courseInfo.teacher_id",
     }),
+    ...mapGetters("admin",{
+      courseList: 'getCourseList',
+      courseInfo: 'getCourseInfo'
+    })
+  },
+  created(){
+    this.$store.dispatch("admin/fetchCourseList", this.params.school_id)
+    this.$store.dispatch("admin/fetchTeacherList", this.params.school_id)
   },
   methods: {
     submit() {
-      this.$http("post", "/currican/test_submit", {
-        action: "post",
-        course_id: this.id,
-        credit: this.credit,
-        year: this.year,
-        semester: this.semester,
-        time_slot: this.time,
-        week: this.week,
-        building: this.building,
-        room: this.classroom,
-        teacher_id: this.teacher
-      });
-    },
-    clear() {
-      document.getElementById("id").value = "";
-      document.getElementById("credit").value = "";
-      document.getElementById("year").value = "";
-      document.getElementById("semester").value = "";
-      document.getElementById("time").value = "";
-      document.getElementById("week").value = "";
-      document.getElementById("building").value = "";
-      document.getElementById("classroom").value = "";
-      document.getElementById("tea").value = "";
+      this.$http("post", "/currican/test_submit", courseInfo).then(res=>{
+
+      })
     },
     back() {
-      this.$router.go(-1);
+      this.$router.go(-1)
     }
   }
 };

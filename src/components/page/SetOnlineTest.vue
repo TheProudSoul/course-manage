@@ -55,7 +55,7 @@ export default {
         end_time: '',
         content: ''
       },
-      uploadUrl: '/api/file/currican/online_test',
+      uploadUrl: 'http://120.79.191.54:8081/currican/online_test',
       fileInclude: false
     }
   },
@@ -63,7 +63,7 @@ export default {
     title() {
       if (this.$route.params.operation == "add") {
         return "添加在线测试";
-      } else {
+      } else if (this.$route.params.operation == "edit") {
         return "修改在线测试";
       }
     },
@@ -74,6 +74,7 @@ export default {
 
   created() {
     if (this.$route.params.operation == "edit"){
+      this.testInfo.action = 'update'
       this.testInfo.title = this.originalTestInfo.title,
       this.testInfo.start_time = this.originalTestInfo.start_time,
       this.testInfo.test_id = this.$route.params.test_id,
@@ -98,7 +99,7 @@ export default {
       if (this.fileInclude){
         this.$refs.upload.submit()
       } else {
-        this.$http('post','/currican/assign_submit',this.testInfo).then(res=>{
+        this.$http('post','/currican/online_test',this.testInfo,{contentType: 'multipart/form-data'}).then(res=>{
           if(res.data.status==0){
             this.$alert("提交成功", "消息", {
               confirmButtonText: "确定",

@@ -45,12 +45,13 @@ export default {
         content: '',
         deadline: ''
       },
-      uploadUrl: '/api/file/currican/assign_submit',
+      uploadUrl: 'http://120.79.191.54:8081/currican/assignment',
       fileInclude: false
     }
   },
   created () {
     if (this.$route.params.operation == "edit"){
+      this.assignmentInfo.action='update'
       this.assignmentInfo.title = this.originalAssignmentInfo.title,
       this.assignmentInfo.content = this.originalAssignmentInfo.content,
       this.assignmentInfo.assign_id = this.$route.params.assign_id,
@@ -83,9 +84,10 @@ export default {
         }
       }
       if(this.fileInclude){
+        console.log(this.assignmentInfo)
         this.$refs.upload.submit()
       }else{
-        this.$http('post','/currican/assign_submit',this.assignmentInfo).then(res=>{
+        this.$http('post','/currican/assignment',this.assignmentInfo,{contentType: 'multipart/form-data'}).then(res=>{
           if(res.data.status==0){
             this.$alert("提交成功", "消息", {
               confirmButtonText: "确定",
@@ -102,7 +104,6 @@ export default {
       }      
     },
     onChange(file,fileList){
-      console.log(file,fileList)
       if(fileList.length==0){
         this.fileInclude = false
       }else{

@@ -11,13 +11,10 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api':{
+      '/currican':{
         target:'http://120.79.191.54:8080',
         secure:true,
         changeOrigin:true,
-        pathRewrite: {
-            '^/api': ''
-        }
       }
     },
 

@@ -6,15 +6,18 @@ const state = {
   courseList: [],
   userList: [],
   userInfo: [],
-  courseInfo: []
+  courseInfo: [],
+  teacherList: []
 }
 
 const getters = {
-  getCourse: state => state.course
+  getCourseList: state => state.courseList,
+  getTeacherList: state => state.teacherList,
+  getCourseInfo: state => state.courseInfo
 }
 
 const actions = {
-  getSchool ({ state, commit }) {
+  fetchSchool ({ state, commit }) {
     let data = []
 
     http('get', '/currican/admin/school').then(res => {
@@ -30,7 +33,7 @@ const actions = {
     })
   },
 
-  getCourse ({ state, commit }, school) {
+  fetchCourse ({ state, commit }, school) {
     http('get', '/currican/admin/course/' + school).then(res => {
       commit('setCourseList', {
         item: res.data
@@ -38,7 +41,7 @@ const actions = {
     })
   },
 
-  getUser ({ state, commit }, {type, school}) {
+  fetchUser ({ state, commit }, {type, school}) {
     http('get', '/currican/account/' + type + '/' + school).then(res => {
       commit('setUserList', {
         item: res.data
@@ -65,6 +68,11 @@ const actions = {
       }
     }
     commit('setUserInfo', tmp)
+  },
+
+  fetchCourseList ({ state, commit }, school_id) {
+  },
+  fetchTeacherList ({ state, commit }, school_id) {
   }
 }
 
