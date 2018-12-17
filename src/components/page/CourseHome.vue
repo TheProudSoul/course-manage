@@ -9,7 +9,7 @@
       <h3 class="course-item">上课时间：</h3>
       <p
         style="margin-left: 60px; margin-top: 10px"
-        v-for="(time,index) in courseInfo.time_block"
+        v-for="(time,index) in courseInfo.time_slot"
         :key="index"
       >周{{time.week_day}} &ensp;第{{time.period}}节课 &ensp;{{time.start_time}}-{{time.end_time}}</p>
       <h3 class="course-item">课室：</h3>
@@ -44,7 +44,7 @@
             </div>
           </el-dialog>
         </div>
-      <el-table ref="singleTable" :show-header="false" :data="notices" highlight-current-row @row-click="showNotice" style="padding-left:20px;padding-right:20px">
+      <el-table ref="singleTable" :show-header="false" :data="notices" highlight-current-row style="padding-left:20px;padding-right:20px">
         <el-table-column width="30">
           <template slot-scope="scope">
             <img src="../../assets/i6.png" style="height:20px; width: 20px"/>
@@ -52,7 +52,13 @@
         </el-table-column>
         <el-table-column property="release_time" label="发布时间" width="180"></el-table-column>
         <el-table-column property="teacher_name" label="发布者" width="80"></el-table-column>
-        <el-table-column property="title" label="公告标题"></el-table-column>   
+        <el-table-column property="title" label="公告标题"></el-table-column> 
+        <el-table-column fixed="right" label="操作" width="100">
+      <template slot-scope="scope">
+        <el-button @click="showNotice(scope.row)" type="text" size="small">查看</el-button>
+        <el-button @click="noticeDelete(scope.row)" type="text" size="small">删除</el-button>
+      </template>
+    </el-table-column>  
       </el-table>
       </el-card>
     </div>
@@ -95,6 +101,37 @@ export default {
   },
 
   methods: {
+    noticeDelete(row){
+      console.log
+      this.$confirm('是否确认删除"' + row.title + '"这个公告?', "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$http("post", "/currican/notice", {
+            action: "delete",
+            notice_id: row.notice_id
+          }).then(res => {
+            if (res.data.status == 0) {
+              this.$alert("删除成功", "消息", {
+              confirmButtonText: "确定",
+              beforeClose: (action, instance, done) => {
+                this.$router.go(0)
+              }
+            })
+          } else {
+              this.$message({ type: "info", message: res.data.error_msg });
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          })
+        })
+    },
     handleAddNotice() {
       if(this.params.title==''||this.params.content==''){
         this.$notify({
@@ -159,7 +196,7 @@ export default {
         }
       });
     },
-    showNotice(row, event, column){
+    showNotice(row){
       console.log(row)
       this.$alert(row.content, row.title, {
         confirmButtonText: '确定'
