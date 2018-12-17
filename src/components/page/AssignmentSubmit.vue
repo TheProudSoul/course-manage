@@ -74,7 +74,7 @@ export default {
   data () {
     return {
       mark: "",
-      downloadUrl: 'http://120.79.191.54:8081/currican/assign_submit/file/' + this.$route.params.submit_id
+      downloadUrl: 'http://120.79.191.54:8081/currican/assign_submit/file?id=' + this.$route.params.submit_id
     };
   },
   computed: {
@@ -126,7 +126,7 @@ export default {
           .then(() => {
             this.$http("post", "/currican/assign_submit", {
               action: "put",
-              submit_id: this.$route.params.submit_id,
+              sub_id: this.$route.params.submit_id,
               mark: this.mark
             }).then(res => {
               if (res.data.status == 0) {

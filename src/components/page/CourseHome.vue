@@ -90,7 +90,7 @@ export default {
   },
   beforeRouteUpdate(to, from, next) {
     this.$store.dispatch("course/fetchCourse", to.params.course);
-    this.$store.dispatch("notice/fetchNotice", to.params.course);
+    this.$store.dispatch("notice/fetchNotice", 0);
     next();
   },
 

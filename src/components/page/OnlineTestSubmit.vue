@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       mark: "",
-      downloadUrl: 'http://120.79.191.54:8081/currican/test_submit/file/' + this.$route.params.submit_id
+      downloadUrl: 'http://120.79.191.54:8081/currican/test_submit/file?id=' + this.$route.params.submit_id
     };
   },
   computed: {
@@ -98,7 +98,7 @@ export default {
         })
           .then(() => {
             // 真正路径  '/test_submit'
-            this.$http("post", "/currican/admin/course", {
+            this.$http("post", "/currican/test_submit", {
               action: "put",
               submit_id: this.$route.params.submit_id,
               mark: this.mark
